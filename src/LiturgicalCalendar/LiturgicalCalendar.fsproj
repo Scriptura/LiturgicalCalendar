@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    
+    <!-- Package NuGet info -->
+    <PackageId>LiturgicalCalendar</PackageId>
+    <Version>0.1.0-alpha</Version>
+    <Authors>VotreNom</Authors>
+    <Description>A liturgical calendar library for the Roman Catholic Church, with French language support</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Scriptura/LiturgicalCalendar</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Scriptura/LiturgicalCalendar</RepositoryUrl>
+    <PackageTags>liturgy;calendar;catholic;french;easter;feasts</PackageTags>
+    <PackageReleaseNotes>Initial alpha release with Easter calculation</PackageReleaseNotes>
+    
+    <!-- F# Configuration -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>FS0025</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="EasterCalculation.fs" />
+    <Compile Include="CelebrationType.fs" />
+    <Compile Include="LiturgicalColor.fs" />
+    <Compile Include="LiturgicalRank.fs" />
+    <Compile Include="FixedDate.fs" />
+    <Compile Include="LiturgicalCelebration.fs" />
+    <Compile Include="LiturgicalData.fs" />
+  </ItemGroup>
+
+</Project>
