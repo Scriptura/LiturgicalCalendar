@@ -1,0 +1,497 @@
+{
+  "dominicaPrimaAdventus": {
+    "id": "dominicaPrimaAdventus",
+    "name": "Premier dimanche de l'Avent, <em>Levavi</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaSecundaAdventus": {
+    "id": "dominicaSecundaAdventus",
+    "name": "Deuxième dimanche de l'Avent, <em>Populus Sion</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTertiaAdventus": {
+    "id": "dominicaTertiaAdventus",
+    "name": "Troisième dimanche de l'Avent, <em>Gaudete</em>",
+    "color": "roseus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuartaAdventus": {
+    "id": "dominicaQuartaAdventus",
+    "name": "Quatrième dimanche de l'Avent, <em>Rorate</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "immaculataConceptio": {
+    "id": "immaculataConceptio",
+    "name": "Immaculée Conception de la Bienheureuse Vierge Marie",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "sanctaFamilia": {
+    "id": "sanctaFamilia",
+    "name": "La Sainte Famille",
+    "color": "albus",
+    "type": 2,
+    "rank": 5
+  },
+  "epiphaniaDomini": {
+    "id": "epiphaniaDomini",
+    "name": "Épiphanie du Seigneur",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "baptismaDomini": {
+    "id": "baptismaDomini",
+    "name": "Le Baptême du Seigneur",
+    "color": "albus",
+    "type": 2,
+    "rank": 5
+  },
+  "sanctusIosephSponsusMariaeVirginis": {
+    "id": "sanctusIosephSponsusMariaeVirginis",
+    "name": "Saint Joseph, chaste Époux de la Bienheureuse Vierge Marie",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "annuntiatioDomini": {
+    "id": "annuntiatioDomini",
+    "name": "Annonciation du Seigneur",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "feriaQuartaCinerum": {
+    "id": "feriaQuartaCinerum",
+    "name": "Mercredi des Cendres",
+    "color": "violaceus",
+    "type": null,
+    "rank": 2
+  },
+  "dominicaPrimaQuadragesimae": {
+    "id": "dominicaPrimaQuadragesimae",
+    "name": "Premier dimanche de Carême, <em>Invocabit</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaSecundaQuadragesimae": {
+    "id": "dominicaSecundaQuadragesimae",
+    "name": "Deuxième dimanche de Carême, <em>Reminiscere</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTertiaQuadragesimae": {
+    "id": "dominicaTertiaQuadragesimae",
+    "name": "Troisième dimanche de Carême, <em>Oculi</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuartaQuadragesimae": {
+    "id": "dominicaQuartaQuadragesimae",
+    "name": "Quatrième dimanche de Carême, <em>Laetare</em>",
+    "color": "roseus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuintaQuadragesimae": {
+    "id": "dominicaQuintaQuadragesimae",
+    "name": "Cinquième dimanche de Carême, <em>Judica</em>",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaPalmarum": {
+    "id": "dominicaPalmarum",
+    "name": "Dimanche des Rameaux et de la Passion du Seigneur",
+    "color": "rubeus",
+    "type": 1,
+    "rank": 2
+  },
+  "feriaSecundaHebdomadaeSanctae": {
+    "id": "feriaSecundaHebdomadaeSanctae",
+    "name": "Lundi Saint",
+    "color": "violaceus",
+    "type": null,
+    "rank": 2
+  },
+  "feriaTertiaHebdomadaeSanctae": {
+    "id": "feriaTertiaHebdomadaeSanctae",
+    "name": "Mardi Saint",
+    "color": "violaceus",
+    "type": null,
+    "rank": 2
+  },
+  "feriaQuartaHebdomadaeSanctae": {
+    "id": "feriaQuartaHebdomadaeSanctae",
+    "name": "Mercredi Saint",
+    "color": "violaceus",
+    "type": null,
+    "rank": 2
+  },
+  "feriaQuintaInCoenaDomini": {
+    "id": "feriaQuintaInCoenaDomini",
+    "name": "Jeudi Saint",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "feriaSextaInPassioneDomini": {
+    "id": "feriaSextaInPassioneDomini",
+    "name": "Vendredi Saint",
+    "color": "rubeus",
+    "type": 1,
+    "rank": 1
+  },
+  "sabbatumSanctum": {
+    "id": "sabbatumSanctum",
+    "name": "Samedi Saint",
+    "color": "violaceus",
+    "type": 1,
+    "rank": 1
+  },
+  "dominicaResurrectionis": {
+    "id": "dominicaResurrectionis",
+    "name": "Résurrection du Seigneur",
+    "extra": "dimanche du Temps Pascal",
+    "color": "albus",
+    "type": 1,
+    "rank": 1
+  },
+  "feriaSecundaInOctavaPaschae": {
+    "id": "feriaSecundaInOctavaPaschae",
+    "name": "Lundi dans l'octave Pâques",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "feriaTertiaInOctavaPaschae": {
+    "id": "feriaTertiaInOctavaPaschae",
+    "name": "Mardi dans l'octave de Pâques",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "feriaQuartaInOctavaPaschae": {
+    "id": "feriaQuartaInOctavaPaschae",
+    "name": "Mercredi dans l'octave de Pâques",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "feriaQuintaInOctavaPaschae": {
+    "id": "feriaQuintaInOctavaPaschae",
+    "name": "Jeudi dans l'octave de Pâques",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "feriaSextaInOctavaPaschae": {
+    "id": "feriaSextaInOctavaPaschae",
+    "name": "Vendredi dans l'octave de Pâques",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "sabbatumInOctavaPaschae": {
+    "id": "sabbatumInOctavaPaschae",
+    "name": "Samedi dans l'octave de Pâques",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaDivinaeMisericordiae": {
+    "id": "dominicaDivinaeMisericordiae",
+    "name": "Dimanche de la divine Miséricorde",
+    "extra": "Deuxième dimanche du Temps Pascal, <em>in albis</em>",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTertiaTemporisParschalis": {
+    "id": "dominicaTertiaTemporisParschalis",
+    "name": "Troisième dimanche du Temps Pascal, <em>Jubilate</em>",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuartaTemporisParschalis": {
+    "id": "dominicaQuartaTemporisParschalis",
+    "name": "Quatrième dimanche du Temps Pascal, <em>Cantate</em>",
+    "extra": "Ou dimanche \"du Bon Pasteur\"",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuintaTemporisParschalis": {
+    "id": "dominicaQuintaTemporisParschalis",
+    "name": "Cinquième dimanche du Temps Pascal",
+    "extra": "Ou dimanche dit \"des Rogations\"",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaSextaTemporisParschalis": {
+    "id": "dominicaSextaTemporisParschalis",
+    "name": "Sixième dimanche du Temps Pascal",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "ascensioDomini": {
+    "id": "ascensioDomini",
+    "name": "Ascension",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaSeptimaTemporisParschalis": {
+    "id": "dominicaSeptimaTemporisParschalis",
+    "name": "Septième dimanche du Temps Pascal",
+    "color": "albus",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaPentecostes": {
+    "id": "dominicaPentecostes",
+    "name": "Pentecôte",
+    "color": "rubeus",
+    "type": 1,
+    "rank": 2
+  },
+  "beataMariaMaterEcclesiae": {
+    "id": "beataMariaMaterEcclesiae",
+    "name": "Bienheureuse Vierge Marie, Mère de l'Église",
+    "color": "albus",
+    "type": 3,
+    "rank": 10
+  },
+  "sanctissimaTrinitas": {
+    "id": "sanctissimaTrinitas",
+    "name": "Sainte Trinité",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "sanctissimumCorpusEtSanguinemChristi": {
+    "id": "sanctissimumCorpusEtSanguinemChristi",
+    "name": "Le Saint Sacrement du Corps et du Sang du Christ",
+    "extra": "Fête-Dieu",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "sacratissimumCorIesu": {
+    "id": "sacratissimumCorIesu",
+    "name": "Sacré-Cœur de Jésus",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "immaculatumCorMariaeVirginis": {
+    "id": "immaculatumCorMariaeVirginis",
+    "name": "Cœur Immaculé de Marie",
+    "color": "albus",
+    "type": 3,
+    "rank": 10
+  },
+  "nativitasSanctiIoannisBaptistae": {
+    "id": "nativitasSanctiIoannisBaptistae",
+    "name": "Nativité de Saint Jean-Baptiste",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "sanctiPetriEtPauliApostolorum": {
+    "id": "sanctiPetriEtPauliApostolorum",
+    "name": "Saints Pierre et Paul, apôtres",
+    "color": "rubeus",
+    "type": 1,
+    "rank": 3
+  },
+  "dominiNostroIesuChristiRegisUniversi": {
+    "id": "dominiNostroIesuChristiRegisUniversi",
+    "name": "Notre Seigneur Jésus Christ Roi de l'Univers",
+    "color": "albus",
+    "type": 1,
+    "rank": 3
+  },
+  "dominicaDecimaTemporisOrdinarii": {
+    "id": "dominicaDecimaTemporisOrdinarii",
+    "name": "10<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaUndecimaTemporisOrdinarii": {
+    "id": "dominicaUndecimaTemporisOrdinarii",
+    "name": "11<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaDuodecimaTemporisOrdinarii": {
+    "id": "dominicaDuodecimaTemporisOrdinarii",
+    "name": "12<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTertiadecimaTemporisOrdinarii": {
+    "id": "dominicaTertiadecimaTemporisOrdinarii",
+    "name": "13<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuartadecimaTemporisOrdinarii": {
+    "id": "dominicaQuartadecimaTemporisOrdinarii",
+    "name": "14<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaQuintadecimaTemporisOrdinarii": {
+    "id": "dominicaQuintadecimaTemporisOrdinarii",
+    "name": "15<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaSextadecimaTemporisOrdinarii": {
+    "id": "dominicaSextadecimaTemporisOrdinarii",
+    "name": "16<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaSeptimadecimaTemporisOrdinarii": {
+    "id": "dominicaSeptimadecimaTemporisOrdinarii",
+    "name": "17<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaDuodevicesimaTemporisOrdinarii": {
+    "id": "dominicaDuodevicesimaTemporisOrdinarii",
+    "name": "18<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaUndevicesimaTemporisOrdinarii": {
+    "id": "dominicaUndevicesimaTemporisOrdinarii",
+    "name": "19<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaTemporisOrdinarii": {
+    "id": "dominicaVicesimaTemporisOrdinarii",
+    "name": "20<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtPrimaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtPrimaTemporisOrdinarii",
+    "name": "21<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtSecundaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtSecundaTemporisOrdinarii",
+    "name": "22<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtTertiaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtTertiaTemporisOrdinarii",
+    "name": "23<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtQuartaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtQuartaTemporisOrdinarii",
+    "name": "24<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtQuintaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtQuintaTemporisOrdinarii",
+    "name": "25<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtSextaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtSextaTemporisOrdinarii",
+    "name": "26<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtSeptimaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtSeptimaTemporisOrdinarii",
+    "name": "27<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtOctavaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtOctavaTemporisOrdinarii",
+    "name": "28<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaVicesimaEtNonaTemporisOrdinarii": {
+    "id": "dominicaVicesimaEtNonaTemporisOrdinarii",
+    "name": "29<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTricesimaTemporisOrdinarii": {
+    "id": "dominicaTricesimaTemporisOrdinarii",
+    "name": "30<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTricesimaEtPrimaTemporisOrdinarii": {
+    "id": "dominicaTricesimaEtPrimaTemporisOrdinarii",
+    "name": "31<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTricesimaEtSecundaTemporisOrdinarii": {
+    "id": "dominicaTricesimaEtSecundaTemporisOrdinarii",
+    "name": "32<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  },
+  "dominicaTricesimaEtTertiaTemporisOrdinarii": {
+    "id": "dominicaTricesimaEtTertiaTemporisOrdinarii",
+    "name": "33<sup>ème</sup> dimanche du temps ordinaire",
+    "color": "viridis",
+    "type": 1,
+    "rank": 2
+  }
+}

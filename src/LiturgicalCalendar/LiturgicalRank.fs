@@ -8,7 +8,7 @@ type LiturgicalRank =
 
     static member Create(value: int) =
         if value < 1 || value > 13 then
-            invalidArg "value" "Le rang liturgique doit être entre 1 et 13"
+            invalidArg "value" "Le rang liturgique doit être compris entre 1 et 13"
 
         LiturgicalRank value
 

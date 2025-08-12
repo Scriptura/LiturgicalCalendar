@@ -8,14 +8,14 @@ module LiturgicalData =
     // Calendrier romain général (immuable)
     let private generalRomanCalendar =
         [ (FixedDate.Create(1, 1),
-           { LiturgicalId = "mariaeMatrisDei"
+           { Id = "mariaeMatrisDei"
              Name = "Sainte Marie, Mère de Dieu"
              Color = LiturgicalColor.Albus
              Type = CelebrationType.Sollemnitas
              Rank = LiturgicalRank.Create(3) })
 
           (FixedDate.Create(1, 2),
-           { LiturgicalId = "basiliusMagnusEtGregoriusNazianzenus"
+           { Id = "basiliusMagnusEtGregoriusNazianzenus"
              Name =
                "Saint Basile le Grand, évêque de Césarée, docteur de l'Église et Saint Grégoire de Naziance, évêque de Constantinople, docteur de l'Église"
              Color = LiturgicalColor.Albus
@@ -26,7 +26,7 @@ module LiturgicalData =
     // Calendriers régionaux
     let private europeRomanCalendar =
         [ (FixedDate.Create(7, 11),
-           { LiturgicalId = "benedictusDeNursia"
+           { Id = "benedictusDeNursia"
              Name = "Saint Benoît de Nursie, abbé, patron de l'Europe"
              Color = LiturgicalColor.Albus
              Type = CelebrationType.Festum
@@ -35,7 +35,7 @@ module LiturgicalData =
 
     let private frenchRomanCalendar =
         [ (FixedDate.Create(1, 3),
-           { LiturgicalId = "genovefaParisiensis"
+           { Id = "genovefaParisiensis"
              Name = "Sainte Geneviève, vierge, patronne de Paris"
              Color = LiturgicalColor.Albus
              Type = CelebrationType.Memoria

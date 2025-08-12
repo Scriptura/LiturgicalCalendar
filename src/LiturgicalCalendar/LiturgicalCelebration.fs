@@ -2,7 +2,7 @@ namespace LiturgicalCalendar
 
 /// Structure représentant une célébration liturgique
 type LiturgicalCelebration =
-    { LiturgicalId: string
+    { Id: string
       Name: string
       Color: LiturgicalColor
       Type: CelebrationType
