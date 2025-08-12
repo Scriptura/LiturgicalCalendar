@@ -1,4 +1,4 @@
-![F#](https://img.shields.io/badge/F%23-28319D?style=for-the-badge&logo=fsharp&logoColor=fff)
+![F#](https://img.shields.io/badge/F%23-378BBA?style=for-the-badge&logo=fsharp&logoColor=white)
 ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![Liturgical Calendar](https://img.shields.io/badge/Liturgical%20Calendar-4285F4?style=for-the-badge&logo=google-calendar&logoColor=white)
 
