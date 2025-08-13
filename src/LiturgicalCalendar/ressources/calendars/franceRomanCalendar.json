@@ -1,84 +1,96 @@
 {
-  "0103": {
-    "id": "ssimiNominisJesuVelGenovefae",
+  "ssimiNominisJesuVelGenovefae": {
+    "month": 1,
+    "day": 3,
     "name": "Saint Nom de Jésus ou Sainte Geneviève, vierge",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0106": {
-    "id": "epiphaniaDomini",
+  "epiphaniaDomini": {
+    "month": 1,
+    "day": 6,
     "name": "L'Épiphanie du Seigneur",
     "color": "albus",
-    "type": "sollemnitas",
-    "rank": 2
+    "rank": "sollemnitas",
+    "priority": 2
   },
-  "0115": {
-    "id": "remigiiRemensis",
+  "remigiiRemensis": {
+    "month": 1,
+    "day": 15,
     "name": "Saint Rémi, évêque",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0218": {
-    "id": "bernadettaeSoubirous",
+  "bernadettaeSoubirous": {
+    "month": 2,
+    "day": 18,
     "name": "Sainte Bernadette Soubirous",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0519": {
-    "id": "ivonisKermartinensis",
+  "ivonisKermartinensis": {
+    "month": 5,
+    "day": 19,
     "name": "Saint Yves, prêtre",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0530": {
-    "id": "joannaeDarc",
+  "joannaeDarc": {
+    "month": 5,
+    "day": 30,
     "name": "Sainte Jeanne d'Arc, vierge et martyre",
     "extra": "patronne secondaire de la France",
     "color": "rubeus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "0602": {
-    "id": "pothiniLugdunensisEtSociorum",
+  "pothiniLugdunensisEtSociorum": {
+    "month": 6,
+    "day": 2,
     "name": "Saint Pothin, évêque, Sainte Blandine, vierge, et leurs compagnons, martyrs",
     "color": "rubeus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0604": {
-    "id": "clotildisReginae",
+  "clotildisReginae": {
+    "month": 6,
+    "day": 4,
     "name": "Sainte Clotilde, reine des Francs",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0815": {
-    "id": "assumptionisMariaeVirginis",
+  "assumptionisMariaeVirginis": {
+    "month": 8,
+    "day": 15,
     "extra": "patronne principale de la France"
   },
-  "0826": {
-    "id": "caesariiArelatensis",
+  "caesariiArelatensis": {
+    "month": 8,
+    "day": 26,
     "name": "Saint Césaire d'Arles, évêque",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0919": {
-    "id": "mariaeVirginisSalettensis",
+  "mariaeVirginisSalettensis": {
+    "month": 9,
+    "day": 19,
     "name": "Notre-Dame de La Salette",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "1001": {
-    "id": "theresiaePueriJesu",
+  "theresiaePueriJesu": {
+    "month": 10,
+    "day": 1,
     "extra": "patronne secondaire de la France",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   }
 }

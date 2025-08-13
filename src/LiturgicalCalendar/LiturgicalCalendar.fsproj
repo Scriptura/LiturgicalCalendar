@@ -22,11 +22,8 @@
 
   <ItemGroup>
     <Compile Include="EasterCalculation.fs" />
-    <Compile Include="CelebrationType.fs" />
-    <Compile Include="LiturgicalColor.fs" />
-    <Compile Include="LiturgicalRank.fs" />
     <Compile Include="FixedDate.fs" />
-    <Compile Include="LiturgicalCelebration.fs" />
+    <Compile Include="LiturgicalTypes.fs" />
     <Compile Include="LiturgicalData.fs" />
   </ItemGroup>
 

@@ -1,72 +1,82 @@
 {
-  "0130": {
-    "id": "mutianiMariaeWiaux",
+  "mutianiMariaeWiaux": {
+    "month": 1,
+    "day": 30,
     "name": "Saint Mutien-Marie Wiaux, religieux",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0206": {
-    "id": "amandi",
+  "amandi": {
+    "month": 2,
+    "day": 6,
     "name": "Saint Amand, évêque, missionnaire",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "0317": {
-    "id": "gertrudisNivellensis",
+  "gertrudisNivellensis": {
+    "month": 3,
+    "day": 17,
     "name": "Sainte Gertrude de Nivelles, vierge",
     "color": "albus",
-    "type": "memoriaAdLibitum",
-    "rank": 12
+    "rank": "memoriaAdLibitum",
+    "priority": 12
   },
-  "0408": {
-    "id": "juliaeBilliart",
+  "juliaeBilliart": {
+    "month": 4,
+    "day": 8,
     "name": "Sainte Julie Billiart",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "0510": {
-    "id": "damianiDeVeuster",
+  "damianiDeVeuster": {
+    "month": 5,
+    "day": 10,
     "name": "Saint Père Damien",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "0807": {
-    "id": "julianaeLeodiensis",
+  "julianaeLeodiensis": {
+    "month": 8,
+    "day": 7,
     "name": "Sainte Julienne du Mont-Cornillon",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "0831": {
-    "id": "mariaeMediatriciOmniumGratiarum",
+  "mariaeMediatriciOmniumGratiarum": {
+    "month": 8,
+    "day": 31,
     "name": "Marie, Médiatrice de toute grâce",
     "color": "albus",
-    "type": "festum",
-    "rank": 8
+    "rank": "festum",
+    "priority": 8
   },
-  "0917": {
-    "id": "lambertiTrajectensis",
+  "lambertiTrajectensis": {
+    "month": 9,
+    "day": 17,
     "name": "Saint Lambert, évêque et martyr",
     "color": "rubeus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "1103": {
-    "id": "hubertiLeodiensis",
+  "hubertiLeodiensis": {
+    "month": 11,
+    "day": 3,
     "name": "Saint Hubert, évêque de Liège",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   },
-  "1126": {
-    "id": "joannisBerchmans",
+  "joannisBerchmans": {
+    "month": 11,
+    "day": 26,
     "name": "Saint Jean Berchmans",
     "color": "albus",
-    "type": "memoria",
-    "rank": 10
+    "rank": "memoria",
+    "priority": 10
   }
 }

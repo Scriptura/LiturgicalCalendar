@@ -1,0 +1,47 @@
+namespace LiturgicalCalendar
+
+/// Couleurs liturgiques en latin (forme canonique)
+type LiturgicalColor =
+    | Albus
+    | Rubeus
+    | Viridis
+    | Violaceus
+    | Roseus
+    | Niger
+
+/// Types de célébrations liturgiques
+type LiturgicalRank =
+    | Sollemnitas
+    | Festum
+    | Memoria
+    | MemoriaAdLibitum
+    | FeriaOrdinis
+    | Dominica
+
+/// Rang liturgique selon les normes romaines (1-13)
+[<Struct>]
+type LiturgicalPrecedence =
+    private
+    | LiturgicalPrecedence of int
+
+    static member Create(value: int) =
+        if value < 1 || value > 13 then
+            invalidArg "value" "Le rang liturgique doit être compris entre 1 et 13"
+
+        LiturgicalPrecedence value
+
+    member this.Value =
+        let (LiturgicalPrecedence v) = this
+        v
+
+    static member op_Implicit(rank: LiturgicalPrecedence) = rank.Value
+
+    override this.ToString() = this.Value.ToString()
+
+/// Structure représentant une célébration liturgique
+type LiturgicalCelebration =
+    { Id: string
+      Name: string
+      Color: LiturgicalColor
+      Rank: LiturgicalRank
+      Priority: LiturgicalPrecedence }

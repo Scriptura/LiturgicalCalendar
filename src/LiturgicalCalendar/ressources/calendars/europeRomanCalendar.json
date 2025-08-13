@@ -1,37 +1,42 @@
 {
-  "0214": {
-    "id": "cyrilliEtMethodii",
+  "cyrilliEtMethodii": {
+    "month": 2,
+    "day": 14,
     "name": "Saint Cyrille, moine et Saint Méthode, évêque",
     "color": "albus",
-    "type": "festum",
-    "rank": 8
+    "rank": "festum",
+    "priority": 8
   },
-  "0429": {
-    "id": "catharianeSenensis",
+  "catharianeSenensis": {
+    "month": 4,
+    "day": 29,
     "name": "Sainte Catherine de Sienne, vierge et docteur de l'Église",
     "color": "albus",
-    "type": "festum",
-    "rank": 8
+    "rank": "festum",
+    "priority": 8
   },
-  "0711": {
-    "id": "benedictiAbbatis",
+  "benedictiAbbatis": {
+    "month": 7,
+    "day": 11,
     "name": "Saint Benoît, abbé",
     "color": "albus",
-    "type": "festum",
-    "rank": 8
+    "rank": "festum",
+    "priority": 8
   },
-  "0723": {
-    "id": "brigittaeSueciae",
+  "brigittaeSueciae": {
+    "month": 7,
+    "day": 23,
     "name": "Sainte Brigitte de Suède, religieuse",
     "color": "albus",
-    "type": "festum",
-    "rank": 8
+    "rank": "festum",
+    "priority": 8
   },
-  "0809": {
-    "id": "teresiaeBenedictaeCrucis",
+  "teresiaeBenedictaeCrucis": {
+    "month": 8,
+    "day": 9,
     "name": "Sainte Thérèse Bénédicte de La Croix, religieuse",
     "color": "rubeus",
-    "type": "festum",
-    "rank": 8
+    "rank": "festum",
+    "priority": 8
   }
 }
