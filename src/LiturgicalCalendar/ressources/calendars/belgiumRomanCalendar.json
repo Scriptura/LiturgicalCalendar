@@ -1,41 +1,41 @@
 {
   "0130": {
-    "id": "sanctiMutianiMariaeWiaux",
+    "id": "mutianiMariaeWiaux",
     "name": "Saint Mutien-Marie Wiaux, religieux",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0206": {
-    "id": "sanctiAmandi",
+    "id": "amandi",
     "name": "Saint Amand, évêque, missionnaire",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0317": {
-    "id": "sanctaeGertrudisNivellensis",
+    "id": "gertrudisNivellensis",
     "name": "Sainte Gertrude de Nivelles, vierge",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0408": {
-    "id": "sanctaeJuliaeBilliart",
+    "id": "juliaeBilliart",
     "name": "Sainte Julie Billiart",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0510": {
-    "id": "sanctiDamianiDeVeuster",
+    "id": "damianiDeVeuster",
     "name": "Saint Père Damien",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0807": {
-    "id": "sanctaeJulianaeLeodiensis",
+    "id": "julianaeLeodiensis",
     "name": "Sainte Julienne du Mont-Cornillon",
     "color": "albus",
     "type": "memoria",
@@ -49,21 +49,21 @@
     "rank": 8
   },
   "0917": {
-    "id": "sanctiLambertiTrajectensis",
+    "id": "lambertiTrajectensis",
     "name": "Saint Lambert, évêque et martyr",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "1103": {
-    "id": "sanctiHubertiLeodiensis",
+    "id": "hubertiLeodiensis",
     "name": "Saint Hubert, évêque de Liège",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "1126": {
-    "id": "sanctiJoannisBerchmans",
+    "id": "joannisBerchmans",
     "name": "Saint Jean Berchmans",
     "color": "albus",
     "type": "memoria",

@@ -55,7 +55,7 @@
     "type": "festum",
     "rank": 5
   },
-  "sanctusIosephSponsusMariaeVirginis": {
+  "iosephSponsiMariaeVirginis": {
     "id": "sanctusIosephSponsusMariaeVirginis",
     "name": "Saint Joseph, chaste Époux de la Bienheureuse Vierge Marie",
     "color": "albus",
@@ -277,14 +277,14 @@
     "rank": 10
   },
   "sanctissimaTrinitas": {
-    "id": "sanctissimaTrinitas",
+    "id": "ssimaTrinitas",
     "name": "Sainte Trinité",
     "color": "albus",
     "type": "sollemnitas",
     "rank": 3
   },
   "sanctissimumCorpusEtSanguinemChristi": {
-    "id": "sanctissimumCorpusEtSanguinemChristi",
+    "id": "ssimumCorpusEtSanguinemChristi",
     "name": "Le Saint Sacrement du Corps et du Sang du Christ",
     "extra": "Fête-Dieu",
     "color": "albus",
@@ -313,7 +313,7 @@
     "rank": 3
   },
   "sanctiPetriEtPauliApostolorum": {
-    "id": "sanctiPetriEtPauliApostolorum",
+    "id": "petriEtPauliApostolorum",
     "name": "Saints Pierre et Paul, apôtres",
     "color": "rubeus",
     "type": "sollemnitas",

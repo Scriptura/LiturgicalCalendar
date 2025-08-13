@@ -1,6 +1,6 @@
 {
   "0103": {
-    "id": "sanctissimiNominisJesuVelSanctaeGenovefae",
+    "id": "ssimiNominisJesuVelSanctaeGenovefae",
     "name": "Saint Nom de Jésus ou Sainte Geneviève, vierge",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -14,28 +14,28 @@
     "rank": 2
   },
   "0115": {
-    "id": "sanctiRemigiiRemensis",
+    "id": "remigiiRemensis",
     "name": "Saint Rémi, évêque",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0218": {
-    "id": "sanctaeBernadettaeSoubirous",
+    "id": "bernadettaeSoubirous",
     "name": "Sainte Bernadette Soubirous",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0519": {
-    "id": "sanctiIvonisKermartinensis",
+    "id": "ivonisKermartinensis",
     "name": "Saint Yves, prêtre",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0530": {
-    "id": "sanctaeJoannaeDarc",
+    "id": "joannaeDarc",
     "name": "Sainte Jeanne d'Arc, vierge et martyre",
     "extra": "patronne secondaire de la France",
     "color": "rubeus",
@@ -43,14 +43,14 @@
     "rank": 10
   },
   "0602": {
-    "id": "sanctiPothiniLugdunensisEtSociorum",
+    "id": "pothiniLugdunensisEtSociorum",
     "name": "Saint Pothin, évêque, Sainte Blandine, vierge, et leurs compagnons, martyrs",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0604": {
-    "id": "sanctaeClotildisReginae",
+    "id": "clotildisReginae",
     "name": "Sainte Clotilde, reine des Francs",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -61,7 +61,7 @@
     "extra": "patronne principale de la France"
   },
   "0826": {
-    "id": "sanctiCaesariiArelatensis",
+    "id": "caesariiArelatensis",
     "name": "Saint Césaire d'Arles, évêque",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -75,7 +75,7 @@
     "rank": 12
   },
   "1001": {
-    "id": "sanctaeTheresiaePueriJesu",
+    "id": "theresiaePueriJesu",
     "extra": "patronne secondaire de la France",
     "color": "albus",
     "type": "memoria",

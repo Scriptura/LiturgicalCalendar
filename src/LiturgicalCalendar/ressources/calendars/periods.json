@@ -1,61 +1,61 @@
 {
-  "advent": {
-    "id": "advent",
+  "adventus": {
+    "id": "adventus",
     "name": "Temps de l'Avent",
     "color": "violaceus",
     "rank": 13
   },
-  "christmastide": {
-    "id": "christmastide",
+  "tempusNativitatis": {
+    "id": "tempusNativitatis",
     "name": "Temps de Noël",
     "color": "albus",
     "rank": 13
   },
-  "lent": {
-    "id": "lent",
+  "quadragesima": {
+    "id": "quadragesima",
     "name": "Carême",
     "color": "violaceus",
     "rank": 9
   },
-  "eastertide": {
-    "id": "eastertide",
+  "tempusPaschale": {
+    "id": "tempusPaschale",
     "name": "Temps Pascal",
     "color": "albus",
     "rank": 13
   },
-  "ordinaryTime": {
-    "id": "ordinaryTime",
+  "tempusPerAnnum": {
+    "id": "tempusPerAnnum",
     "name": "Temps ordinaire",
     "color": "viridis",
     "rank": 13
   },
   "sub": {
-    "advent17_24": {
-      "id": "advent17_24",
-      "name": "Temps de l'Avent",
+    "adventusMaior": {
+      "id": "adventusMaior",
+      "name": "Grand Avent",
       "rank": 9
     },
-    "octaveOfChristmas": {
-      "id": "octaveOfChristmas",
+    "octavaNativitatis": {
+      "id": "octavaNativitatis",
       "name": "Octave de la Nativité du Seigneur",
       "rank": 9
     },
-    "epiphanyTide": {
-      "id": "epiphanyTide",
+    "tempusPostEpiphaniam": {
+      "id": "tempusPostEpiphaniam",
       "name": "Après l'Épiphanie"
     },
-    "holyWeek": {
-      "id": "holyWeek",
+    "hebdomadaSancta": {
+      "id": "hebdomadaSancta",
       "name": "Semaine Sainte",
       "rank": 2
     },
-    "easterTriduum": {
-      "id": "easterTriduum",
+    "triduumPaschale": {
+      "id": "triduumPaschale",
       "name": "Triduum pascal",
       "rank": 1
     },
-    "octaveOfEaster": {
-      "id": "octaveOfEaster",
+    "octavaPaschae": {
+      "id": "octavaPaschae",
       "name": "Octave de Pâques",
       "rank": 2
     }
