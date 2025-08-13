@@ -7,7 +7,7 @@
     "rank": 3
   },
   "0102": {
-    "id": "basiliiMagniEtGregoriiNazianzeni",
+    "id": "sanctorumBasiliiMagniEtGregoriiNazianzeni",
     "name": "Saint Basile le Grand, évêque de Césarée, docteur de l'Église et Saint Grégoire de Naziance, évêque de Constantinople, docteur de l'Église",
     "color": "albus",
     "type": "memoria",
@@ -28,49 +28,49 @@
     "rank": 2
   },
   "0107": {
-    "id": "raymundiDePenyafort",
+    "id": "sanctiRaymundiDePenyafort",
     "name": "Saint Raymond de Peñafort, prêtre, dominicain",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0113": {
-    "id": "hilariiPictaviensis",
+    "id": "sanctiHilariiPictaviensis",
     "name": "Saint Hilaire de Poitiers, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0117": {
-    "id": "antoniiAbbatis",
+    "id": "sanctiAntoniiAbbatis",
     "name": "Saint Antoine le Grand, abbé en Haute-Égypte",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0120": {
-    "id": "sebastianiMartyris",
+    "id": "sanctiSebastianiMartyris",
     "name": "Saint Sébastien, martyr de Rome",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0121": {
-    "id": "agnetisVirginisetMartyris",
+    "id": "sanctaeAgnetisVirginisetMartyris",
     "name": "Sainte Agnès, vierge et martyre",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0122": {
-    "id": "vincentiidiaconiEtMartyris",
+    "id": "sanctiVincentiidiaconiEtMartyris",
     "name": "Saint Vincent de Saragosse, diacre et martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0124": {
-    "id": "francisciDeSales",
+    "id": "sanctiFrancisciDeSales",
     "name": "Saint François de Sales, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoria",
@@ -84,28 +84,28 @@
     "rank": 3
   },
   "0126": {
-    "id": "timotheiEtTiti",
+    "id": "sanctorumTimotheiEtTiti",
     "name": "Saints Tite et Timothée, évêques, compagons de Saint Paul",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0127": {
-    "id": "angelaeMerici",
+    "id": "sanctaeAngelaeMerici",
     "name": "Sainte Angèle Mérici, vierge",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0128": {
-    "id": "thomaeAquinatis",
+    "id": "sanctiThomaeAquinatis",
     "name": "Saint Thomas d'Aquin, prêtre et docteur de l'Église",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0131": {
-    "id": "ioannisBosco",
+    "id": "sanctiIoannisBosco",
     "name": "Saint Jean Bosco, prêtre",
     "color": "albus",
     "type": "memoria",
@@ -119,35 +119,35 @@
     "rank": 5
   },
   "0203": {
-    "id": "anscharii",
+    "id": "sanctiAnscharii",
     "name": "Saint Anschaire de Brême, évêque",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0205": {
-    "id": "agathaeVirginisetMartyris",
+    "id": "sanctaeAgathaeVirginisetMartyris",
     "name": "Sainte Agathe, vierge et martyre",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0206": {
-    "id": "pauliMikiEtSociorum",
+    "id": "sanctorumPauliMikiEtSociorum",
     "name": "Saints Paul Miki et ses compagnons, martyrs",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0208": {
-    "id": "hieronymiAemilianiEtIosephinaeBakhita",
+    "id": "sanctorumHieronymiAemilianiEtIosephinaeBakhita",
     "name": "Saint Jérôme Émilien, fondateur et Sainte Joséphine Bakhita, vierge",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0210": {
-    "id": "scholasticaeVirginis",
+    "id": "sanctaeScholasticaeVirginis",
     "name": "Sainte Scholastique, vierge",
     "color": "albus",
     "type": "memoria",
@@ -161,21 +161,21 @@
     "rank": 12
   },
   "0214": {
-    "id": "cyrilliEtMethodii",
+    "id": "sanctorumCyrilliEtMethodii",
     "name": "Saint Cyrille, moine et Saint Méthode, évêque",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0217": {
-    "id": "septemFoundatorumOrdiniServorum",
+    "id": "sanctorumSeptemFoundatorumOrdiniServorum",
     "name": "Les Sept Saints fondateurs de l'ordre des Servites",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0221": {
-    "id": "petriDamiani",
+    "id": "sanctiPetriDamiani",
     "name": "Saint Pierre Damien, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -189,175 +189,175 @@
     "rank": 7
   },
   "0223": {
-    "id": "polycarpiEpiscopiEtMartyris",
+    "id": "sanctiPolycarpiEpiscopiEtMartyris",
     "name": "Saint Polycarpe de Smyrne, évêque et martyr",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0304": {
-    "id": "casimiri",
+    "id": "sanctiCasimiri",
     "name": "Saint Casimir, prince de Lituanie",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0307": {
-    "id": "perpetuaeEtFelicitatis",
+    "id": "sanctarumPerpetuaeEtFelicitatis",
     "name": "Sainte Perpétue et Sainte Félicité, martyres",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0308": {
-    "id": "ioannisDeDeo",
+    "id": "sanctiIoannisDeDeo",
     "name": "Saint Jean de Dieu, religieux, fondateur des frères hospitaliers",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0309": {
-    "id": "franciscaeRomanae",
+    "id": "sanctaeFranciscaeRomanae",
     "name": "Sainte Françoise Romaine, mère de famille puis religieuse",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0317": {
-    "id": "patriciiHiberniae",
+    "id": "sanctiPatriciiHiberniae",
     "name": "Saint Patrick, évêque d'Irlande",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0318": {
-    "id": "cyrilliHierosolymitani",
+    "id": "sanctiCyrilliHierosolymitani",
     "name": "Saint Cyrille de Jérusalem, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0323": {
-    "id": "turibiiDeMogrovejo",
+    "id": "sanctiTuribiiDeMogrovejo",
     "name": "Saint Toribio de Mogrovejo, évêque",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0402": {
-    "id": "francisciDePaula",
+    "id": "sanctiFrancisciDePaula",
     "name": "Saint François de Paule, ermite italien",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0404": {
-    "id": "isidoriHispalensis",
+    "id": "sanctiIsidoriHispalensis",
     "name": "Saint Isidore de Séville, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0405": {
-    "id": "vincentiiFerrer",
+    "id": "sanctiVincentiiFerrer",
     "name": "Saint Vincent Ferrier, prêtre, dominicain espagnol",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0407": {
-    "id": "ioannisBaptistaeDeLaSalle",
+    "id": "sanctiIoannisBaptistaeDeLaSalle",
     "name": "Saint Jean-Baptiste de la Salle, prêtre, fondateur des Écoles chrétiennes",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0411": {
-    "id": "stanislaiEpiscopiEtMartyris",
+    "id": "sanctiStanislaiEpiscopiEtMartyris",
     "name": "Saint Stanislas de Cracovie, évêque et martyr",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0413": {
-    "id": "martiniPrimipapaeEtMartyris",
+    "id": "sanctiMartiniPrimipapaeEtMartyris",
     "name": "Saint Martin <abbr title=\"premier\">I<sup>er</sup></abbr>, pape et martyr",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0421": {
-    "id": "anselmiCantuariensis",
+    "id": "sanctiAnselmiCantuariensis",
     "name": "Saint Anselme de Cantorbéry, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0423": {
-    "id": "georgiiMartyris",
+    "id": "sanctiGeorgiiMartyris",
     "name": "Saint Georges, martyr ; Saint Adalbert, évêque de Prague et martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0424": {
-    "id": "fidelisASigmaringen",
+    "id": "sanctiFidelisASigmaringen",
     "name": "Saint Fidèle de Sigmaringen, prêtre et martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0425": {
-    "id": "marciEvangelistae",
+    "id": "sanctiMarciEvangelistae",
     "name": "Saint Marc, évangéliste",
     "color": "rubeus",
     "type": "festum",
     "rank": 7
   },
   "0428": {
-    "id": "petriChanelEtLudoviciMariaeMontfort",
+    "id": "sanctorumPetriChanelEtLudoviciMariaeMontfort",
     "name": "Saint Pierre Chanel, prêtre et martyr et Saint Louis-Marie Grignion de Montfort, prêtre",
     "color": ["rubeus", "albus"],
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0429": {
-    "id": "catharinaesenensisVirginisetDoctoris",
+    "id": "sanctaeCatharinaesenensisVirginisetDoctoris",
     "name": "Sainte Catherine de Sienne, vierge et docteur de l'Église",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0430": {
-    "id": "piiQuintiPapae",
+    "id": "sanctiPiiQuintiPapae",
     "name": "Saint Pie V, pape",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0501": {
-    "id": "iosephOpificis",
+    "id": "sanctiIosephOpificis",
     "name": "Saint Joseph artisan",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0502": {
-    "id": "athanasiiAlexandrini",
+    "id": "sanctiAthanasiiAlexandrini",
     "name": "Saint Athanase d'Alexandrie, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0503": {
-    "id": "philippiEtIacobiApostolorum",
+    "id": "sanctorumPhilippiEtIacobiApostolorum",
     "name": "Saints Philippe et Jacques, apôtres",
     "color": "rubeus",
     "type": "festum",
     "rank": 7
   },
   "0512": {
-    "id": "nereiEtAchilleiMartyrum",
+    "id": "sanctorumNereiEtAchilleiMartyrum",
     "name": "Saints Nérée et Achillée, martyrs ; ou Saint Pancrace, martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
@@ -371,56 +371,56 @@
     "rank": 12
   },
   "0514": {
-    "id": "matthiaeApostoli",
+    "id": "sanctiMatthiaeApostoli",
     "name": "Saint Matthias, apôtres",
     "color": "rubeus",
     "type": "festum",
     "rank": 7
   },
   "0518": {
-    "id": "ioannisPrimiPapaeEtMartyris",
+    "id": "sanctiIoannisPrimiPapaeEtMartyris",
     "name": "Saint Jean <abbr title=\"premier\">I<sup>er</sup></abbr>, pape et martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0520": {
-    "id": "bernardinisenensis",
+    "id": "sanctiBernardinisenenesis",
     "name": "Saint Bernardin de Sienne, prêtre, franciscain",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0521": {
-    "id": "christophoriMagallanesEtSociorum",
+    "id": "sanctorumChristophoriMagallanesEtSociorum",
     "name": "Saint Cristóbal Magallanes Jara et ses compagnons, martyrs",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0522": {
-    "id": "ritaeCasciae",
+    "id": "sanctaeRitaeCasciae",
     "name": "Sainte Rita de Cascia, religieuse",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0525": {
-    "id": "bedaeVenerabilis",
+    "id": "sanctiBedaeVenerabilis",
     "name": "Saint Bède le Vénérable, prêtre, moine et docteur de l'Église, ou saint Grégoire VII, pape, ou sainte Marie-Madeleine de Pazzi, vierge carmélite",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0526": {
-    "id": "philippiNeri",
+    "id": "sanctiPhilippiNeri",
     "name": "Saint Philippe Neri, prêtre, fondateur de l'Oratoire",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0527": {
-    "id": "augustiniCantuariensis",
+    "id": "sanctiAugustiniCantuariensis",
     "name": "Saint Augustin de Cantorbéry, évêque",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -434,91 +434,91 @@
     "rank": 7
   },
   "0601": {
-    "id": "iustiniMartyris",
+    "id": "sanctiIustiniMartyris",
     "name": "Saint Justin Martyr",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0602": {
-    "id": "marcelliiniEtPetriMartyrum",
+    "id": "sanctorumMarcelliiniEtPetriMartyrum",
     "name": "Saints Marcellin et Pierre, martyrs",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0603": {
-    "id": "caroliLwangaEtSociorum",
+    "id": "sanctorumCaroliLwangaEtSociorum",
     "name": "Saints Charles Lwanga et ses compagnons, martyrs",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0605": {
-    "id": "bonifaciiEpiscopiEtMartyris",
+    "id": "sanctiBonifaciiEpiscopiEtMartyris",
     "name": "Saint Boniface, évêque de Mayence et martyr",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0606": {
-    "id": "norbertiEpiscopi",
+    "id": "sanctiNorbertiEpiscopi",
     "name": "Saint Norbert, évêque, fondateur des Prémontrés",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0609": {
-    "id": "ephraemdiaconi",
+    "id": "sanctiEphraemdiaconi",
     "name": "Saint Ephrem, diacre et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0611": {
-    "id": "barnabaeApostoli",
+    "id": "sanctiBarnabaeApostoli",
     "name": "Saint Barnabé, apôtre",
     "color": "rubeus",
     "type": "memoria",
     "rank": 10
   },
   "0613": {
-    "id": "antoniiDePadua",
+    "id": "sanctiAntoniiDePadua",
     "name": "Saint Antoine de Padoue, prêtre et docteur de l'Église, franciscain portugais",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0619": {
-    "id": "romualdiAbbatis",
+    "id": "sanctiRomualdiAbbatis",
     "name": "Saint Romuald, abbé, fondateur des camaldules",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0621": {
-    "id": "aloisiiGonzaga",
+    "id": "sanctiAloisiiGonzaga",
     "name": "Saint Louis de Gonzague, novice jésuite",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0622": {
-    "id": "pauliniNolaniEtIoannisMoreMartyrum",
+    "id": "sanctorumPauliniNolaniEtIoannisMoreMartyrum",
     "name": "Saint Paulin de Nole, évêque ou Saints John Fisher, évêque et martyr et Thomas More, martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0627": {
-    "id": "cyrilliAlexandrini",
+    "id": "sanctiCyrilliAlexandrini",
     "name": "Saint Cyrille d'Alexandrie, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0628": {
-    "id": "irenaiLugdunensis",
+    "id": "sanctiIrenaiLugdunensis",
     "name": "Saint Irénée de Lyon, évêque et martyr",
     "color": "rubeus",
     "type": "memoria",
@@ -532,63 +532,63 @@
     "rank": 12
   },
   "0703": {
-    "id": "thomaeApostoli",
+    "id": "sanctiTomaeApostoli",
     "name": "Saint Thomas, apôtre",
     "color": "rubeus",
     "type": "festum",
     "rank": 7
   },
   "0704": {
-    "id": "elisabethaePortugalliae",
+    "id": "sanctaeElisabethaePortugalliae",
     "name": "Sainte Elisabeth de Portugal, reine",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0705": {
-    "id": "antoniiMariae Zaccariae",
+    "id": "sanctiAntoniiMariaeZaccariae",
     "name": "Saint Antoine-Marie Zaccaria, prêtre, fondateur des barnabites",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0706": {
-    "id": "mariaeGorettiVirginisetMartyris",
+    "id": "sanctaeMariaeGorettiVirginisetMartyris",
     "name": "Sainte Maria Goretti, vierge et martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0709": {
-    "id": "augustiniZhaoRongEtSociorum",
+    "id": "sanctorumAugustiniZhaoRongEtSociorum",
     "name": "Saint Augustin Zhao Rong et ses compagnons, martyrs",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0711": {
-    "id": "benedictinursini",
+    "id": "sanctiBenedictiNursini",
     "name": "Saint Benoît, abbé",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0713": {
-    "id": "henriciImperatoris",
+    "id": "sanctiHenriciImperatoris",
     "name": "Saint Henri",
     "color": "",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0714": {
-    "id": "camilliDeLellis",
+    "id": "sanctiCamilliDeLellis",
     "name": "Saint Camille de Lellis, prêtre",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0715": {
-    "id": "bonaventuraeEpiscopiEtDoctoris",
+    "id": "sanctiBonaventuraeEpiscopiEtDoctoris",
     "name": "Saint Bonaventure, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoria",
@@ -602,91 +602,91 @@
     "rank": 12
   },
   "0720": {
-    "id": "apollinarisRavennatis",
+    "id": "sanctiApollinaareRavennatis",
     "name": "Saint Apollinaire, évêque et martyr",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0721": {
-    "id": "laurentiiDeBrindisi",
+    "id": "sanctiLaurentiiDeBrindisi",
     "name": "Saint Laurent de Brindisi, prêtre et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0722": {
-    "id": "mariaemagdalenae",
+    "id": "sanctaeMariaemagdalenae",
     "name": "Sainte Marie-Madeleine, disciple du Seigneur",
     "color": "albus",
     "type": "festum",
     "rank": 7
   },
   "0723": {
-    "id": "birgittaesueciae",
+    "id": "sanctaeBirgittaesueciae",
     "name": "Sainte Brigitte de Suède, religieuse",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0724": {
-    "id": "charbeliiMakhlouf",
+    "id": "sanctiCharbeliiMakhlouf",
     "name": "Saint Charbel Makhlouf, prêtre et ermite",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0725": {
-    "id": "iacobyMaiorisApostoli",
+    "id": "sanctiIacobyMaiorisApostoli",
     "name": "Saint Jacques le Majeur, apôtre",
     "color": "rubeus",
     "type": "festum",
     "rank": 7
   },
   "0726": {
-    "id": "annaeEtIoachim",
+    "id": "sanctorumAnnaeEtIoachim",
     "name": "Saints Anne et Joachim, parents de la Vierge Marie",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0729": {
-    "id": "marthaeEtMariaeEtLazariBethaniae",
+    "id": "sanctorumMarthaeEtMariaeEtLazariBethaniae",
     "name": "Sainte Marthe, sainte Marie et saint Lazare",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0730": {
-    "id": "petriChrysologi",
+    "id": "sanctiPetriChrysologi",
     "name": "Saint Pierre Chrysologue, évêque et docteur de l'Église",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0731": {
-    "id": "ignatiiDeLoyola",
+    "id": "sanctiIgnatiiDeLoyola",
     "name": "Saint Ignace de Loyola, prêtre, fondateur des jésuites",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0801": {
-    "id": "alphonsiDeLiguori",
+    "id": "sanctiAlphonsiDeLiguori",
     "name": "Saint Alphonse de Liguori, évêque et docteur de l'Église, fondateur des Rédemptoristes",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0802": {
-    "id": "eusebiiVercellarum",
+    "id": "sanctiEusebiiVercellarum",
     "name": "Saint Eusèbe de Verceil, évêque, ou Saint Pierre-Julien Eymard, prêtre, fondateur de la congrégation du Très-Saint-Sacrement",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0804": {
-    "id": "ioannisMariaeVianney",
+    "id": "sanctiIoannisMariaeVianney",
     "name": "Saint Jean-Marie Vianney, prêtre",
     "color": "albus",
     "type": "memoria",
@@ -707,56 +707,56 @@
     "rank": 5
   },
   "0807": {
-    "id": "sixtiSecundiEtSociorum",
+    "id": "sanctorumSixtiSecundiEtSociorum",
     "name": "Saint Sixte II, pape, et ses compagnons, martyrs, ou Saint Cajetan, prêtre",
     "color": ["rubeus", "albus"],
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0808": {
-    "id": "dominiciDeGuzman",
+    "id": "sanctiDominiciDeGuzman",
     "name": "Saint Dominique, prêtre, fondateur des Frères Prêcheurs",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0809": {
-    "id": "teresiaeBenedictaeACruce",
+    "id": "sanctaeTeresiaeBenedictaeACruce",
     "name": "Sainte Thérèse-Bénédicte de la Croix (Édith Stein), vierge et martyre, carmélite",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0810": {
-    "id": "laurentiidiaconiEtMartyris",
+    "id": "sanctiLaurentiiDiaconiEtMartyris",
     "name": "Saint Laurent, diacre et martyr",
     "color": "rubeus",
     "type": "festum",
     "rank": 7
   },
   "0811": {
-    "id": "claraeassisiensis",
+    "id": "sanctaeClaraeassisiensis",
     "name": "Sainte Claire d'Assise, vierge, fondatrice des Pauvres Dames ou Clarisses",
     "color": "albus",
     "type": "memoria",
     "rank": 10
   },
   "0812": {
-    "id": "ioannaefranciscaeDeChantal",
+    "id": "sanctaeIoannaefranciscaeDeChantal",
     "name": "Sainte Jeanne-Françoise de Chantal, religieuse, fondatrice de la Visitation",
     "color": "albus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0813": {
-    "id": "pontianiEtHippolyti",
+    "id": "sanctorumPontianiEtHippolyti",
     "name": "Saints Pontien, pape, et Hippolyte, prêtre, martyrs",
     "color": "rubeus",
     "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0814": {
-    "id": "maximilianiKolbe",
+    "id": "sanctiMaximilianiKolbe",
     "name": "Saint Maximilien Kolbe, prêtre et martyr, franciscain",
     "color": "rubeus",
     "type": "memoria",
@@ -770,7 +770,7 @@
     "rank": 7
   },
   "0816": {
-    "id": "stephaniHungariae",
+    "id": "sanctiStephaniHungariae",
     "name": "Saint Étienne de Hongrie",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -847,7 +847,7 @@
     "rank": 10
   },
   "0903": {
-    "id": "sanctiGregoriaMagni",
+    "id": "sanctiGregoriiMagni",
     "name": "Saint Grégoire le Grand, pape et docteur de l'Église",
     "color": "albus",
     "type": "memoria",
@@ -1045,7 +1045,7 @@
     "rank": 10
   },
   "1016": {
-    "id": "sanctaeHedvigisEtMargaritaeMariaeAlacoque",
+    "id": "sanctarumHedvigisEtMargaritaeMariaeAlacoque",
     "name": "Sainte Hedwige, religieuse et Sainte Marguerite-Marie Alacoque, vierge",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -1164,7 +1164,7 @@
     "rank": 12
   },
   "1116": {
-    "id": "sanctaeMargaritaeScotorumEtGertrudis",
+    "id": "sanctarumMargaritaeScotorumEtGertrudis",
     "name": "Sainte Marguerite d'Ecosse, reine et Sainte Gertrude, vierge",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -1269,7 +1269,7 @@
     "rank": 12
   },
   "1210": {
-    "id": "mariaeVirginis Lauretanae",
+    "id": "mariaeVirginsLauretanae",
     "name": "Notre-Dame de Lorette",
     "color": "albus",
     "type": "memoriaAdLibitum",
@@ -1283,7 +1283,7 @@
     "rank": 12
   },
   "1212": {
-    "id": "mariaeVirginis Guadalupensis",
+    "id": "mariaeVirginsGuadalupensis",
     "name": "Notre-Dame de Guadaloupé",
     "color": "albus",
     "type": "memoriaAdLibitum",
