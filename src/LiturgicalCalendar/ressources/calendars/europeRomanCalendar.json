@@ -3,35 +3,35 @@
     "id": "sanctorumCyrilliEtMethodii",
     "name": "Saint Cyrille, moine et Saint Méthode, évêque",
     "color": "albus",
-    "type": 2,
+    "type": "Festum",
     "rank": 8
   },
   "0429": {
     "id": "sanctaeCatharianeSenensis",
     "name": "Sainte Catherine de Sienne, vierge et docteur de l'Église",
     "color": "albus",
-    "type": 2,
+    "type": "Festum",
     "rank": 8
   },
   "0711": {
     "id": "sanctiBenedictiAbbatis",
     "name": "Saint Benoît, abbé",
     "color": "albus",
-    "type": 2,
+    "type": "Festum",
     "rank": 8
   },
   "0723": {
     "id": "sanctaeBrigittaeSueciae",
     "name": "Sainte Brigitte de Suède, religieuse",
     "color": "albus",
-    "type": 2,
+    "type": "Festum",
     "rank": 8
   },
   "0809": {
     "id": "sanctaeTeresiaeBenedictaeCrucis",
     "name": "Sainte Thérèse Bénédicte de La Croix, religieuse",
     "color": "rubeus",
-    "type": 2,
+    "type": "Festum",
     "rank": 8
   }
 }

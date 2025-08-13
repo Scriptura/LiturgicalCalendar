@@ -3,35 +3,35 @@
     "id": "sanctissimiNominisJesuVelSanctaeGenovefae",
     "name": "Saint Nom de Jésus ou Sainte Geneviève, vierge",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0106": {
     "id": "Epiphania Domini",
     "name": "L'Épiphanie du Seigneur",
     "color": "albus",
-    "type": "Sollemnitas",
+    "type": "sollemnitas",
     "rank": 2
   },
   "0115": {
     "id": "sanctiRemigiiRemensis",
     "name": "Saint Rémi, évêque",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0218": {
     "id": "sanctaeBernadettaeSoubirous",
     "name": "Sainte Bernadette Soubirous",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0519": {
     "id": "sanctiIvonisKermartinensis",
     "name": "Saint Yves, prêtre",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0530": {
@@ -39,21 +39,21 @@
     "name": "Sainte Jeanne d'Arc, vierge et martyre",
     "extra": "patronne secondaire de la France",
     "color": "rubeus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "0602": {
     "id": "sanctiPothiniLugdunensisEtSociorum",
     "name": "Saint Pothin, évêque, Sainte Blandine, vierge, et leurs compagnons, martyrs",
     "color": "rubeus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0604": {
     "id": "sanctaeClotildisReginae",
     "name": "Sainte Clotilde, reine des Francs",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0815": {
@@ -64,14 +64,14 @@
     "id": "sanctiCaesariiArelatensis",
     "name": "Saint Césaire d'Arles, évêque",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0919": {
     "id": "mariaeVirginisSalettensis",
     "name": "Notre-Dame de La Salette",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "1001": {
@@ -79,7 +79,7 @@
     "name": "Sainte Thérèse de l'Enfant Jésus, vierge et docteur de l'Église",
     "extra": "patronne secondaire de la France",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   }
 }

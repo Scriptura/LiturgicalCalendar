@@ -3,70 +3,70 @@
     "id": "sanctiMutianiMariaeWiaux",
     "name": "Saint Mutien-Marie Wiaux, religieux",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0206": {
     "id": "sanctiAmandi",
     "name": "Saint Amand, évêque, missionnaire",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "0317": {
     "id": "sanctaeGertrudisNivellensis",
     "name": "Sainte Gertrude de Nivelles, vierge",
     "color": "albus",
-    "type": "MemoriaAdLibitum",
+    "type": "memoriaAdLibitum",
     "rank": 12
   },
   "0408": {
     "id": "sanctaeJuliaeBilliart",
     "name": "Sainte Julie Billiart",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "0510": {
     "id": "sanctiDamianiDeVeuster",
     "name": "Saint Père Damien",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "0807": {
     "id": "sanctaeJulianaeLeodiensis",
     "name": "Sainte Julienne du Mont-Cornillon",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "0831": {
     "id": "mariaeMediatriciOmniumGratiarum",
     "name": "Marie, Médiatrice de toute grâce",
     "color": "albus",
-    "type": "Festum",
+    "type": "festum",
     "rank": 8
   },
   "0917": {
     "id": "sanctiLambertiTrajectensis",
     "name": "Saint Lambert, évêque et martyr",
     "color": "rubeus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "1103": {
     "id": "sanctiHubertiLeodiensis",
     "name": "Saint Hubert, évêque de Liège",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   },
   "1126": {
     "id": "sanctiJoannisBerchmans",
     "name": "Saint Jean Berchmans",
     "color": "albus",
-    "type": "Memoria",
+    "type": "memoria",
     "rank": 10
   }
 }
