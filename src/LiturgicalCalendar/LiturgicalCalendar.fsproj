@@ -24,6 +24,7 @@
     <Compile Include="EasterCalculation.fs" />
     <Compile Include="FixedDate.fs" />
     <Compile Include="LiturgicalTypes.fs" />
+    <Compile Include="LiturgicalJsonLoader.fs" />
     <Compile Include="LiturgicalData.fs" />
   </ItemGroup>
 

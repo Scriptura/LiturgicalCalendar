@@ -1,5 +1,9 @@
 namespace LiturgicalCalendar
 
+open System
+open System.IO
+open System.Text.Json
+
 /// Couleurs liturgiques en latin (forme canonique)
 type LiturgicalColor =
     | Albus
@@ -34,13 +38,15 @@ type LiturgicalPrecedence =
         let (LiturgicalPrecedence v) = this
         v
 
-    static member op_Implicit(rank: LiturgicalPrecedence) = rank.Value
+    static member op_Implicit(priority: LiturgicalPrecedence) = priority.Value
 
     override this.ToString() = this.Value.ToString()
 
 /// Structure représentant une célébration liturgique
 type LiturgicalCelebration =
     { Id: string
+      Month: int
+      Day: int
       Name: string
       Color: LiturgicalColor
       Rank: LiturgicalRank
