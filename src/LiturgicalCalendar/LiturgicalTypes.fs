@@ -16,11 +16,11 @@ type LiturgicalColor =
 /// Types de célébrations liturgiques
 type LiturgicalRank =
     | Sollemnitas
+    | Dominica
     | Festum
     | Memoria
     | MemoriaAdLibitum
     | FeriaOrdinis
-    | Dominica
 
 /// Rang liturgique selon les normes romaines (1-13)
 [<Struct>]
@@ -28,9 +28,10 @@ type LiturgicalPrecedence =
     private
     | LiturgicalPrecedence of int
 
+    /// Crée un rang liturgique valide (1 à 13)
     static member Create(value: int) =
         if value < 1 || value > 13 then
-            invalidArg "value" "Le rang liturgique doit être compris entre 1 et 13"
+            invalidArg (nameof value) "Le rang liturgique doit être compris entre 1 et 13"
 
         LiturgicalPrecedence value
 
@@ -40,7 +41,7 @@ type LiturgicalPrecedence =
 
     static member op_Implicit(priority: LiturgicalPrecedence) = priority.Value
 
-    override this.ToString() = this.Value.ToString()
+    override this.ToString() = string this.Value
 
 /// Structure représentant une célébration liturgique
 type LiturgicalCelebration =

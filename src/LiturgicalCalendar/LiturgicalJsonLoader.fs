@@ -3,6 +3,7 @@ namespace LiturgicalCalendar
 open System
 open System.IO
 open System.Text.Json
+open LiturgicalCalendar.DateIndex
 
 module LiturgicalJsonLoader =
 
@@ -30,11 +31,11 @@ module LiturgicalJsonLoader =
     let private parseRank =
         function
         | "sollemnitas" -> LiturgicalRank.Sollemnitas
+        | "dominica" -> LiturgicalRank.Dominica
         | "festum" -> LiturgicalRank.Festum
         | "memoria" -> LiturgicalRank.Memoria
         | "memoriaAdLibitum" -> LiturgicalRank.MemoriaAdLibitum
         | "feriaOrdinis" -> LiturgicalRank.FeriaOrdinis
-        | "dominica" -> LiturgicalRank.Dominica
         | other -> invalidArg "Rank" $"Rang inconnu : {other}"
 
     /// Charge un fichier JSON et retourne les célébrations typées
