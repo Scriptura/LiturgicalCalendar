@@ -1,10 +1,10 @@
 namespace LiturgicalCalendar.Tests
 
-open System
-open Xunit
-open LiturgicalCalendar
-
 module EasterCalculationTests =
+
+    open System
+    open Xunit
+    open LiturgicalCalendar
 
     // La classe de test est implicitement reconnue par xUnit,
     // pas besoin d'attribut [TestFixture].
