@@ -1,7 +1,9 @@
 namespace LiturgicalCalendar
 
 open System
+open System.IO
 open System.Collections.Generic
+open System.Text.Json
 
 /// Module principal pour gérer les données liturgiques avec indexation optimisée
 module LiturgicalData =
@@ -124,13 +126,37 @@ module LiturgicalData =
                     |> List.fold
                         (fun acc filePath ->
                             printfn "📖 Chargement : %s" filePath
-                            // let fileData = LiturgicalJsonLoader.loadFromFile filePath
-                            // let celebrations = convertToMap fileData
-                            // Map.fold (fun acc k v -> Map.add k v acc) acc celebrations
-                            acc // temporaire
-                        )
+
+                            // VRAI chargement JSON !
+                            let jsonContent = File.ReadAllText(filePath)
+                            let jsonOptions = JsonSerializerOptions()
+                            jsonOptions.PropertyNameCaseInsensitive <- true
+
+                            let jsonCelebrations =
+                                JsonSerializer.Deserialize<Dictionary<string, JsonCelebration>>(
+                                    jsonContent,
+                                    jsonOptions
+                                )
+
+                            printfn
+                                "  → %d célébrations trouvées dans %s"
+                                jsonCelebrations.Count
+                                (Path.GetFileName(filePath))
+
+                            // Conversion vers LiturgicalCelebration
+                            jsonCelebrations
+                            |> Seq.fold
+                                (fun acc2 kvp ->
+                                    let id = kvp.Key
+                                    let jsonCeleb = kvp.Value
+                                    let celebration = JsonConverters.convertCelebration id jsonCeleb
+                                    Map.add id celebration acc2)
+                                acc)
                         Map.empty
 
+                printfn "🔢 TOTAL CÉLÉBRATIONS CHARGÉES : %d" allCelebrations.Count
+
+                // CORRECTION : Syntaxe correcte pour l'initialisation du record
                 let metadata =
                     { Name = sprintf "Calendrier Fusionné - %s" region
                       Region = region
@@ -145,6 +171,7 @@ module LiturgicalData =
 
             with ex ->
                 printfn "❌ Erreur lors de la fusion : %s" ex.Message
+                printfn "Stack trace : %s" ex.StackTrace
                 reraise ())
 
     // ================================================================

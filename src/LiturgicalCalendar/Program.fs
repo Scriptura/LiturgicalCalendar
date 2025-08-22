@@ -1,43 +1,54 @@
 // Program.fs
 namespace LiturgicalCalendar
 
-open System
-open System.IO
+module Program =
 
-// Importez les modules nécessaires
-open LiturgicalCalendar.LiturgicalData
+    open System
+    open System.IO
 
-[<EntryPoint>]
-let main argv =
-    try
-        let resourcesPath =
-            Path.Combine(__SOURCE_DIRECTORY__, "..", "Ressources", "calendars")
+    // Importez les modules nécessaires
+    open LiturgicalCalendar.LiturgicalData
 
-        let paths =
-            [ Path.Combine(resourcesPath, "generalRomanCalendar.json")
-              Path.Combine(resourcesPath, "europeRomanCalendar.json")
-              Path.Combine(resourcesPath, "franceRomanCalendar.json") ]
+    [<EntryPoint>]
+    let main argv =
+        try
+            let resourcesPath = Path.Combine(__SOURCE_DIRECTORY__, "Ressources", "calendars")
 
-        // 1. Initialisation du calendrier avec les fichiers spécifiques à la France
-        LiturgicalData.initializeFromMultipleJson paths "France"
+            let paths =
+                [ Path.Combine(resourcesPath, "generalRomanCalendar.json")
+                  Path.Combine(resourcesPath, "europeRomanCalendar.json")
+                  Path.Combine(resourcesPath, "franceRomanCalendar.json") ]
 
-        // 2. Recherche et affichage pour le 25 décembre
-        printfn "\n--- RECHERCHE DU 25 DÉCEMBRE ---"
-        let mainCelebration = LiturgicalData.getMainCelebrationForDate 12 25
+            (*
+            // Debug : vérifier le contenu brut du JSON
+            let testJsonPath = Path.Combine(resourcesPath, "generalRomanCalendar.json")
+            let jsonContent = File.ReadAllText(testJsonPath)
+            printfn "\n--- DEBUG JSON BRUT ---"
+            printfn "Taille du fichier : %d caractères" jsonContent.Length
+            printfn "Contient 'nativitatisDomini' : %b" (jsonContent.Contains("nativitatisDomini"))
+            printfn "Premiers 200 caractères : %s" (jsonContent.Substring(0, min 200 jsonContent.Length))
+            *)
 
-        match mainCelebration with
-        | Some(id, celebration) ->
-            printfn "🎉 Célébration principale le 25 décembre: %s (%s)" celebration.Name id
-            printfn "  - Rang : %A" celebration.Rank
-            printfn "  - Couleur : %A" celebration.Color
-        | None -> printfn "❌ Aucune célébration trouvée le 25 décembre."
+            // 1. Initialisation du calendrier avec les fichiers spécifiques à la France
+            LiturgicalData.initializeFromMultipleJson paths "France"
 
-        // 3. Affichage des statistiques pour validation
-        printfn "\n--- STATISTIQUES DU CALENDRIER ---"
-        LiturgicalData.printCalendarStats ()
+            // 2. Recherche et affichage pour le 25 décembre
+            printfn "\n--- RECHERCHE DU 25 DÉCEMBRE ---"
+            let mainCelebration = LiturgicalData.getMainCelebrationForDate 12 25
 
-        0 // Code de sortie
+            match mainCelebration with
+            | Some(id, celebration) ->
+                printfn "🎉 Célébration principale le 25 décembre: %s (%s)" celebration.Name id
+                printfn "  - Rang : %A" celebration.Rank
+                printfn "  - Couleur : %A" celebration.Color
+            | None -> printfn "❌ Aucune célébration trouvée le 25 décembre."
 
-    with ex ->
-        printfn "Erreur fatale : %s" ex.Message
-        1 // Code d'erreur
+            // 3. Affichage des statistiques pour validation
+            printfn "\n--- STATISTIQUES DU CALENDRIER ---"
+            LiturgicalData.printCalendarStats ()
+
+            0 // Code de sortie
+
+        with ex ->
+            printfn "Erreur fatale : %s" ex.Message
+            1 // Code d'erreur
