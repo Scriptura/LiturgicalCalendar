@@ -359,11 +359,19 @@
     "rank": "festum",
     "priority": 7
   },
-  "petriChanelEtLudoviciMariaeMontfort": {
+  "petriChanel": {
     "month": 4,
     "day": 28,
-    "name": "Saint Pierre Chanel, prêtre et martyr et Saint Louis-Marie Grignion de Montfort, prêtre",
-    "color": ["rubeus", "albus"],
+    "name": "Saint Pierre Chanel, prêtre et martyr",
+    "color": "rubeus",
+    "rank": "memoriaAdLibitum",
+    "priority": 12
+  },
+  "ludoviciMariaeMontfort": {
+    "month": 4,
+    "day": 28,
+    "name": "Saint Louis-Marie Grignion de Montfort, prêtre",
+    "color": "albus",
     "rank": "memoriaAdLibitum",
     "priority": 12
   },
@@ -810,8 +818,16 @@
   "sixtiSecundiEtSociorum": {
     "month": 8,
     "day": 7,
-    "name": "Saint Sixte II, pape, et ses compagnons, martyrs, ou Saint Cajetan, prêtre",
-    "color": ["rubeus", "albus"],
+    "name": "Saint Sixte II, pape, et ses compagnons, martyrs",
+    "color": "rubeus",
+    "rank": "memoriaAdLibitum",
+    "priority": 12
+  },
+  "cajetani": {
+    "month": 8,
+    "day": 7,
+    "name": "Saint Gaétan, prêtre",
+    "color": "albus",
     "rank": "memoriaAdLibitum",
     "priority": 12
   },
