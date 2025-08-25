@@ -20,27 +20,6 @@ type LiturgicalRank =
     | MemoriaAdLibitum
     | FeriaOrdinis
 
-/// Rang liturgique selon les normes romaines (1-13)
-[<Struct>]
-type LiturgicalPrecedence =
-    private
-    | LiturgicalPrecedence of int
-
-    /// Crée un rang liturgique valide (1 à 13)
-    static member Create(value: int) =
-        if value < 1 || value > 13 then
-            invalidArg (nameof value) "Le rang liturgique doit être compris entre 1 et 13"
-
-        LiturgicalPrecedence value
-
-    member this.Value =
-        let (LiturgicalPrecedence v) = this
-        v
-
-    static member op_Implicit(priority: LiturgicalPrecedence) = priority.Value
-
-    override this.ToString() = string this.Value
-
 /// Structure représentant une célébration liturgique
 type LiturgicalCelebration =
     { Id: string
@@ -48,8 +27,7 @@ type LiturgicalCelebration =
       Day: int
       Name: string
       Color: LiturgicalColor
-      Rank: LiturgicalRank
-      Priority: LiturgicalPrecedence }
+      Rank: LiturgicalRank }
 
 
 //////////////////////////// TEST : ////////////////////////////
@@ -65,9 +43,7 @@ type JsonCelebration =
       [<JsonPropertyName("color")>]
       Color: string
       [<JsonPropertyName("rank")>]
-      Rank: string
-      [<JsonPropertyName("priority")>]
-      Priority: int }
+      Rank: string }
 
 /// Fonctions de conversion JSON -> Types liturgiques
 module JsonConverters =
@@ -100,5 +76,4 @@ module JsonConverters =
           Day = json.Day
           Name = json.Name
           Color = parseColor json.Color
-          Rank = parseRank json.Rank
-          Priority = LiturgicalPrecedence.Create(json.Priority) }
+          Rank = parseRank json.Rank }

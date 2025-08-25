@@ -4,40 +4,35 @@
     "day": 3,
     "name": "Saint Nom de Jésus ou Sainte Geneviève, vierge",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "epiphaniaDomini": {
     "month": 1,
     "day": 6,
     "name": "L'Épiphanie du Seigneur",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "remigiiRemensis": {
     "month": 1,
     "day": 15,
     "name": "Saint Rémi, évêque",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "bernadettaeSoubirous": {
     "month": 2,
     "day": 18,
     "name": "Sainte Bernadette Soubirous",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "ivonisKermartinensis": {
     "month": 5,
     "day": 19,
     "name": "Saint Yves, prêtre",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "joannaeDarc": {
     "month": 5,
@@ -45,28 +40,23 @@
     "name": "Sainte Jeanne d'Arc, vierge et martyre",
     "extra": "patronne secondaire de la France",
     "color": "rubeus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "pothiniLugdunensisEtSociorum": {
     "month": 6,
     "day": 2,
     "name": "Saint Pothin, évêque, Sainte Blandine, vierge, et leurs compagnons, martyrs",
     "color": "rubeus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "clotildisReginae": {
     "month": 6,
     "day": 4,
     "name": "Sainte Clotilde, reine des Francs",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
-  "assumptionisMariaeVirginis": {
-    "month": 8,
-    "day": 15,
+  "assumptionisBeataeMariae": {
     "extra": "patronne principale de la France"
   },
   "caesariiArelatensis": {
@@ -74,23 +64,20 @@
     "day": 26,
     "name": "Saint Césaire d'Arles, évêque",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "mariaeVirginisSalettensis": {
     "month": 9,
     "day": 19,
     "name": "Notre-Dame de La Salette",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "theresiaePueriJesu": {
     "month": 10,
     "day": 1,
     "extra": "patronne secondaire de la France",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   }
 }

@@ -89,7 +89,6 @@ module DateIndex =
             let celebrationsForThisDate =
                 groupedCelebrations // seq<DateKey * IndexedCelebration>
                 |> Seq.map snd // seq<IndexedCelebration>
-                |> Seq.sortBy (fun (_, celebration) -> celebration.Priority.Value) // tri par priorité
                 |> List.ofSeq // IndexedCelebration list
 
             // Retour du tuple final propre
@@ -272,9 +271,8 @@ module DateIndex =
             |> List.iteri (fun i (id, celebration) ->
                 let colorEmoji = colorToEmoji celebration.Color
                 let rankEmoji = rankToEmoji celebration.Rank
-                let priorityText = sprintf "P%d" celebration.Priority.Value
 
-                printfn "  %d. %s %s %s [%s] %s" (i + 1) colorEmoji rankEmoji id priorityText celebration.Name)
+                printfn "  %d. %s %s %s %s" (i + 1) colorEmoji rankEmoji id celebration.Name)
 
             printfn "")
 
@@ -340,101 +338,3 @@ module DateIndex =
                     printfn "   - IDs en trop : %A" extra
 
         isValid
-
-    // ================================================================
-    // EXEMPLE D'UTILISATION COMPLÈTE
-    // ================================================================
-
-    /// Exemple complet montrant l'utilisation avec les vrais types liturgiques.
-    let demonstrateUsage () =
-
-        // ÉTAPE 1 : Données d'exemple avec les vrais types
-        let exampleCalendar =
-            Map
-                [ ("mariaeMatrisDei",
-                   { Id = "mariaeMatrisDei"
-                     Month = 1
-                     Day = 1
-                     Name = "Sainte Marie, Mère de Dieu"
-                     Color = Albus
-                     Rank = Sollemnitas
-                     Priority = LiturgicalPrecedence.Create(3) })
-
-                  ("agathaeVirginisetMartyris",
-                   { Id = "agathaeVirginisetMartyris"
-                     Month = 2
-                     Day = 5
-                     Name = "Sainte Agathe, vierge et martyre"
-                     Color = Rubeus
-                     Rank = Memoria
-                     Priority = LiturgicalPrecedence.Create(10) })
-
-                  ("cyrilliEtMethodii",
-                   { Id = "cyrilliEtMethodii"
-                     Month = 2
-                     Day = 14
-                     Name = "Saint Cyrille, moine et Saint Méthode, évêque"
-                     Color = Albus
-                     Rank = Festum
-                     Priority = LiturgicalPrecedence.Create(8) })
-
-                  ("valentini",
-                   { Id = "valentini"
-                     Month = 2
-                     Day = 14
-                     Name = "Saint Valentin, martyre"
-                     Color = Rubeus
-                     Rank = MemoriaAdLibitum
-                     Priority = LiturgicalPrecedence.Create(12) }) ]
-
-        // ÉTAPE 2 : Construction de l'index
-        printfn "🏗️ Construction de l'index liturgique..."
-        let dateIndex = buildDateIndex exampleCalendar
-
-        // ÉTAPE 3 : Validation
-        let isValid = validateIndex exampleCalendar dateIndex
-
-        // ÉTAPE 4 : Démonstration des recherches
-        printfn "\n🔍 DÉMONSTRATION DES RECHERCHES :"
-
-        // Recherche avec des célébrations
-        let celebrationsOn14Feb = findCelebrationsForDate 2 14 dateIndex
-        printfn "\nCélébrations du 14 février (%d trouvée(s)) :" celebrationsOn14Feb.Length
-
-        celebrationsOn14Feb
-        |> List.iteri (fun i (id, celebration) ->
-            printfn
-                "  %d. %s %s : %s [P%d]"
-                (i + 1)
-                (colorToEmoji celebration.Color)
-                (rankToEmoji celebration.Rank)
-                id
-                celebration.Priority.Value)
-
-        // Recherche de la célébration principale
-        let mainCelebration = findMainCelebrationForDate 2 14 dateIndex
-
-        match mainCelebration with
-        | Some(id, celebration) -> printfn "\n👑 Célébration principale du 14 février : %s (%s)" id celebration.Name
-        | None -> printfn "\n❌ Aucune célébration principale trouvée"
-
-        // Recherche par couleur
-        let redCelebrations = findCelebrationsByColor 2 14 Rubeus dateIndex
-        printfn "\n🔴 Célébrations rouges du 14 février (%d) :" redCelebrations.Length
-
-        redCelebrations
-        |> List.iter (fun (id, celebration) -> printfn "  • %s : %s" id celebration.Name)
-
-        // Recherche sans célébration
-        let celebrationsOn1March = findCelebrationsForDate 3 1 dateIndex
-        printfn "\nCélébrations du 1er mars (%d trouvée(s))" celebrationsOn1March.Length
-
-        // ÉTAPE 5 : Affichage complet pour debugging
-        printfn "\n📋 CONTENU COMPLET DE L'INDEX :"
-        printIndex dateIndex
-
-        printfn "\n✨ Démonstration liturgique terminée avec succès !"
-
-// ====================================================================
-// NOTES POUR L'AVENIR
-// ====================================================================

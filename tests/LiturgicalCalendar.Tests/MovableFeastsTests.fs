@@ -83,7 +83,6 @@ module MovableFeastsTests =
         let date = DateTime(2021, 1, 6)
         let result = LiturgicalCalendar date "france"
         Assert.Equal("defaultKey", result.Key)
-        Assert.Equal(13, result.Priority)
 
     [<Fact>]
     let ``Baptême du Seigneur le 10 janvier 2021`` () =

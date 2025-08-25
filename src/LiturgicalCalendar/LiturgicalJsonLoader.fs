@@ -13,8 +13,7 @@ module LiturgicalJsonLoader =
           Day: int
           Name: string
           Color: string
-          Rank: string
-          Priority: int }
+          Rank: string }
 
     /// Conversion string -> LiturgicalColor
     let private parseColor =
@@ -54,5 +53,4 @@ module LiturgicalJsonLoader =
               Day = raw.Day
               Name = raw.Name
               Color = parseColor raw.Color
-              Rank = parseRank raw.Rank
-              Priority = LiturgicalPrecedence.Create(raw.Priority) })
+              Rank = parseRank raw.Rank })

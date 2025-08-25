@@ -2,426 +2,356 @@
   "dominicaPrimaAdventus": {
     "name": "Premier dimanche de l'Avent, <em>Levavi</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaSecundaAdventus": {
     "name": "Deuxième dimanche de l'Avent, <em>Populus Sion</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTertiaAdventus": {
     "name": "Troisième dimanche de l'Avent, <em>Gaudete</em>",
     "color": "roseus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuartaAdventus": {
     "name": "Quatrième dimanche de l'Avent, <em>Rorate</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "immaculataConceptio": {
     "name": "Immaculée Conception de la Bienheureuse Vierge Marie",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "sanctaFamilia": {
     "name": "La Sainte Famille",
     "color": "albus",
-    "rank": "festum",
-    "priority": 5
+    "rank": "festum"
   },
   "epiphaniaDomini": {
     "name": "Épiphanie du Seigneur",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "baptismaDomini": {
     "name": "Le Baptême du Seigneur",
     "color": "albus",
-    "rank": "festum",
-    "priority": 5
+    "rank": "festum"
   },
   "iosephSponsiMariaeVirginis": {
     "name": "Saint Joseph, chaste Époux de la Bienheureuse Vierge Marie",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "annuntiatioDomini": {
     "name": "Annonciation du Seigneur",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "feriaQuartaCinerum": {
     "name": "Mercredi des Cendres",
     "color": "violaceus",
-    "rank": null,
-    "priority": 2
+    "rank": null
   },
   "dominicaPrimaQuadragesimae": {
     "name": "Premier dimanche de Carême, <em>Invocabit</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaSecundaQuadragesimae": {
     "name": "Deuxième dimanche de Carême, <em>Reminiscere</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTertiaQuadragesimae": {
     "name": "Troisième dimanche de Carême, <em>Oculi</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuartaQuadragesimae": {
     "name": "Quatrième dimanche de Carême, <em>Laetare</em>",
     "color": "roseus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuintaQuadragesimae": {
     "name": "Cinquième dimanche de Carême, <em>Judica</em>",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaPalmarum": {
     "name": "Dimanche des Rameaux et de la Passion du Seigneur",
     "color": "rubeus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "feriaSecundaHebdomadaeSanctae": {
     "name": "Lundi Saint",
     "color": "violaceus",
-    "rank": null,
-    "priority": 2
+    "rank": null
   },
   "feriaTertiaHebdomadaeSanctae": {
     "name": "Mardi Saint",
     "color": "violaceus",
-    "rank": null,
-    "priority": 2
+    "rank": null
   },
   "feriaQuartaHebdomadaeSanctae": {
     "name": "Mercredi Saint",
     "color": "violaceus",
-    "rank": null,
-    "priority": 2
+    "rank": null
   },
   "feriaQuintaInCoenaDomini": {
     "name": "Jeudi Saint",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "feriaSextaInPassioneDomini": {
     "name": "Vendredi Saint",
     "color": "rubeus",
-    "rank": "sollemnitas",
-    "priority": 1
+    "rank": "sollemnitas"
   },
   "sabbatumSanctum": {
     "name": "Samedi Saint",
     "color": "violaceus",
-    "rank": "sollemnitas",
-    "priority": 1
+    "rank": "sollemnitas"
   },
   "dominicaResurrectionis": {
     "name": "Résurrection du Seigneur",
     "extra": "dimanche du Temps Pascal",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 1
+    "rank": "sollemnitas"
   },
   "feriaSecundaInOctavaPaschae": {
     "name": "Lundi dans l'octave Pâques",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "feriaTertiaInOctavaPaschae": {
     "name": "Mardi dans l'octave de Pâques",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "feriaQuartaInOctavaPaschae": {
     "name": "Mercredi dans l'octave de Pâques",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "feriaQuintaInOctavaPaschae": {
     "name": "Jeudi dans l'octave de Pâques",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "feriaSextaInOctavaPaschae": {
     "name": "Vendredi dans l'octave de Pâques",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "sabbatumInOctavaPaschae": {
     "name": "Samedi dans l'octave de Pâques",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaDivinaeMisericordiae": {
     "name": "Dimanche de la divine Miséricorde",
     "extra": "Deuxième dimanche du Temps Pascal, <em>in albis</em>",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTertiaTemporisParschalis": {
     "name": "Troisième dimanche du Temps Pascal, <em>Jubilate</em>",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuartaTemporisParschalis": {
     "name": "Quatrième dimanche du Temps Pascal, <em>Cantate</em>",
     "extra": "Ou dimanche \"du Bon Pasteur\"",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuintaTemporisParschalis": {
     "name": "Cinquième dimanche du Temps Pascal",
     "extra": "Ou dimanche dit \"des Rogations\"",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaSextaTemporisParschalis": {
     "name": "Sixième dimanche du Temps Pascal",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "ascensioDomini": {
     "name": "Ascension",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaSeptimaTemporisParschalis": {
     "name": "Septième dimanche du Temps Pascal",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaPentecostes": {
     "name": "Pentecôte",
     "color": "rubeus",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "beataMariaMaterEcclesiae": {
     "name": "Bienheureuse Vierge Marie, Mère de l'Église",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "sanctissimaTrinitas": {
     "name": "Sainte Trinité",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "sanctissimumCorpusEtSanguinemChristi": {
     "name": "Le Saint Sacrement du Corps et du Sang du Christ",
     "extra": "Fête-Dieu",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "sacratissimumCorIesu": {
     "name": "Sacré-Cœur de Jésus",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "immaculatumCorMariaeVirginis": {
     "name": "Cœur Immaculé de Marie",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "nativitasSanctiIoannisBaptistae": {
     "name": "Nativité de Saint Jean-Baptiste",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "sanctiPetriEtPauliApostolorum": {
     "name": "Saints Pierre et Paul, apôtres",
     "color": "rubeus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "dominiNostroIesuChristiRegisUniversi": {
     "name": "Notre Seigneur Jésus Christ Roi de l'Univers",
     "color": "albus",
-    "rank": "sollemnitas",
-    "priority": 3
+    "rank": "sollemnitas"
   },
   "dominicaDecimaTemporisOrdinarii": {
     "name": "10<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaUndecimaTemporisOrdinarii": {
     "name": "11<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaDuodecimaTemporisOrdinarii": {
     "name": "12<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTertiadecimaTemporisOrdinarii": {
     "name": "13<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuartadecimaTemporisOrdinarii": {
     "name": "14<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaQuintadecimaTemporisOrdinarii": {
     "name": "15<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaSextadecimaTemporisOrdinarii": {
     "name": "16<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaSeptimadecimaTemporisOrdinarii": {
     "name": "17<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaDuodevicesimaTemporisOrdinarii": {
     "name": "18<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaUndevicesimaTemporisOrdinarii": {
     "name": "19<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaTemporisOrdinarii": {
     "name": "20<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtPrimaTemporisOrdinarii": {
     "name": "21<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtSecundaTemporisOrdinarii": {
     "name": "22<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtTertiaTemporisOrdinarii": {
     "name": "23<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtQuartaTemporisOrdinarii": {
     "name": "24<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtQuintaTemporisOrdinarii": {
     "name": "25<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtSextaTemporisOrdinarii": {
     "name": "26<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtSeptimaTemporisOrdinarii": {
     "name": "27<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtOctavaTemporisOrdinarii": {
     "name": "28<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaVicesimaEtNonaTemporisOrdinarii": {
     "name": "29<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTricesimaTemporisOrdinarii": {
     "name": "30<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTricesimaEtPrimaTemporisOrdinarii": {
     "name": "31<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTricesimaEtSecundaTemporisOrdinarii": {
     "name": "32<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   },
   "dominicaTricesimaEtTertiaTemporisOrdinarii": {
     "name": "33<sup>ème</sup> dimanche du temps ordinaire",
     "color": "viridis",
-    "rank": "sollemnitas",
-    "priority": 2
+    "rank": "sollemnitas"
   }
 }

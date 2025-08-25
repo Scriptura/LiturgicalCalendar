@@ -4,79 +4,69 @@
     "day": 30,
     "name": "Saint Mutien-Marie Wiaux, religieux",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "amandi": {
     "month": 2,
     "day": 6,
     "name": "Saint Amand, évêque, missionnaire",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "gertrudisNivellensis": {
     "month": 3,
     "day": 17,
     "name": "Sainte Gertrude de Nivelles, vierge",
     "color": "albus",
-    "rank": "memoriaAdLibitum",
-    "priority": 12
+    "rank": "memoriaAdLibitum"
   },
   "juliaeBilliart": {
     "month": 4,
     "day": 8,
     "name": "Sainte Julie Billiart",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "damianiDeVeuster": {
     "month": 5,
     "day": 10,
     "name": "Saint Père Damien",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "julianaeLeodiensis": {
     "month": 8,
     "day": 7,
     "name": "Sainte Julienne du Mont-Cornillon",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "mariaeMediatriciOmniumGratiarum": {
     "month": 8,
     "day": 31,
     "name": "Marie, Médiatrice de toute grâce",
     "color": "albus",
-    "rank": "festum",
-    "priority": 8
+    "rank": "festum"
   },
   "lambertiTrajectensis": {
     "month": 9,
     "day": 17,
     "name": "Saint Lambert, évêque et martyr",
     "color": "rubeus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "hubertiLeodiensis": {
     "month": 11,
     "day": 3,
     "name": "Saint Hubert, évêque de Liège",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   },
   "joannisBerchmans": {
     "month": 11,
     "day": 26,
     "name": "Saint Jean Berchmans",
     "color": "albus",
-    "rank": "memoria",
-    "priority": 10
+    "rank": "memoria"
   }
 }
