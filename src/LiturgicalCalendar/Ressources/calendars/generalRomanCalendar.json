@@ -888,7 +888,7 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "joanniEudis": {
+  "ioannisEudes": {
     "month": 8,
     "day": 19,
     "name": "Saint Jean Eudes, prêtre, fondateur",
@@ -902,38 +902,45 @@
     "color": "albus",
     "rank": "memoria"
   },
-  "piiDecimi": {
+  "piiX": {
     "month": 8,
     "day": 21,
     "name": "Saint Pie X, pape",
     "color": "albus",
     "rank": "memoria"
   },
-  "mariaeReginae": {
+  "beataeMariaeVirginisReginae": {
     "month": 8,
     "day": 22,
     "name": "Bienheureuse Vierge Marie Reine de l'univers",
     "color": "albus",
     "rank": "memoria"
   },
-  "rosaeLimensis": {
+  "rosaeDeLima": {
     "month": 8,
     "day": 23,
     "name": "Sainte Rose de Lima, vierge, tertiaire dominicaine",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "bartholomaeiApostoli": {
+  "bartholomaei": {
     "month": 8,
     "day": 24,
     "name": "Saint Barthélemy, apôtre",
     "color": "rubeus",
     "rank": "festum"
   },
-  "ludoviciRegis": {
+  "ludovici": {
     "month": 8,
     "day": 25,
-    "name": "Saint Louis, roi de France, ou Saint Joseph Calasanz, prêtre, fondateur",
+    "name": "Saint Louis, roi de France",
+    "color": "albus",
+    "rank": "memoriaAdLibitum"
+  },
+  "iosephiDeCalasanz": {
+    "month": 8,
+    "day": 25,
+    "name": "Saint Joseph Calasanz, prêtre",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
@@ -951,7 +958,7 @@
     "color": "albus",
     "rank": "memoria"
   },
-  "decollationisJoannisBaptistae": {
+  "inPassioneIoannisBaptistae": {
     "month": 8,
     "day": 29,
     "name": "Décollation de Saint Jean-Baptiste, martyr",
@@ -965,7 +972,14 @@
     "color": "albus",
     "rank": "memoria"
   },
-  "nativitatisMariaeVirginis": {
+  "teresiaeDeCalcutta": {
+    "month": 9,
+    "day": 5,
+    "name": "Sainte Mère Teresa de Calcutta",
+    "color": "albus",
+    "rank": "memoriaAdLibitum"
+  },
+  "inNativitateBeataeMariaeVirginis": {
     "month": 9,
     "day": 8,
     "name": "Nativité de la Vierge Marie",
@@ -973,35 +987,35 @@
     "link": "https://www.aelf.org/2020-09-08/romain/messe",
     "rank": "festum"
   },
-  "petriClaverii": {
+  "petriClaver": {
     "month": 9,
     "day": 9,
     "name": "Saint Pierre Claver, prêtre",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "ssimiNominisMariaeVirginis": {
+  "sanctissimiNominisMariae": {
     "month": 9,
     "day": 12,
     "name": "Saint Nom de la Bienheureuse Vierge Marie",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "joannisChrisostomi": {
+  "ioannisChrysostomi": {
     "month": 9,
     "day": 13,
     "name": "Saint Jean Chrysostome, évêque et docteur de l'Église",
     "color": "albus",
     "rank": "memoria"
   },
-  "exaltationisSanctaeCrucis": {
+  "inExaltationeSanctaeCrucis": {
     "month": 9,
     "day": 14,
     "name": "La Croix glorieuse",
     "color": "rubeus",
     "rank": "festum"
   },
-  "septemDolorumMariaeVirginis": {
+  "beataeMariaeVirginisPerdolentis": {
     "month": 9,
     "day": 15,
     "name": "Notre-Dame des Sept Douleurs",
@@ -1016,35 +1030,35 @@
     "link": "https://www.aelf.org/2020-09-16/romain/messe",
     "rank": "memoria"
   },
-  "robertiBellarmini": {
+  "robertiBellarmino": {
     "month": 9,
     "day": 17,
     "name": "Saint Robert Bellarmin, évêque et docteur de l'Église",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "januarii": {
+  "ianuarii": {
     "month": 9,
     "day": 19,
     "name": "Saint Janvier, évêque et martyr",
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "andreaeKimEtSociorum": {
+  "andreaeKimTaeGonPauliChoNgHaSangEtSociorum": {
     "month": 9,
     "day": 20,
-    "name": "Saint André Kim Taegon, prêtre, et Paul Chong Hasang et ses compagnons, martyrs",
+    "name": "Saint André Kim Taegon, prêtre, Paul Chong Has-ang et ses compagnons, martyrs",
     "color": "rubeus",
     "rank": "memoria"
   },
-  "matthaeiEvangelistae": {
+  "matthaei": {
     "month": 9,
     "day": 21,
     "name": "Saint Matthieu, apôtre et évangéliste",
     "color": "rubeus",
     "rank": "festum"
   },
-  "piiDePietrelcina": {
+  "piiAPietrelcina": {
     "month": 9,
     "day": 23,
     "name": "Saint Padre Pio, prêtre",
@@ -1058,21 +1072,28 @@
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "vincentiiAPaulo": {
+  "vincentiiDePaul": {
     "month": 9,
     "day": 27,
     "name": "Saint Vincent de Paul, prêtre",
     "color": "albus",
     "rank": "memoria"
   },
-  "wenceslai": {
+  "venceslai": {
     "month": 9,
     "day": 28,
-    "name": "Saint Venceslas, martyr ou Saints Lorenzo Ruiz et ses compagnons, martyrs",
+    "name": "Saint Venceslas, martyr",
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "michaelisGabrielisEtRaphaelisArchangelorum": {
+  "laurentiiRuizEtSociorum": {
+    "month": 9,
+    "day": 28,
+    "name": "Saints Lorenzo Ruiz et ses compagnons, martyrs",
+    "color": "rubeus",
+    "rank": "memoriaAdLibitum"
+  },
+  "michaelisGabrielisEtRaphaelis": {
     "month": 9,
     "day": 29,
     "name": "Saints Michel, Gabriel et Raphaël, Archanges",
@@ -1086,7 +1107,7 @@
     "color": "albus",
     "rank": "memoria"
   },
-  "theresiaePueriJesu": {
+  "teresiaeAIesuInfante": {
     "month": 10,
     "day": 1,
     "name": "Sainte Thérèse de l'enfant Jésus et de la Sainte Face, vierge et docteur de l'Église",
@@ -1114,14 +1135,14 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "brunonisColoniensis": {
+  "brunonis": {
     "month": 10,
     "day": 6,
     "name": "Saint Bruno, prêtre",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "mariaeVirginisSacratissimIRosarii": {
+  "beataeMariaeVirginisARosario": {
     "month": 10,
     "day": 7,
     "name": "Notre Dame du Rosaire",
@@ -1131,35 +1152,49 @@
   "dionysiiEtSociorum": {
     "month": 10,
     "day": 9,
-    "name": "Saint Denis de Paris et ses compagnons, martyrs et Saint Jean Leonardi, prêtre",
-    "color": "red, white",
+    "name": "Saint Denis de Paris et ses compagnons, martyrs",
+    "color": "red",
     "rank": "memoriaAdLibitum"
   },
-  "joannisXXIII": {
+  "ioannisLeonardi": {
+    "month": 10,
+    "day": 9,
+    "name": "Saint Jean Leonardi, prêtre",
+    "color": "white",
+    "rank": "memoriaAdLibitum"
+  },
+  "ioannisXXIII": {
     "month": 10,
     "day": 11,
     "name": "Saint Jean XXIII, pape",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "callixtiPrimi": {
+  "callistiI": {
     "month": 10,
     "day": 14,
     "name": "Saint Callixte <abbr title=\"premier\">I<sup>er</sup></abbr>, pape et martyr",
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "theresiaJesuAvilensis": {
+  "teresiaeAIesu": {
     "month": 10,
     "day": 15,
     "name": "Sainte Thérèse de Jésus (d'Avila), vierge et docteur de l'Église",
     "color": "albus",
     "rank": "memoria"
   },
-  "hedvigisEtMargaritaeMariaeAlacoque": {
+  "hedvigis": {
     "month": 10,
     "day": 16,
-    "name": "Sainte Hedwige, religieuse et Sainte Marguerite-Marie Alacoque, vierge",
+    "name": "Sainte Hedwige, religieuse",
+    "color": "albus",
+    "rank": "memoriaAdLibitum"
+  },
+  "margaritaeMariaeAlacoque": {
+    "month": 10,
+    "day": 16,
+    "name": "Sainte Marguerite-Marie Alacoque, vierge",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
@@ -1170,28 +1205,35 @@
     "color": "rubeus",
     "rank": "memoria"
   },
-  "lucaeEvangelistae": {
+  "lucae": {
     "month": 10,
     "day": 18,
     "name": "Saint Luc, évangéliste",
     "color": "rubeus",
     "rank": "festum"
   },
-  "joannisDeBrebeufEtSociorum": {
+  "ioannisDeBrebeufEtIsaacJoguesEtSociorum": {
     "month": 10,
     "day": 19,
-    "name": "Saints Jean de Brébeuf et Isaac Jogues, prêtres et martyrs, et leurs compagnons, martyrs et Saint Paul de la Croix, prêtre",
-    "color": "red, white",
+    "name": "Saints Jean de Brébeuf et Isaac Jogues, prêtres et martyrs, et leurs compagnons, martyrs",
+    "color": "red",
     "rank": "memoriaAdLibitum"
   },
-  "joannisPhauliSecundi": {
+  "pauliACruce": {
+    "month": 10,
+    "day": 19,
+    "name": "Saint Paul de la Croix, prêtre",
+    "color": "white",
+    "rank": "memoriaAdLibitum"
+  },
+  "ioannisPauliII": {
     "month": 10,
     "day": 22,
     "name": "Saint Jean-Paul II, pape",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "joannisCapistrani": {
+  "ioannisDeCapestrano": {
     "month": 10,
     "day": 23,
     "name": "Saint Jean de Capistran, pêtre",
@@ -1205,7 +1247,7 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "simonisEtJudaeApostolorum": {
+  "simonisEtIudae": {
     "month": 10,
     "day": 28,
     "name": "Saint Simon et Saint Jude, apôtres",
@@ -1219,12 +1261,12 @@
     "color": "albus",
     "rank": "sollemnitas"
   },
-  "commemorationisOmniumFideliumDefunctorum": {
+  "inCommemorationeOmniumFideliumDefunctorum": {
     "month": 11,
     "day": 2,
     "name": "Commémoration de tous les fidèles défunts",
     "color": "black",
-    "rank": ""
+    "rank": "festum"
   },
   "martiniDePorres": {
     "month": 11,
@@ -1233,14 +1275,14 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "caroliBorromaei": {
+  "caroliBorromeo": {
     "month": 11,
     "day": 4,
     "name": "Saint Charles Borromée, évêque de Milan et cardinal",
     "color": "albus",
     "rank": "memoria"
   },
-  "dedicationisBasilicaeLateranensis": {
+  "inDedicationeBasilicaeLateranensis": {
     "month": 11,
     "day": 9,
     "name": "Dédicace de la Basilique Saint-Jean-de-Latran",
@@ -1261,7 +1303,7 @@
     "color": "albus",
     "rank": "memoria"
   },
-  "josaphat": {
+  "iosaphat": {
     "month": 11,
     "day": 12,
     "name": "Saint Josaphat, évêque et martyr",
@@ -1275,10 +1317,17 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "margaritaeScotorumEtGertrudis": {
+  "margaritaeScotiae": {
     "month": 11,
     "day": 16,
-    "name": "Sainte Marguerite d'Ecosse, reine et Sainte Gertrude, vierge",
+    "name": "Sainte Marguerite d'Ecosse, reine",
+    "color": "albus",
+    "rank": "memoriaAdLibitum"
+  },
+  "gertrudis": {
+    "month": 11,
+    "day": 16,
+    "name": "ainte Gertrude, vierge",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
@@ -1289,19 +1338,19 @@
     "color": "albus",
     "rank": "memoria"
   },
-  "dedicationisBasilicarumPetriEtPauliApostolorum": {
+  "inDedicationeBasilicarumSanctorumPetriEtPauliApostolorum": {
     "month": 11,
     "day": 18,
     "name": "Dédicace des Basiliques de Saint Pierre et Saint Paul, apôtres",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "praesentationisMariaeVirginis": {
+  "inPraesentationeBeataeMariaeVirginis": {
     "month": 11,
     "day": 21,
     "name": "Présentation de la Bienheureuse Vierge Marie au Temple",
     "color": "albus",
-    "rank": "memoriaAdLibitum"
+    "rank": "memoria"
   },
   "caeciliae": {
     "month": 11,
@@ -1310,14 +1359,21 @@
     "color": "rubeus",
     "rank": "memoria"
   },
-  "clementisEtColumbani": {
+  "clementisI": {
     "month": 11,
     "day": 23,
-    "name": "Saint Clément de Rome, pape et martyr et Saint Colomban, religieux",
-    "color": "red, white",
+    "name": "Saint Clément de Rome, pape et martyr",
+    "color": "red",
     "rank": "memoriaAdLibitum"
   },
-  "andreaeDungLacEtSociorum": {
+  "columbani": {
+    "month": 11,
+    "day": 23,
+    "name": "Saint Colomban, religieux",
+    "color": "white",
+    "rank": "memoriaAdLibitum"
+  },
+  "andreaeDuNgLacEtSociorum": {
     "month": 11,
     "day": 24,
     "name": "Saint André Dũng-Lạc et ses compagnons, martyrs",
@@ -1331,84 +1387,84 @@
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "andreaeApostoli": {
+  "andreae": {
     "month": 11,
     "day": 30,
     "name": "Saint André, le premier apôtre",
     "color": "rubeus",
     "rank": "festum"
   },
-  "caroliDeFoucauld": {
-    "month": 12,
-    "day": 1,
-    "name": "Saint Charles de Foucauld",
-    "color": "rubeus",
-    "rank": "memoriaAdLibitum"
-  },
-  "francisciXaverii": {
+  "francisciXavier": {
     "month": 12,
     "day": 3,
     "name": "Saint François-Xavier, prêtre, jésuite",
     "color": "albus",
     "rank": "memoria"
   },
-  "joannisDamasceni": {
+  "ioannisDamasceni": {
     "month": 12,
     "day": 4,
     "name": "Saint Jean Damascène, prêtre et docteur de l'Église",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "nicolaiMyrae": {
+  "nicolai": {
     "month": 12,
     "day": 6,
     "name": "Saint Nicolas de Myre, évêque",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "ambrosiMediolanensis": {
+  "ambrosii": {
     "month": 12,
     "day": 7,
     "name": "Saint Ambroise de Milan, évêque et docteur de l'Église",
     "color": "albus",
     "rank": "memoria"
   },
-  "juanDiegoCuauhtlatoatzin": {
+  "inConceptioneImmaculataBeataeMariaeVirginis": {
+    "month": 12,
+    "day": 8,
+    "name": "Immaculée Conception de la Vierge Marie",
+    "color": "albus",
+    "rank": "sollemnitas"
+  },
+  "ioannisDidaciCuauhtlatoatzin": {
     "month": 12,
     "day": 9,
     "name": "Saint Juan Diego Cuauhtlatoatzin",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "mariaeVirginsLauretanae": {
+  "beataeMariaeVirginisDeLoreto": {
     "month": 12,
     "day": 10,
     "name": "Notre-Dame de Lorette",
     "color": "albus",
-    "rank": "memoriaAdLibitum"
+    "rank": "memoria"
   },
-  "damasiPapae": {
+  "damasiI": {
     "month": 12,
     "day": 11,
     "name": "Saint Damase, pape",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "mariaeVirginsGuadalupensis": {
+  "beataeMariaeVirginsDeGuadalupe": {
     "month": 12,
     "day": 12,
-    "name": "Notre-Dame de Guadaloupé",
+    "name": "Bienheureuse Vierge Marie de Guadaloupé",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "luciaeVirginis": {
+  "luciae": {
     "month": 12,
     "day": 13,
     "name": "Sainte Lucie, vierge et martyre",
     "color": "rubeus",
     "rank": "memoria"
   },
-  "joannisCrucis": {
+  "ioannisACruce": {
     "month": 12,
     "day": 14,
     "name": "Saint Jean de la Croix, prêtre et docteur de l'Église, carme",
@@ -1422,28 +1478,28 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "joannisKantii": {
+  "ioannisDeKety": {
     "month": 12,
     "day": 23,
     "name": "Saint Jean de Kenty, prêtre",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "nativitatisDomini": {
+  "inNativitateDomini": {
     "month": 12,
     "day": 25,
     "name": "Nativité du Seigneur",
     "color": "albus",
     "rank": "sollemnitas"
   },
-  "stephaniProtomartyr": {
+  "stephani": {
     "month": 12,
     "day": 26,
     "name": "Saint Etienne, premier martyr",
     "color": "rubeus",
     "rank": "festum"
   },
-  "joannisEvangelistae": {
+  "ioannis": {
     "month": 12,
     "day": 27,
     "name": "Saint Jean, apôtre et évangéliste",
@@ -1464,7 +1520,7 @@
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "silvestriPapae": {
+  "silvestriI": {
     "month": 12,
     "day": 31,
     "name": "Saint Sylvestre, pape",
