@@ -3,40 +3,40 @@
     "name": "Temps de l'Avent",
     "color": "violaceus"
   },
+  "adventusMaior": {
+    "name": "Grand Avent",
+    "parent": "adventus"
+  },
   "tempusNativitatis": {
     "name": "Temps de Noël",
     "color": "albus"
+  },
+  "octavaNativitatis": {
+    "name": "Octave de la Nativité du Seigneur",
+    "parent": "tempusNativitatis"
   },
   "quadragesima": {
     "name": "Carême",
     "color": "violaceus"
   },
+  "hebdomadaSancta": {
+    "name": "Semaine Sainte",
+    "parent": "quadragesima"
+  },
+  "triduumPaschale": {
+    "name": "Triduum pascal",
+    "color": null
+  },
   "tempusPaschale": {
     "name": "Temps Pascal",
     "color": "albus"
   },
+  "octavaPaschae": {
+    "name": "Octave de Pâques",
+    "parent": "tempusPaschale"
+  },
   "tempusPerAnnum": {
     "name": "Temps ordinaire",
     "color": "viridis"
-  },
-  "sub": {
-    "adventusMaior": {
-      "name": "Grand Avent"
-    },
-    "octavaNativitatis": {
-      "name": "Octave de la Nativité du Seigneur"
-    },
-    "tempusPostEpiphaniam": {
-      "name": "Après l'Épiphanie"
-    },
-    "hebdomadaSancta": {
-      "name": "Semaine Sainte"
-    },
-    "triduumPaschale": {
-      "name": "Triduum pascal"
-    },
-    "octavaPaschae": {
-      "name": "Octave de Pâques"
-    }
   }
 }

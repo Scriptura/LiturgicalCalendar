@@ -204,8 +204,8 @@
     "color": "albus",
     "rank": "sollemnitas"
   },
-  "immaculatumCorMariaeVirginis": {
-    "name": "Cœur Immaculé de Marie ++++++++++++++++++++++++++++++++++++++++++++++++++++",
+  "immaculatiCordisBeataeMariaeVirginis": {
+    "name": "Cœur Immaculé de Marie",
     "color": "albus",
     "rank": "memoria"
   },
