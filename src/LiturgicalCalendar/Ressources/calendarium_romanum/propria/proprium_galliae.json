@@ -1,17 +1,10 @@
 {
-  "ssimiNominisJesuVelGenovefae": {
+  "genofevae": {
     "month": 1,
     "day": 3,
-    "name": "Saint Nom de Jésus ou Sainte Geneviève, vierge",
+    "name": "Sainte Geneviève, vierge",
     "color": "albus",
     "rank": "memoriaAdLibitum"
-  },
-  "epiphaniaDomini": {
-    "month": 1,
-    "day": 6,
-    "name": "L'Épiphanie du Seigneur",
-    "color": "albus",
-    "rank": "sollemnitas"
   },
   "remigiiRemensis": {
     "month": 1,
@@ -20,21 +13,21 @@
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "bernadettaeSoubirous": {
+  "mariaeBernardaeSoubirous": {
     "month": 2,
     "day": 18,
     "name": "Sainte Bernadette Soubirous",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "ivonisKermartinensis": {
+  "yvonis": {
     "month": 5,
     "day": 19,
     "name": "Saint Yves, prêtre",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "joannaeDarc": {
+  "ioannaeArcensis": {
     "month": 5,
     "day": 30,
     "name": "Sainte Jeanne d'Arc, vierge et martyre",
@@ -42,42 +35,38 @@
     "color": "rubeus",
     "rank": "memoria"
   },
-  "pothiniLugdunensisEtSociorum": {
+  "pothini": {
     "month": 6,
     "day": 2,
     "name": "Saint Pothin, évêque, Sainte Blandine, vierge, et leurs compagnons, martyrs",
     "color": "rubeus",
     "rank": "memoriaAdLibitum"
   },
-  "clotildisReginae": {
+  "clotildis": {
     "month": 6,
     "day": 4,
     "name": "Sainte Clotilde, reine des Francs",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "assumptionisBeataeMariae": {
+  "inAssumptioneBeataeMariaeVirginis": {
     "extra": "patronne principale de la France"
   },
-  "caesariiArelatensis": {
+  "cesariiArelatensis": {
     "month": 8,
     "day": 26,
     "name": "Saint Césaire d'Arles, évêque",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "mariaeVirginisSalettensis": {
+  "dominaNostraDeLaSalette": {
     "month": 9,
     "day": 19,
     "name": "Notre-Dame de La Salette",
     "color": "albus",
     "rank": "memoriaAdLibitum"
   },
-  "theresiaePueriJesu": {
-    "month": 10,
-    "day": 1,
-    "extra": "patronne secondaire de la France",
-    "color": "albus",
-    "rank": "memoria"
+  "teresiaeAIesu": {
+    "extra": "patronne secondaire de la France"
   }
 }

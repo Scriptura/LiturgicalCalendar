@@ -1,0 +1,658 @@
+{
+  "solemnitasSanctaeDeiGenetricisMariae": {
+    "name": "Sainte Marie, Mère de Dieu"
+    },
+  "basiliiMagniEtGregoriiNazianzeni": {
+    "name": "Saint Basile le Grand, évêque de Césarée, docteur de l'Église et Saint Grégoire de Naziance, évêque de Constantinople, docteur de l'Église"
+    },
+  "sanctissimiNominisIesu": {
+    "name": "Saint Nom de Jésus"
+    },
+  "inEpiphaniaDomini": {
+    "name": "L'Épiphanie du Seigneur"
+    },
+  "raimundiDePenyafort": {
+    "name": "Saint Raymond de Peñafort, prêtre, dominicain"
+    },
+  "hilarii": {
+    "name": "Saint Hilaire de Poitiers, évêque et docteur de l'Église"
+    },
+  "antonii": {
+    "name": "Saint Antoine le Grand, abbé en Haute-Égypte"
+    },
+  "fabiani": {
+    "name": "Saint Fabien, pape et martyr"
+    },
+  "sebastiani": {
+    "name": "Saint Sébastien, martyr de Rome"
+    },
+  "agnetis": {
+    "name": "Sainte Agnès, vierge et martyre"
+    },
+  "vincentii": {
+    "name": "Saint Vincent de Saragosse, diacre et martyr"
+    },
+  "francisciDeSales": {
+    "name": "Saint François de Sales, évêque et docteur de l'Église"
+    },
+  "inConversionePauli": {
+    "name": "Conversion de Saint Paul, apôtre"
+    },
+  "timotheiEtTiti": {
+    "name": "Saints Tite et Timothée, évêques, compagons de Saint Paul"
+    },
+  "angelaeMerici": {
+    "name": "Sainte Angèle Mérici, vierge"
+    },
+  "thomaeDeAquino": {
+    "name": "Saint Thomas d'Aquin, prêtre et docteur de l'Église"
+    },
+  "ioannisBosco": {
+    "name": "Saint Jean Bosco, prêtre"
+    },
+  "inPraesentationeDomini": {
+    "name": "Présentation du Seigneur au Temple"
+    },
+  "blasii": {
+    "name": "Saint Blaise, évêque et martyr"
+    },
+  "ansgarii": {
+    "name": "Saint Anschaire de Brême, évêque"
+    },
+  "agathae": {
+    "name": "Sainte Agathe, vierge et martyre"
+    },
+  "pauliMikiEtSociorum": {
+    "name": "Saints Paul Miki et ses compagnons, martyrs"
+    },
+  "hieronymiEmiliani": {
+    "name": "Saint Jérôme Émilien, fondateur"
+    },
+  "iosephinaeBakhita": {
+    "name": "Sainte Joséphine Bakhita, vierge"
+    },
+  "scholasticae": {
+    "name": "Sainte Scholastique, vierge"
+    },
+  "beataeMariaeVirginisDeLourdes": {
+    "name": "Notre-Dame de Lourdes"
+    },
+  "cyrilliEtMethodii": {
+    "name": "Saint Cyrille, moine, et Saint Méthode, évêque"
+    },
+  "septemFoundatorumOrdinisServorum": {
+    "name": "Les Sept Saints fondateurs de l'ordre des Servites"
+    },
+  "petriDamiani": {
+    "name": "Saint Pierre Damien, évêque et docteur de l'Église"
+    },
+  "cathedraePetriApostoli": {
+    "name": "Chaire de Saint Pierre, apôtre"
+    },
+  "polycarpi": {
+    "name": "Saint Polycarpe de Smyrne, évêque et martyr"
+    },
+  "casimiri": {
+    "name": "Saint Casimir, prince de Lituanie"
+    },
+  "perpetuaeEtFelicitatis": {
+    "name": "Sainte Perpétue et Sainte Félicité, martyres"
+    },
+  "ioannisADeo": {
+    "name": "Saint Jean de Dieu, religieux, fondateur des frères hospitaliers"
+    },
+  "franciscaeRomanae": {
+    "name": "Sainte Françoise Romaine, mère de famille puis religieuse"
+    },
+  "patricii": {
+    "name": "Saint Patrick, évêque d'Irlande"
+    },
+  "cyrilliHierosolymitani": {
+    "name": "Saint Cyrille de Jérusalem, évêque et docteur de l'Église"
+    },
+  "iosephSponsiBeataeMariaeVirginis": {
+    "name": "Saint Joseph, époux de la Bienheureuse Vierge Marie"
+    },
+  "turibiiDeMogrovejo": {
+    "name": "Saint Toribio de Mogrovejo, évêque"
+    },
+  "inAnnuntiationeDomini": {
+    "name": "Annonciation du Seigneur"
+    },
+  "francisciDePaula": {
+    "name": "Saint François de Paule, ermite italien"
+    },
+  "isidori": {
+    "name": "Saint Isidore de Séville, évêque et docteur de l'Église"
+    },
+  "vincentiiFerrer": {
+    "name": "Saint Vincent Ferrier, prêtre, dominicain espagnol"
+    },
+  "ioannisBaptistaeDeLaSalle": {
+    "name": "Saint Jean-Baptiste de la Salle, prêtre, fondateur des Écoles chrétiennes"
+    },
+  "stanislai": {
+    "name": "Saint Stanislas de Cracovie, évêque et martyr"
+    },
+  "martiniI": {
+    "name": "Saint Martin <abbr title=\"premier\">I<sup>er</sup></abbr>, pape et martyr"
+    },
+  "anselmi": {
+    "name": "Saint Anselme de Cantorbéry, évêque et docteur de l'Église"
+    },
+  "georgii": {
+    "name": "Saint Georges, martyr"
+    },
+  "adalberti": {
+    "name": "Saint Adalbert, évêque de Prague et martyr"
+    },
+  "fidelisDeSigmaringen": {
+    "name": "Saint Fidèle de Sigmaringen, prêtre et martyr"
+    },
+  "marci": {
+    "name": "Saint Marc, évangéliste"
+    },
+  "petriChanel": {
+    "name": "Saint Pierre Chanel, prêtre et martyr"
+    },
+  "ludoviciMariaeGrignionDeMontfort": {
+    "name": "Saint Louis-Marie Grignion de Montfort, prêtre"
+    },
+  "catharinaeSenensis": {
+    "name": "Sainte Catherine de Sienne, vierge et docteur de l'Église"
+    },
+  "piiV": {
+    "name": "Saint Pie V, pape"
+    },
+  "iosephOpificis": {
+    "name": "Saint Joseph artisan"
+    },
+  "athanasii": {
+    "name": "Saint Athanase d'Alexandrie, évêque et docteur de l'Église"
+    },
+  "philippiEtIacobi": {
+    "name": "Saints Philippe et Jacques, apôtres"
+    },
+  "nereiEtAchillei": {
+    "name": "Saints Nérée et Achillée, martyrs"
+    },
+  "Pancratii": {
+    "name": "Saint Pancrace, martyr"
+    },
+  "beataeMariaeVirginisDeFatima": {
+    "name": "Notre-Dame de Fátima"
+    },
+  "matthiae": {
+    "name": "Saint Matthias, apôtres"
+    },
+  "ioannisI": {
+    "name": "Saint Jean <abbr title=\"premier\">I<sup>er</sup></abbr>, pape et martyr"
+    },
+  "bernardiniSenensis": {
+    "name": "Saint Bernardin de Sienne, prêtre, franciscain"
+    },
+  "christophoriMagallanesEtSociorum": {
+    "name": "Saint Christophe Magallanès, prêtre, et ses compagnons, martyrs"
+    },
+  "ritaeDeCascia": {
+    "name": "Sainte Rita de Cascia, religieuse"
+    },
+  "bedaeVenerabilis": {
+    "name": "Saint Bède le Vénérable, prêtre, moine et docteur de l'Église"
+    },
+  "gregoriiVII": {
+    "name": "Saint Grégoire VII, pape"
+    },
+  "mariaeMagdalenaeDePazzi": {
+    "name": "Sainte Marie-Madeleine de Pazzi, vierge carmélite"
+    },
+  "philippiNeri": {
+    "name": "Saint Philippe Neri, prêtre, fondateur de l'Oratoire"
+    },
+  "augustiniCantuariensis": {
+    "name": "Saint Augustin de Cantorbéry, évêque"
+    },
+  "pauliVI": {
+    "name": "Saint Paul VI, pape"
+    },
+  "inVisitationeBeataeMariaeVirginis": {
+    "name": "Visitation de la Vierge Marie"
+    },
+  "iustini": {
+    "name": "Saint Justin Martyr"
+    },
+  "marcelliniEtPetri": {
+    "name": "Saints Marcellin et Pierre, martyrs"
+    },
+  "caroliLwangaEtSociorum": {
+    "name": "Saints Charles Lwanga et ses compagnons, martyrs"
+    },
+  "bonifatii": {
+    "name": "Saint Boniface, évêque de Mayence et martyr"
+    },
+  "norberti": {
+    "name": "Saint Norbert, évêque, fondateur des Prémontrés"
+    },
+  "ephraem": {
+    "name": "Saint Ephrem, diacre et docteur de l'Église"
+    },
+  "barnabae": {
+    "name": "Saint Barnabé, apôtre"
+    },
+  "antoniiDePadova": {
+    "name": "Saint Antoine de Padoue, prêtre et docteur de l'Église, franciscain portugais"
+    },
+  "romualdi": {
+    "name": "Saint Romuald, abbé, fondateur des camaldules"
+    },
+  "aloisiiGonzaga": {
+    "name": "Saint Louis de Gonzague, novice jésuite"
+    },
+  "pauliniNolani": {
+    "name": "Saint Paulin de Nole, évêque"
+    },
+  "ioannisFisherEtThomaeMore": {
+    "name": "Saint John Fisher, évêque, et Thomas More, martyrs"
+    },
+  "inNativitateIoannisBaptistae": {
+    "name": "Nativité de Saint Jean Baptiste"
+    },
+  "cyrilliAlexandrini": {
+    "name": "Saint Cyrille d'Alexandrie, évêque et docteur de l'Église"
+    },
+  "irenaei": {
+    "name": "Saint Irénée de Lyon, évêque et martyr"
+    },
+  "petriEtPauli": {
+    "name": " Saints Pierre et Paul, Apôtres"
+    },
+  "protomartyrumSanctaeRomanaeEcclesiae": {
+    "name": "Premiers martyrs de l'Église de Rome"
+    },
+  "thomae": {
+    "name": "Saint Thomas, apôtre"
+    },
+  "elisabethLusitaniae": {
+    "name": "Sainte Elisabeth de Portugal, reine"
+    },
+  "antoniiMariaeZaccaria": {
+    "name": "Saint Antoine-Marie Zaccaria, prêtre, fondateur des barnabites"
+    },
+  "mariaeGoretti": {
+    "name": "Sainte Maria Goretti, vierge et martyr"
+    },
+  "augustiniZhaoRongEtSociorum": {
+    "name": "Saint Augustin Zhao Rong et ses compagnons, martyrs"
+    },
+  "benedicti": {
+    "name": "Saint Benoît, abbé"
+    },
+  "henrici": {
+    "name": "Saint Henri"
+    },
+  "camilliDeLellis": {
+    "name": "Saint Camille de Lellis, prêtre"
+    },
+  "bonaventurae": {
+    "name": "Saint Bonaventure, évêque et docteur de l'Église"
+    },
+  "beataeMariaeVirginisDeMonteCarmelo": {
+    "name": "Notre-Dame du Mont-Carmel"
+    },
+  "apollinaris": {
+    "name": "Saint Apollinaire, évêque et martyr"
+    },
+  "laurentiiDeBrindisi": {
+    "name": "Saint Laurent de Brindisi, prêtre et docteur de l'Église"
+    },
+  "mariaemagdalenae": {
+    "name": "Sainte Marie-Madeleine, disciple du Seigneur"
+    },
+  "birgittae": {
+    "name": "Sainte Brigitte de Suède, religieuse"
+    },
+  "sarbeliiMakhlu": {
+    "name": "Saint Charbel Makhlouf, prêtre et ermite"
+    },
+  "iacobi": {
+    "name": "Saint Jacques le Majeur, apôtre"
+    },
+  "ioachimEtAnnae": {
+    "name": "Saints Anne et Joachim, parents de la Vierge Marie"
+    },
+  "marthaeMariaeEtLazari": {
+    "name": "Saints Marthe et Marie et saint Lazare"
+    },
+  "petriChrysologi": {
+    "name": "Saint Pierre Chrysologue, évêque et docteur de l'Église"
+    },
+  "ignatiiDeLoyola": {
+    "name": "Saint Ignace de Loyola, prêtre, fondateur des jésuites"
+    },
+  "alfonsiMariaeDeLiguori": {
+    "name": "Saint Alphonse de Liguori, évêque et docteur de l'Église, fondateur des Rédemptoristes"
+    },
+  "eusebiiVercellensis": {
+    "name": "Saint Eusèbe de Verceil, évêque"
+    },
+  "petriIulianiEymard": {
+    "name": "Saint Pierre-Julien Eymard, prêtre, fondateur de la congrégation du Très-Saint-Sacrement"
+    },
+  "ioannisMariaeVianney": {
+    "name": "Saint Jean-Marie Vianney, prêtre"
+    },
+  "inDedicationeBasilicaeSanctaeMariae": {
+    "name": "Dédicace de la Basilique Sainte-Marie-Majeure"
+    },
+  "inTransfigurationeDomini": {
+    "name": "Transfiguration du Seigneur"
+    },
+  "xystiIIEtSociorum": {
+    "name": "Saint Sixte II, pape, et ses compagnons, martyrs"
+    },
+  "caietani": {
+    "name": "Saint Gaétan, prêtre"
+    },
+  "dominici": {
+    "name": "Saint Dominique, prêtre, fondateur des Frères Prêcheurs"
+    },
+  "teresiaeBenedictaeACruce": {
+    "name": "Sainte Thérèse-Bénédicte de la Croix (Édith Stein), vierge et martyre, carmélite"
+    },
+  "laurentii": {
+    "name": "Saint Laurent, diacre et martyr"
+    },
+  "clarae": {
+    "name": "Sainte Claire d'Assise, vierge, fondatrice des Pauvres Dames ou Clarisses"
+    },
+  "ioannaefranciscaeDeChantal": {
+    "name": "Sainte Jeanne-Françoise de Chantal, religieuse, fondatrice de la Visitation"
+    },
+  "pontianiEtHippolyti": {
+    "name": "Saints Pontien, pape, et Hippolyte, prêtre, martyrs"
+    },
+  "maximilianiMariaeKolbe": {
+    "name": "Saint Maximilien Kolbe, prêtre et martyr, franciscain"
+    },
+  "inAssumptioneBeataeMariaeVirginis": {
+    "name": "Assomption de la Bienheureuse Vierge Marie"
+    },
+  "stephaniHungariae": {
+    "name": "Saint Étienne de Hongrie"
+    },
+  "ioannisEudes": {
+    "name": "Saint Jean Eudes, prêtre, fondateur"
+    },
+  "bernardi": {
+    "name": "Saint Bernard, abbé de Clairvaux et docteur de l'Église"
+    },
+  "piiX": {
+    "name": "Saint Pie X, pape"
+    },
+  "beataeMariaeVirginisReginae": {
+    "name": "Bienheureuse Vierge Marie Reine de l'univers"
+    },
+  "rosaeDeLima": {
+    "name": "Sainte Rose de Lima, vierge, tertiaire dominicaine"
+    },
+  "bartholomaei": {
+    "name": "Saint Barthélemy, apôtre"
+    },
+  "ludovici": {
+    "name": "Saint Louis, roi de France"
+    },
+  "iosephiDeCalasanz": {
+    "name": "Saint Joseph Calasanz, prêtre"
+    },
+  "monicae": {
+    "name": "Sainte Monique"
+    },
+  "augustini": {
+    "name": "Saint Augustin, évêque et docteur de l'Église"
+    },
+  "inPassioneIoannisBaptistae": {
+    "name": "Décollation de Saint Jean-Baptiste, martyr"
+    },
+  "gregoriiMagni": {
+    "name": "Saint Grégoire le Grand, pape et docteur de l'Église"
+    },
+  "teresiaeDeCalcutta": {
+    "name": "Sainte Mère Teresa de Calcutta"
+    },
+  "inNativitateBeataeMariaeVirginis": {
+    "name": "Nativité de la Vierge Marie",
+    "link": "https://www.aelf.org/2020-09-08/romain/messe"
+    },
+  "petriClaver": {
+    "name": "Saint Pierre Claver, prêtre"
+    },
+  "sanctissimiNominisMariae": {
+    "name": "Saint Nom de la Bienheureuse Vierge Marie"
+    },
+  "ioannisChrysostomi": {
+    "name": "Saint Jean Chrysostome, évêque et docteur de l'Église"
+    },
+  "inExaltationeSanctaeCrucis": {
+    "name": "La Croix glorieuse"
+    },
+  "beataeMariaeVirginisPerdolentis": {
+    "name": "Notre-Dame des Sept Douleurs"
+    },
+  "corneliiEtCypriani": {
+    "name": "Saints Corneille, pape, et Cyprien, évêque, martyrs",
+    "link": "https://www.aelf.org/2020-09-16/romain/messe"
+    },
+  "robertiBellarmino": {
+    "name": "Saint Robert Bellarmin, évêque et docteur de l'Église"
+    },
+  "ianuarii": {
+    "name": "Saint Janvier, évêque et martyr"
+    },
+  "andreaeKimTaeGonPauliChoNgHaSangEtSociorum": {
+    "name": "Saint André Kim Taegon, prêtre, Paul Chong Has-ang et ses compagnons, martyrs"
+    },
+  "matthaei": {
+    "name": "Saint Matthieu, apôtre et évangéliste"
+    },
+  "piiAPietrelcina": {
+    "name": "Saint Padre Pio, prêtre"
+    },
+  "cosmaeEtDamiani": {
+    "name": "Saints Côme et Damien, martyrs"
+    },
+  "vincentiiDePaul": {
+    "name": "Saint Vincent de Paul, prêtre"
+    },
+  "venceslai": {
+    "name": "Saint Venceslas, martyr"
+    },
+  "laurentiiRuizEtSociorum": {
+    "name": "Saints Lorenzo Ruiz et ses compagnons, martyrs"
+    },
+  "michaelisGabrielisEtRaphaelis": {
+    "name": "Saints Michel, Gabriel et Raphaël, Archanges"
+    },
+  "hieronymi": {
+    "name": "Saint Jérôme, prêtre et docteur de l'Église"
+    },
+  "teresiaeAIesuInfante": {
+    "name": "Sainte Thérèse de l'enfant Jésus et de la Sainte Face, vierge et docteur de l'Église"
+    },
+  "angelorumCustodum": {
+    "name": "Les Saints Anges gardiens"
+    },
+  "francisciAssisiensis": {
+    "name": "Saint François d'Assise, prêtre et docteur de l'Église"
+    },
+  "faustinaeMariaeKowalska": {
+    "name": "Sainte Faustine Kowalska, vierge, † 1938 à Cracovie"
+    },
+  "brunonis": {
+    "name": "Saint Bruno, prêtre"
+    },
+  "beataeMariaeVirginisARosario": {
+    "name": "Notre Dame du Rosaire"
+    },
+  "dionysiiEtSociorum": {
+    "name": "Saint Denis de Paris et ses compagnons, martyrs"
+    },
+  "ioannisLeonardi": {
+    "name": "Saint Jean Leonardi, prêtre"
+    },
+  "ioannisXXIII": {
+    "name": "Saint Jean XXIII, pape"
+    },
+  "callistiI": {
+    "name": "Saint Callixte <abbr title=\"premier\">I<sup>er</sup></abbr>, pape et martyr"
+    },
+  "teresiaeAIesu": {
+    "name": "Sainte Thérèse de Jésus (d'Avila), vierge et docteur de l'Église"
+    },
+  "hedvigis": {
+    "name": "Sainte Hedwige, religieuse"
+    },
+  "margaritaeMariaeAlacoque": {
+    "name": "Sainte Marguerite-Marie Alacoque, vierge"
+    },
+  "ignatiiAntiocheni": {
+    "name": "Saint Ignace d'Antioche, évêque et martyr"
+    },
+  "lucae": {
+    "name": "Saint Luc, évangéliste"
+    },
+  "ioannisDeBrebeufEtIsaacJoguesEtSociorum": {
+    "name": "Saints Jean de Brébeuf et Isaac Jogues, prêtres et martyrs, et leurs compagnons, martyrs"
+    },
+  "pauliACruce": {
+    "name": "Saint Paul de la Croix, prêtre"
+    },
+  "ioannisPauliII": {
+    "name": "Saint Jean-Paul II, pape"
+    },
+  "ioannisDeCapestrano": {
+    "name": "Saint Jean de Capistran, pêtre"
+    },
+  "antoniiMariaeClaret": {
+    "name": "Saint Antoine-Marie Claret, évêque"
+    },
+  "simonisEtIudae": {
+    "name": "Saint Simon et Saint Jude, apôtres"
+    },
+  "omniumSanctorum": {
+    "name": "La Toussaint, fête de tous les saints"
+    },
+  "inCommemorationeOmniumFideliumDefunctorum": {
+    "name": "Commémoration de tous les fidèles défunts"
+    },
+  "martiniDePorres": {
+    "name": "Saint Martin de Porres, dominicain"
+    },
+  "caroliBorromeo": {
+    "name": "Saint Charles Borromée, évêque de Milan et cardinal"
+    },
+  "inDedicationeBasilicaeLateranensis": {
+    "name": "Dédicace de la Basilique Saint-Jean-de-Latran"
+    },
+  "leonisMagni": {
+    "name": "Saint Léon Le Grand, pape et docteur de l'Église"
+    },
+  "martiniTuronensis": {
+    "name": "Saint Martin de Tours, évêque"
+    },
+  "iosaphat": {
+    "name": "Saint Josaphat, évêque et martyr"
+    },
+  "albertiMagni": {
+    "name": "Saint Albert le Grand, dominicain, évêque de Ratisbonne et docteur de l'Église"
+    },
+  "margaritaeScotiae": {
+    "name": "Sainte Marguerite d'Ecosse, reine"
+    },
+  "gertrudis": {
+    "name": "ainte Gertrude, vierge"
+    },
+  "elisabethHungariae": {
+    "name": "Sainte Elisabeth de Hongrie, duchesse de Thuringe et tertiaire franciscaine"
+    },
+  "inDedicationeBasilicarumSanctorumPetriEtPauliApostolorum": {
+    "name": "Dédicace des Basiliques de Saint Pierre et Saint Paul, apôtres"
+    },
+  "inPraesentationeBeataeMariaeVirginis": {
+    "name": "Présentation de la Bienheureuse Vierge Marie au Temple"
+    },
+  "caeciliae": {
+    "name": "Sainte Cécile, vierge et martyr"
+    },
+  "clementisI": {
+    "name": "Saint Clément de Rome, pape et martyr"
+    },
+  "columbani": {
+    "name": "Saint Colomban, religieux"
+    },
+  "andreaeDuNgLacEtSociorum": {
+    "name": "Saint André Dũng-Lạc et ses compagnons, martyrs"
+    },
+  "catharianaeAlexandrinae": {
+    "name": "Sainte Catherine d'Alexandrie, vierge et martyre"
+    },
+  "andreae": {
+    "name": "Saint André, le premier apôtre"
+    },
+  "francisciXavier": {
+    "name": "Saint François-Xavier, prêtre, jésuite"
+    },
+  "ioannisDamasceni": {
+    "name": "Saint Jean Damascène, prêtre et docteur de l'Église"
+    },
+  "nicolai": {
+    "name": "Saint Nicolas de Myre, évêque"
+    },
+  "ambrosii": {
+    "name": "Saint Ambroise de Milan, évêque et docteur de l'Église"
+    },
+  "inConceptioneImmaculataBeataeMariaeVirginis": {
+    "name": "Immaculée Conception de la Vierge Marie"
+    },
+  "ioannisDidaciCuauhtlatoatzin": {
+    "name": "Saint Juan Diego Cuauhtlatoatzin"
+    },
+  "beataeMariaeVirginisDeLoreto": {
+    "name": "Notre-Dame de Lorette"
+    },
+  "damasiI": {
+    "name": "Saint Damase, pape"
+    },
+  "beataeMariaeVirginsDeGuadalupe": {
+    "name": "Bienheureuse Vierge Marie de Guadaloupé"
+    },
+  "luciae": {
+    "name": "Sainte Lucie, vierge et martyre"
+    },
+  "ioannisACruce": {
+    "name": "Saint Jean de la Croix, prêtre et docteur de l'Église, carme"
+    },
+  "petriCanisii": {
+    "name": "Saint Pierre Canisius, prêtre et docteur de l'Église"
+    },
+  "ioannisDeKety": {
+    "name": "Saint Jean de Kenty, prêtre"
+    },
+  "inNativitateDomini": {
+    "name": "Nativité du Seigneur"
+    },
+  "stephani": {
+    "name": "Saint Etienne, premier martyr"
+    },
+  "ioannis": {
+    "name": "Saint Jean, apôtre et évangéliste"
+    },
+  "innocentium": {
+    "name": "Les Saints Innocents, martyrs"
+    },
+  "thomaeBecket": {
+    "name": "Saint Thomas Beckett, évêque et martyr"
+    },
+  "silvestriI": {
+    "name": "Saint Sylvestre, pape"
+    }
+}
