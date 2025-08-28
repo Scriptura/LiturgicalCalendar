@@ -19,10 +19,6 @@
     "name": "Carême",
     "color": "violaceus"
   },
-  "hebdomadaSancta": {
-    "name": "Semaine Sainte",
-    "parent": "quadragesima"
-  },
   "triduumPaschale": {
     "name": "Triduum pascal",
     "color": null
