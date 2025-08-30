@@ -23,12 +23,17 @@
 
   <ItemGroup>
     <Compile Include="EasterCalculation.fs" />
-    <Compile Include="FixedDate.fs" />
+    <!--<Compile Include="FixedDate.fs" />-->
     <Compile Include="LiturgicalTypes.fs" />
-    <Compile Include="Indexing/DateIndex.fs" />
+    <!--<Compile Include="Indexing/DateIndex.fs" />-->
     <Compile Include="LiturgicalJsonLoader.fs" />
-    <Compile Include="LiturgicalData.fs" />
+    <!--<Compile Include="LiturgicalData.fs" />-->
     <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.SystemTextJson" Version="1.4.36" />
+    <PackageReference Include="FsToolkit.ErrorHandling" Version="5.0.1" />
   </ItemGroup>
 
 </Project>

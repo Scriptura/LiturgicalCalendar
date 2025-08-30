@@ -1,79 +1,131 @@
 namespace LiturgicalCalendar
 
+open System
 open System.Text.Json.Serialization
 
 /// Couleurs liturgiques en latin (forme canonique)
 type LiturgicalColor =
-    | Albus
-    | Rubeus
-    | Viridis
-    | Violaceus
-    | Roseus
-    | Niger
+    | Albus // Blanc
+    | Rubeus // Rouge
+    | Viridis // Vert
+    | Violaceus // Violet/Pourpre
+    | Roseus // Rose
+    | Niger // Noir
+
+    // Conversion depuis string latin
+    static member FromLatin(colorLatin: string) =
+        match colorLatin.ToLower().Trim() with
+        | "albus" -> Some Albus
+        | "rubeus" -> Some Rubeus
+        | "viridis" -> Some Viridis
+        | "violaceus" -> Some Violaceus
+        | "roseus" -> Some Roseus
+        | "niger" -> Some Niger
+        | _ -> None
+
+    // Conversion vers string latin
+    member this.ToLatin() =
+        match this with
+        | Albus -> "albus"
+        | Rubeus -> "rubeus"
+        | Viridis -> "viridis"
+        | Violaceus -> "violaceus"
+        | Roseus -> "roseus"
+        | Niger -> "niger"
+
+    // Nom français pour l'affichage
+    member this.ToFrench() =
+        match this with
+        | Albus -> "Blanc"
+        | Rubeus -> "Rouge"
+        | Viridis -> "Vert"
+        | Violaceus -> "Violet"
+        | Roseus -> "Rose"
+        | Niger -> "Noir"
 
 /// Types de célébrations liturgiques
 type LiturgicalRank =
-    | Sollemnitas
-    | Dominica
-    | Festum
-    | Memoria
-    | MemoriaAdLibitum
-    | FeriaOrdinis
+    | Sollemnitas // Solennité
+    | Dominica // Dimanche
+    | Festum // Fête
+    | Memoria // Mémoire
+    | MemoriaAdLibitum // Mémoire libre
+    | FeriaOrdinis // Férie ordinaire
 
-/// Structure représentant une célébration liturgique
-type LiturgicalCelebration =
-    { Id: string
-      Month: int
-      Day: int
-      Name: string
-      Color: LiturgicalColor
-      Rank: LiturgicalRank }
+    static member FromLatin(rankLatin: string) =
+        match rankLatin.ToLower().Trim() with
+        | "sollemnitas" -> Some Sollemnitas
+        | "dominica" -> Some Dominica
+        | "festum" -> Some Festum
+        | "memoria" -> Some Memoria
+        | "memoria ad libitum" -> Some MemoriaAdLibitum
+        | "feria ordinis"
+        | "feria" -> Some FeriaOrdinis
+        | _ -> None
 
+    member this.ToLatin() =
+        match this with
+        | Sollemnitas -> "sollemnitas"
+        | Dominica -> "dominica"
+        | Festum -> "festum"
+        | Memoria -> "memoria"
+        | MemoriaAdLibitum -> "memoria ad libitum"
+        | FeriaOrdinis -> "feria ordinis"
 
-//////////////////////////// TEST : ////////////////////////////
+    member this.ToFrench() =
+        match this with
+        | Sollemnitas -> "Solennité"
+        | Dominica -> "Dimanche"
+        | Festum -> "Fête"
+        | Memoria -> "Mémoire"
+        | MemoriaAdLibitum -> "Mémoire libre"
+        | FeriaOrdinis -> "Férie"
 
-/// Type temporaire pour parser le JSON brut (minuscules comme dans vos JSON)
-type JsonCelebration =
-    { [<JsonPropertyName("month")>]
-      Month: int
-      [<JsonPropertyName("day")>]
-      Day: int
-      [<JsonPropertyName("name")>]
-      Name: string
-      [<JsonPropertyName("color")>]
-      Color: string
-      [<JsonPropertyName("rank")>]
-      Rank: string }
+// Type pour les informations liturgiques (gardant les strings pour la sérialisation JSON)
+[<CLIMutable>]
+type LiturgicalInfo =
+    { Name: string
+      Extra: string option
+      Color: string // Format latin du JSON
+      Rank: string option } // Format latin du JSON
+    // Méthodes de conversion vers les types typés
+    member this.GetColor() = LiturgicalColor.FromLatin(this.Color)
 
-/// Fonctions de conversion JSON -> Types liturgiques
-module JsonConverters =
+    member this.GetRank() =
+        this.Rank |> Option.bind LiturgicalRank.FromLatin
 
-    /// Convertit une couleur JSON vers LiturgicalColor
-    let parseColor (colorStr: string) : LiturgicalColor =
-        match colorStr.ToLowerInvariant() with
-        | "albus" -> Albus
-        | "rubeus" -> Rubeus
-        | "viridis" -> Viridis
-        | "violaceus" -> Violaceus
-        | "roseus" -> Roseus
-        | "niger" -> Niger
-        | _ -> Albus // Par défaut
+    // Méthodes utilitaires pour l'affichage
+    member this.GetColorFrench() =
+        this.GetColor()
+        |> Option.map (fun c -> c.ToFrench())
+        |> Option.defaultValue this.Color
 
-    /// Convertit un rang JSON vers LiturgicalRank
-    let parseRank (rankStr: string) : LiturgicalRank =
-        match rankStr.ToLowerInvariant() with
-        | "sollemnitas" -> Sollemnitas
-        | "dominica" -> Dominica
-        | "festum" -> Festum
-        | "memoria" -> Memoria
-        | "memoriaadlibitum" -> MemoriaAdLibitum
-        | _ -> Memoria // Par défaut
+    member this.GetRankFrench() =
+        this.Rank
+        |> Option.bind LiturgicalRank.FromLatin
+        |> Option.map (fun r -> r.ToFrench())
+        |> Option.defaultValue (this.Rank |> Option.defaultValue "Non spécifié")
 
-    /// Convertit JsonCelebration vers LiturgicalCelebration
-    let convertCelebration (id: string) (json: JsonCelebration) : LiturgicalCelebration =
-        { Id = id
-          Month = json.Month
-          Day = json.Day
-          Name = json.Name
-          Color = parseColor json.Color
-          Rank = parseRank json.Rank }
+// Alias de type pour l'ensemble des données liturgiques
+type LiturgicalData = Map<string, LiturgicalInfo>
+
+// Type pour une date liturgique (avec l'année)
+type LiturgicalDate =
+    { Info: LiturgicalInfo
+      Date: DateTime
+      Year: int
+      Key: string }
+    // Propriétés calculées pour un accès facile aux types typés
+    member this.Color = this.Info.GetColor()
+    member this.Rank = this.Info.GetRank()
+    member this.ColorFrench = this.Info.GetColorFrench()
+    member this.RankFrench = this.Info.GetRankFrench()
+
+// Types d'erreurs spécifiques au domaine liturgique
+type LiturgicalError =
+    | FileNotFound of path: string
+    | InvalidJson of message: string
+    | MissingKey of key: string
+    | EasterCalculationError of message: string
+    | UnknownLiturgicalColor of color: string
+    | UnknownLiturgicalRank of rank: string

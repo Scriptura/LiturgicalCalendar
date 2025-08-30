@@ -1,56 +1,73 @@
 namespace LiturgicalCalendar
 
-open System
 open System.IO
 open System.Text.Json
-open LiturgicalCalendar.DateIndex
+open System.Text.Json.Serialization
+//open FSharp.SystemTextJson
+open FsToolkit.ErrorHandling
 
 module LiturgicalJsonLoader =
 
-    /// Type intermédiaire pour désérialisation brute
-    type LiturgicalCelebrationRaw =
-        { Month: int
-          Day: int
-          Name: string
-          Color: string
-          Rank: string }
+    // Configuration du désérialiseur JSON pour le support F# et la conversion du nommage
+    let private jsonOptions =
+        let options = JsonSerializerOptions()
+        options.PropertyNamingPolicy <- JsonNamingPolicy.CamelCase
+        options.PropertyNameCaseInsensitive <- true
+        options.DefaultIgnoreCondition <- JsonIgnoreCondition.WhenWritingNull
+        options
 
-    /// Conversion string -> LiturgicalColor
-    let private parseColor =
-        function
-        | "albus" -> LiturgicalColor.Albus
-        | "rubeus" -> LiturgicalColor.Rubeus
-        | "viridis" -> LiturgicalColor.Viridis
-        | "violaceus" -> LiturgicalColor.Violaceus
-        | "roseus" -> LiturgicalColor.Roseus
-        | "niger" -> LiturgicalColor.Niger
-        | other -> invalidArg "Color" $"Couleur inconnue : {other}"
+    // Fonction pour lire le contenu d'un fichier en Result
+    let private readFile (path: string) : Result<string, LiturgicalError> =
+        try
+            if File.Exists(path) then
+                Ok(File.ReadAllText(path))
+            else
+                Error(FileNotFound path)
+        with ex ->
+            Error(InvalidJson $"Erreur de lecture: {ex.Message}")
 
-    /// Conversion string -> LiturgicalRank
-    let private parseRank =
-        function
-        | "sollemnitas" -> LiturgicalRank.Sollemnitas
-        | "dominica" -> LiturgicalRank.Dominica
-        | "festum" -> LiturgicalRank.Festum
-        | "memoria" -> LiturgicalRank.Memoria
-        | "memoriaAdLibitum" -> LiturgicalRank.MemoriaAdLibitum
-        | "feriaOrdinis" -> LiturgicalRank.FeriaOrdinis
-        | other -> invalidArg "Rank" $"Rang inconnu : {other}"
+    // Fonction pour parser une chaîne JSON en Result
+    let private parseJson (jsonString: string) : Result<LiturgicalData, LiturgicalError> =
+        try
+            let data = JsonSerializer.Deserialize<LiturgicalData>(jsonString, jsonOptions)
+            Ok data
+        with ex ->
+            Error(InvalidJson $"JSON invalide: {ex.Message}")
 
-    /// Charge un fichier JSON et retourne les célébrations typées
-    let loadCelebrations (path: string) : LiturgicalCelebration list =
-        let json = File.ReadAllText path
-        let options = JsonSerializerOptions(PropertyNameCaseInsensitive = true)
+    // Validation des données liturgiques
+    let private validateLiturgicalData (data: LiturgicalData) : Result<LiturgicalData, LiturgicalError> =
+        let invalidColors =
+            data
+            |> Map.toSeq
+            |> Seq.choose (fun (key, info) ->
+                match LiturgicalColor.FromLatin(info.Color) with
+                | None -> Some(key, info.Color)
+                | Some _ -> None)
+            |> Seq.toList
 
-        let dict =
-            JsonSerializer.Deserialize<Map<string, LiturgicalCelebrationRaw>>(json, options)
+        let invalidRanks =
+            data
+            |> Map.toSeq
+            |> Seq.choose (fun (key, info) ->
+                match info.Rank with
+                | Some rank ->
+                    match LiturgicalRank.FromLatin(rank) with
+                    | None -> Some(key, rank)
+                    | Some _ -> None
+                | None -> None // On accepte les rangs null/None comme valides
+            )
+            |> Seq.toList
 
-        dict
-        |> Map.toList
-        |> List.map (fun (key, raw) ->
-            { Id = key
-              Month = raw.Month
-              Day = raw.Day
-              Name = raw.Name
-              Color = parseColor raw.Color
-              Rank = parseRank raw.Rank })
+        match invalidColors, invalidRanks with
+        | [], [] -> Ok data
+        | (_, color) :: _, _ -> Error(UnknownLiturgicalColor color)
+        | _, (_, rank) :: _ -> Error(UnknownLiturgicalRank rank)
+
+    // Fonction principale pour charger un fichier JSON de manière sécurisée
+    let loadJsonFile (path: string) : Result<LiturgicalData, LiturgicalError> =
+        result {
+            let! jsonString = readFile path
+            let! data = parseJson jsonString
+            let! validatedData = validateLiturgicalData data
+            return validatedData
+        }

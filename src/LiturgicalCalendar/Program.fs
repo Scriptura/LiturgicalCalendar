@@ -1,54 +1,134 @@
-// Program.fs
 namespace LiturgicalCalendar
+
+open System
+open LiturgicalCalendar.EasterCalculation
+open LiturgicalCalendar.LiturgicalJsonLoader
 
 module Program =
 
-    open System
-    open System.IO
+    // Fonction pour parser l'année depuis argv
+    let parseYear (argv: string[]) : Result<int, string> =
+        match argv with
+        | [||] ->
+            // Aucun argument -> année courante par défaut
+            Ok DateTime.Now.Year
+        | [| yearStr |] ->
+            // Un argument -> tenter de parser l'année
+            match Int32.TryParse(yearStr) with
+            | true, year when year >= 1 && year <= 9999 -> Ok year
+            | true, year -> Error $"Année invalide: {year}. L'année doit être entre 1 et 9999."
+            | false, _ -> Error $"Format invalide: '{yearStr}' n'est pas un nombre."
+        | _ ->
+            // Trop d'arguments
+            Error "Trop d'arguments. Usage: dotnet run [année]"
 
-    // Importez les modules nécessaires
-    open LiturgicalCalendar.LiturgicalData
+    // Fonction d'affichage de l'aide
+    let displayUsage () =
+        printfn ""
+        printfn "📖 USAGE:"
+        printfn "   dotnet run              # Utilise l'année courante (%d)" DateTime.Now.Year
+        printfn "   dotnet run 2025         # Utilise l'année spécifiée"
+        printfn "   dotnet run --help       # Affiche cette aide"
+        printfn ""
+        printfn "📝 EXEMPLES:"
+        printfn "   dotnet run 2024         # Pâques 2024"
+        printfn "   dotnet run 2030         # Pâques 2030"
+        printfn ""
+
+    let displayError (error: LiturgicalError) =
+        match error with
+        | FileNotFound path -> printfn "❌ Fichier introuvable: %s" path
+        | InvalidJson msg -> printfn "❌ JSON invalide: %s" msg
+        | MissingKey key -> printfn "❌ Clé liturgique manquante: %s" key
+        | EasterCalculationError msg -> printfn "❌ Erreur calcul Pâques: %s" msg
+        | UnknownLiturgicalColor color -> printfn "❌ Couleur liturgique inconnue: %s" color
+        | UnknownLiturgicalRank rank -> printfn "❌ Rang liturgique inconnu: %s" rank
+
+    let createLiturgicalDate (key: string) (info: LiturgicalInfo) (date: DateTime) (year: int) =
+        { Info = info
+          Date = date
+          Year = year
+          Key = key }
+
+    let displayEasterInfo (paques: LiturgicalDate) =
+        printfn ""
+        printfn "🌟 ═══════════════════════════════════════════════════"
+        printfn "   CALENDARIUM LITURGICUM - DOMINICA RESURRECTIONIS %d" paques.Year
+        printfn "═══════════════════════════════════════════════════"
+        printfn ""
+
+        printfn
+            "📅 Dies        : %s"
+            (paques.Date.ToString("dddd dd MMMM yyyy", System.Globalization.CultureInfo("fr-FR")))
+
+        printfn "🏷️  Nomen       : %s" paques.Info.Name
+        printfn "🎨 Color       : %s (%s)" paques.Info.Color paques.ColorFrench
+        printfn "⭐ Gradus      : %s (%s)" (paques.Info.Rank |> Option.defaultValue "Non spécifié") paques.RankFrench
+        printfn "🔑 Clavis      : %s" paques.Key
+
+        match paques.Info.Extra with
+        | Some extra -> printfn "ℹ️  Additio     : %s" extra
+        | None -> ()
+
+        // Informations supplémentaires sur l'année
+        let isLeapYear = DateTime.IsLeapYear(paques.Year)
+
+        printfn
+            "📊 Anno        : %s"
+            (if isLeapYear then
+                 "bisextilis (bissextile)"
+             else
+                 "ordinarius")
+
+        match paques.Color, paques.Rank with
+        | Some color, Some rank ->
+            printfn ""
+            printfn "📊 Typi liturgici:"
+            printfn "   Color: %A (%s)" color (color.ToLatin())
+            printfn "   Gradus: %A (%s)" rank (rank.ToLatin())
+        | _ -> ()
+
+        printfn ""
+        printfn "═══════════════════════════════════════════════════"
 
     [<EntryPoint>]
     let main argv =
-        try
-            let resourcesPath = Path.Combine(__SOURCE_DIRECTORY__, "Ressources", "calendars")
+        // Vérification de l'aide
+        if argv |> Array.contains "--help" || argv |> Array.contains "-h" then
+            displayUsage ()
+            0
+        else
+            // Parsing de l'année
+            match parseYear argv with
+            | Error errorMsg ->
+                printfn "❌ %s" errorMsg
+                displayUsage ()
+                1 // Code d'erreur
+            | Ok annee ->
+                let jsonPath = "Ressources/calendarium_romanum/de_tempore.json"
+                let easterKey = "dominicaResurrectionis"
 
-            let paths =
-                [ Path.Combine(resourcesPath, "generalRomanCalendar.json")
-                  Path.Combine(resourcesPath, "europeRomanCalendar.json")
-                  Path.Combine(resourcesPath, "franceRomanCalendar.json") ]
+                printfn "🔍 Recherche des informations liturgiques pour l'année %d..." annee
 
-            (*
-            // Debug : vérifier le contenu brut du JSON
-            let testJsonPath = Path.Combine(resourcesPath, "generalRomanCalendar.json")
-            let jsonContent = File.ReadAllText(testJsonPath)
-            printfn "\n--- DEBUG JSON BRUT ---"
-            printfn "Taille du fichier : %d caractères" jsonContent.Length
-            printfn "Contient 'nativitatisDomini' : %b" (jsonContent.Contains("nativitatisDomini"))
-            printfn "Premiers 200 caractères : %s" (jsonContent.Substring(0, min 200 jsonContent.Length))
-            *)
+                match
+                    EasterCalculation.calculateEaster CalendarType.Gregorian annee,
+                    LiturgicalJsonLoader.loadJsonFile jsonPath
+                with
 
-            // 1. Initialisation du calendrier avec les fichiers spécifiques à la France
-            LiturgicalData.initializeFromMultipleJson paths "France"
+                | Ok paquesDate, Ok liturgicalData ->
+                    match liturgicalData |> Map.tryFind easterKey with
+                    | Some paquesInfo ->
+                        let paques = createLiturgicalDate easterKey paquesInfo paquesDate annee
+                        displayEasterInfo paques
+                        0 // Succès
+                    | None ->
+                        displayError (MissingKey easterKey)
+                        1
 
-            // 2. Recherche et affichage pour le 25 décembre
-            printfn "\n--- RECHERCHE DU 25 DÉCEMBRE ---"
-            let mainCelebration = LiturgicalData.getMainCelebrationForDate 12 25
+                | Error msg, _ ->
+                    displayError (EasterCalculationError msg)
+                    1
 
-            match mainCelebration with
-            | Some(id, celebration) ->
-                printfn "🎉 Célébration principale le 25 décembre: %s (%s)" celebration.Name id
-                printfn "  - Rang : %A" celebration.Rank
-                printfn "  - Couleur : %A" celebration.Color
-            | None -> printfn "❌ Aucune célébration trouvée le 25 décembre."
-
-            // 3. Affichage des statistiques pour validation
-            printfn "\n--- STATISTIQUES DU CALENDRIER ---"
-            LiturgicalData.printCalendarStats ()
-
-            0 // Code de sortie
-
-        with ex ->
-            printfn "Erreur fatale : %s" ex.Message
-            1 // Code d'erreur
+                | _, Error jsonError ->
+                    displayError jsonError
+                    1
