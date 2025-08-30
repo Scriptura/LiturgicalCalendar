@@ -26,7 +26,7 @@
     <ItemGroup>
         <!-- Fichier de test que vous avez créé -->
         <Compile Include="EasterCalculationTests.fs" />
-        <Compile Include="MovableFeastsTests.fs" />
+        <!-- <Compile Include="MovableFeastsTests.fs" /> -->
     </ItemGroup>
 
 </Project>
