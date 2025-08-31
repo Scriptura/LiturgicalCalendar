@@ -73,12 +73,12 @@ module Program =
         // Informations supplémentaires sur l'année
         let isLeapYear = DateTime.IsLeapYear(paques.Year)
 
-        printfn
-            "📊 Anno        : %s"
-            (if isLeapYear then
-                 "bisextilis (bissextile)"
-             else
-                 "ordinarius")
+        let getYearType =
+            function
+            | true -> "bisextilis (bissextile)"
+            | false -> "ordinarius"
+
+        printfn "📊 Anno : %s" (getYearType isLeapYear)
 
         match paques.Color, paques.Rank with
         | Some color, Some rank ->
@@ -94,10 +94,11 @@ module Program =
     [<EntryPoint>]
     let main argv =
         // Vérification de l'aide
-        if argv |> Array.contains "--help" || argv |> Array.contains "-h" then
+        match argv |> Array.contains "--help" || argv |> Array.contains "-h" with
+        | true ->
             displayUsage ()
             0
-        else
+        | false ->
             // Parsing de l'année
             match parseYear argv with
             | Error errorMsg ->

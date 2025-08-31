@@ -16,12 +16,12 @@ module LiturgicalJsonLoader =
         options
 
     // Fonction pour lire le contenu d'un fichier en Result
+
     let private readFile (path: string) : Result<string, LiturgicalError> =
         try
-            if File.Exists(path) then
-                Ok(File.ReadAllText(path))
-            else
-                Error(FileNotFound path)
+            match File.Exists(path) with
+            | true -> Ok(File.ReadAllText(path))
+            | false -> Error(FileNotFound path)
         with ex ->
             Error(InvalidJson $"Erreur de lecture: {ex.Message}")
 
