@@ -4,14 +4,14 @@
 
 # LiturgicalCalendar
 
-A .NET library for liturgical calendar calculations, with primary support for the French-speaking Catholic community.
+Une bibliothèque .NET pour les calculs du calendrier liturgique, avec un support principal pour la communauté catholique francophone.
 
-## Features
+## Fonctionnalités
 
-- ✅ Easter date calculation (Gregorian calendar)
-- 🚧 Fixed feasts
-- 🚧 Movable feasts
-- 🚧 Liturgical seasons
+- ✅ Calcul de la date de Pâques (calendrier grégorien)
+- 🚧 Fêtes fixes
+- 🚧 Fêtes mobiles
+- 🚧 Temps liturgiques
 
 ## Installation
 
