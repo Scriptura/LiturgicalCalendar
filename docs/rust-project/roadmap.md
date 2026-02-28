@@ -1,7 +1,7 @@
 # Roadmap de Développement : Liturgical Calendar v2.0
 
 **Version** : 2.0  
-**Date de Révision** : 2026-02-27  
+**Date de Révision** : 2026-02-28
 **Durée Totale Estimée** : 10 semaines  
 **Méthodologie** : Développement incrémental orienté livrables binaires  
 **Critères de Succès** : Tests de régression + Benchmarks + Fuzzing + Cross-build determinism
@@ -17,6 +17,7 @@
 liturgical-calendar est un moteur déterministe AOT capable de produire un artefact annuel figé appelé **Kalendarium**, sérialisé au format `.kald` (magic `KALD`).
 
 Le système est **complet et autonome** :
+
 - Le **Slow Path** calcule n'importe quelle année grégorienne canonique (1583-4099)
 - Le **Fast Path** (Kalendarium, fichier `.kald`) est une **optimisation spatiale et temporelle** pour une fenêtre choisie
 - L'utilisateur décide de sa plage d'optimisation (typiquement -50/+300 ans autour de l'année courante)
@@ -25,6 +26,7 @@ Le système est **complet et autonome** :
 **Le Kalendarium est un luxe de performance que l'on s'offre pour les années qui comptent vraiment.**
 
 **Nouveautés v2.0** :
+
 - **Modèle 2D découplé** : abandon du modèle 1D `Rank`. Introduction de deux axes orthogonaux — `Precedence` (axe ordinal, 4 bits, Z-Index strict) et `Nature` (axe sémantique, 3 bits). La résolution de collision est désormais une comparaison entière pure sur `Precedence`. `Nature` ne dicte jamais la force d'éviction.
 - **Nouveau layout DayPacked** : `[31:28] Precedence | [27:25] Nature | [24:22] Color | [21:19] Season | [18] Reserved | [17:0] FeastID`. FeastID réduit de 22 à 18 bits (262 144 slots, valeurs 0–262 143). Season repositionné de l'axe primaire vers cache AOT structurel (bits [21:19]).
 - Intégration du hardening production (validation header, corruption handling, observabilité)
@@ -217,12 +219,12 @@ pub fn is_sunday(year: i32, day_of_year: u16) -> bool {
 #[inline]
 fn day_of_week(year: i32, month: u8, day: u8) -> u32 {
     const T: [u32; 12] = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
-    
+
     // Ajustement pour janvier et février
     let y = year - ((month < 3) as i32);
     let m = month as u32;
     let d = day as u32;
-    
+
     ((y + y/4 - y/100 + y/400 + T[(m - 1) as usize] + d) as u32) % 7
 }
 
@@ -269,7 +271,7 @@ fn test_is_sunday_known_dates() {
         expected: bool,
         description: &'static str,
     }
-    
+
     let cases = [
         TestCase { year: 2025, doy: 5, expected: true, description: "5 janv 2025 (dimanche)" },
         TestCase { year: 2025, doy: 110, expected: true, description: "20 avril 2025 (Pâques)" },
@@ -281,7 +283,7 @@ fn test_is_sunday_known_dates() {
         TestCase { year: 2000, doy: 2, expected: true, description: "2 janv 2000 (dimanche)" },
         TestCase { year: 1900, doy: 1, expected: false, description: "1 janv 1900 (lundi)" },
     ];
-    
+
     for case in &cases {
         assert_eq!(
             is_sunday(case.year, case.doy),
@@ -297,7 +299,7 @@ fn test_is_sunday_exhaustive_week() {
     // Vérification d'une semaine complète
     let year = 2025;
     let week_start = 5;  // 5 janv (dimanche)
-    
+
     for offset in 0..7 {
         let is_expected_sunday = offset == 0;
         assert_eq!(
@@ -312,13 +314,13 @@ fn test_is_sunday_exhaustive_week() {
 fn test_is_sunday_leap_year_boundary() {
     // Test autour du 29 février
     let year = 2024;  // Année bissextile
-    
+
     // 60 = 29 février 2024 (jeudi)
     assert!(!is_sunday(year, 60));
-    
+
     // 61 = 1 mars 2024 (vendredi)
     assert!(!is_sunday(year, 61));
-    
+
     // 64 = 4 mars 2024 (lundi)
     assert!(!is_sunday(year, 64));
 }
@@ -328,15 +330,15 @@ fn test_day_of_year_to_month_day_roundtrip() {
     // Vérification que la conversion est correcte
     for year in [1583, 1900, 2000, 2024, 2025, 4099] {
         let max_day = if is_leap_year(year) { 366 } else { 365 };
-        
+
         let is_leap = is_leap_year(year);
         for doy in 1..=max_day {
             let (month, day) = day_of_year_to_month_day(doy, is_leap);
-            
+
             // Vérifications de base
             assert!(month >= 1 && month <= 12, "Invalid month {} for {}-{}", month, year, doy);
             assert!(day >= 1 && day <= 31, "Invalid day {} for {}-{}", day, year, doy);
-            
+
             // Vérification cohérence avec is_leap_year
             if month == 2 {
                 let max_feb = if is_leap_year(year) { 29 } else { 28 };
@@ -383,14 +385,14 @@ impl Header {
         if bytes.len() < 16 {
             return Err(HeaderError::FileTooSmall);
         }
-        
+
         let magic = [bytes[0], bytes[1], bytes[2], bytes[3]];
         let version = u16::from_ne_bytes([bytes[4], bytes[5]]);
         let start_year = i16::from_ne_bytes([bytes[6], bytes[7]]);
         let year_count = u16::from_ne_bytes([bytes[8], bytes[9]]);
         let flags = u16::from_ne_bytes([bytes[10], bytes[11]]);
         let padding = [bytes[12], bytes[13], bytes[14], bytes[15]];
-        
+
         Ok(Header {
             magic,
             version,
@@ -427,17 +429,17 @@ pub const KNOWN_FLAGS_V1: u16 = 0x0000;  // Aucun flag pour v1
 pub fn validate_header(bytes: &[u8]) -> Result<Header, HeaderError> {
     // Désérialisation explicite (pas de cast de pointeur → pas d'UB)
     let header = Header::from_bytes(bytes)?;
-    
+
     // Magic
     if &header.magic != b"KALD" {
         return Err(HeaderError::InvalidMagic(header.magic));
     }
-    
+
     // Version
     if header.version != 1 {
         return Err(HeaderError::UnsupportedVersion(header.version));
     }
-    
+
     // Flags inconnus → REJET STRICT
     if (header.flags & !KNOWN_FLAGS_V1) != 0 {
         return Err(HeaderError::UnsupportedFlags {
@@ -446,21 +448,21 @@ pub fn validate_header(bytes: &[u8]) -> Result<Header, HeaderError> {
             unknown_bits: header.flags & !KNOWN_FLAGS_V1,
         });
     }
-    
+
     // Padding strict
     if header._padding != [0, 0, 0, 0] {
         return Err(HeaderError::InvalidPadding(header._padding));
     }
-    
+
     // Bornes années
     if header.start_year < 1583 || header.start_year > 4099 {
         return Err(HeaderError::YearOutOfBounds(header.start_year));
     }
-    
+
     if header.year_count == 0 || header.year_count > 2516 {
         return Err(HeaderError::InvalidYearCount(header.year_count));
     }
-    
+
     Ok(header)
 }
 
@@ -493,7 +495,7 @@ fn test_validate_header_flags_unknown() {
         0x01, 0x00,              // Flags 0x0001 (INCONNU pour v1)
         0x00, 0x00, 0x00, 0x00,  // Padding
     ];
-    
+
     let result = validate_header(&bytes);
     assert!(matches!(result, Err(HeaderError::UnsupportedFlags { .. })));
 }
@@ -508,7 +510,7 @@ fn test_validate_header_padding_non_zero() {
         0x00, 0x00,
         0xFF, 0x00, 0x00, 0x00,  // Padding invalide
     ];
-    
+
     let result = validate_header(&bytes);
     assert!(matches!(result, Err(HeaderError::InvalidPadding(_))));
 }
@@ -530,11 +532,11 @@ use liturgical_calendar_core::{Header, Day, CorruptionInfo};
 struct Args {
     /// Path to .kald file
     file: String,
-    
+
     /// Show first N entries
     #[arg(short, long, default_value = "10")]
     preview: usize,
-    
+
     /// Check for corruptions
     #[arg(short, long)]
     check: bool,
@@ -542,38 +544,38 @@ struct Args {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
-    
+
     let file = std::fs::File::open(&args.file)?;
     let mmap = unsafe { memmap2::Mmap::map(&file)? };
-    
+
     // Validation header
     let header = validate_header(&mmap[..])?;
-    
+
     println!("Format: KALD v{}", header.version);
     println!("Start Year: {}", header.start_year);
     println!("Year Count: {}", header.year_count);
     println!("Flags: 0x{:04X}", header.flags);
     println!("File Size: {} bytes", mmap.len());
-    
+
     let expected_size = 16 + (header.year_count as usize * 1464);
-    println!("Expected Size: {} bytes {}", 
+    println!("Expected Size: {} bytes {}",
         expected_size,
         if mmap.len() == expected_size { "✓" } else { "✗" }
     );
-    
+
     // Diagnostic endianness
     diagnose_endianness(&header);
-    
+
     // Preview entries
     if args.preview > 0 {
         preview_entries(&mmap, &header, args.preview)?;
     }
-    
+
     // Corruption scan
     if args.check {
         scan_corruptions(&mmap, &header)?;
     }
-    
+
     Ok(())
 }
 
@@ -583,9 +585,9 @@ fn diagnose_endianness(header: &Header) {
     } else {
         "big-endian"
     };
-    
+
     println!("System Endianness: {}", system_endian);
-    
+
     // Heuristique : start_year doit être plausible
     if header.start_year < 1583 || header.start_year > 4099 {
         println!("⚠️  WARNING: start_year looks implausible, possible endianness mismatch");
@@ -600,7 +602,7 @@ fn preview_entries(
     count: usize
 ) -> Result<(), Box<dyn std::error::Error>> {
     println!("\nFirst {} entries:", count);
-    
+
     let data = &mmap[16..];
     for i in 0..count.min(header.year_count as usize * 366) {
         let offset = i * 4;
@@ -610,10 +612,10 @@ fn preview_entries(
             data[offset + 2],
             data[offset + 3],
         ]);
-        
+
         let year = header.start_year + (i / 366) as i16;
         let day = (i % 366) + 1;
-        
+
         match Day::try_from_u32(packed) {
             Ok(logic) => {
                 println!("  {}-{:03}: 0x{:08X} (Prec={:?}, Nat={:?}, {:?}, {:?}, #0x{:05X})",
@@ -627,7 +629,7 @@ fn preview_entries(
             }
         }
     }
-    
+
     Ok(())
 }
 
@@ -636,11 +638,11 @@ fn scan_corruptions(
     header: &Header
 ) -> Result<(), Box<dyn std::error::Error>> {
     println!("\nScanning for corruptions...");
-    
+
     let data = &mmap[16..];
     let total = header.year_count as usize * 366;
     let mut corrupted = 0;
-    
+
     for i in 0..total {
         let offset = i * 4;
         let packed = u32::from_ne_bytes([
@@ -649,7 +651,7 @@ fn scan_corruptions(
             data[offset + 2],
             data[offset + 3],
         ]);
-        
+
         if let Err(info) = DayPacked::try_from_u32(packed) {
             corrupted += 1;
             eprintln!("Corruption at offset {}: 0x{:08X} (field: {}, value: {})",
@@ -657,18 +659,18 @@ fn scan_corruptions(
             );
         }
     }
-    
+
     println!("\nCorruption Report:");
     println!("  Total entries: {}", total);
     println!("  Corrupted: {}", corrupted);
     println!("  Rate: {:.4}%", (corrupted as f64 / total as f64) * 100.0);
-    
+
     if corrupted == 0 {
         println!("✓ No corruptions detected");
     } else {
         println!("✗ File contains corrupted entries");
     }
-    
+
     Ok(())
 }
 ```
@@ -711,6 +713,7 @@ $ kald-inspect corrupted.kald --check
 Forge production-ready générant des fichiers `.kald` pour une **fenêtre temporelle choisie par l'utilisateur**. La Forge ne "compile" pas tout le calendrier : elle optimise une plage stratégique (ex: 2025-2324 pour serveur, 2000-2100 pour mobile).
 
 **Choix de Fenêtre - Exemples** :
+
 - **Application mobile contemporaine** : 2000-2100 (100 ans, ~150 KB)
 - **Serveur avec fenêtre glissante** : année_courante ±50 ans (régénéré annuellement)
 - **Archive historique** : 1583-2025 (442 ans, ~650 KB)
@@ -885,11 +888,10 @@ fn bench_registry_allocate_next(b: &mut Bencher) {
 **Décision d'Implémentation** :
 
 Pour v1.0, le registry simple (`&mut self`, mono-thread) est suffisant :
+
 - La Forge génère le `.kald` séquentiellement
 - Pas d'accès concurrent au registry durant la compilation
 - Le modèle `BTreeMap` garantit le déterminisme de l'output
-
-
 
 **CLI Registry Commands** :
 
@@ -915,24 +917,24 @@ $ liturgical-calendar-forge registry verify \
 #[test]
 fn test_registry_import_export() {
     let mut registry_fr = FeastRegistry::new();
-    
+
     // Allocation France
     for i in 0..100 {
         let id = registry_fr.allocate_next(2, 1).unwrap();
         registry_fr.register(id, format!("Saint FR {}", i)).unwrap();
     }
-    
+
     // Export
     let export = registry_fr.export_scope(2, 1);
     assert_eq!(export.allocations.len(), 100);
-    
+
     // Import dans registry allemand
     let mut registry_de = FeastRegistry::new();
     let report = registry_de.import(export).unwrap();
-    
+
     assert_eq!(report.imported, 100);
     assert_eq!(report.collisions.len(), 0);
-    
+
     // Allocation allemande ne doit pas collisionner
     let de_id = registry_de.allocate_next(2, 1).unwrap();
     // Avec layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12].
@@ -944,7 +946,7 @@ fn test_registry_import_export() {
 #[test]
 fn test_registry_collision_detection() {
     let mut registry = FeastRegistry::new();
-    
+
     // Allocation manuelle
     // Layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12], seq=1 → 0x21001
     registry.register(0x21001, "Saint A".to_string()).unwrap();
@@ -981,6 +983,7 @@ fn test_registry_collision_detection() {
 La roadmap v2.0 se concentre sur l'architecture et les contrats du système. **Le contenu liturgique exhaustif** (règles temporelles, sanctoral, fêtes votives, déplacements) sera fourni par l'opérateur via fichiers de configuration (TOML/JSON).
 
 La spécification technique (section 5.1) détaille le format attendu pour ces configurations. Pour v1.0, l'opérateur doit fournir :
+
 - Règles temporelles (fêtes mobiles, déplacements)
 - Sanctoral complet (universel, national, diocésain)
 - Règles de précédence
@@ -1050,20 +1053,20 @@ impl CalendarBuilder {
 #[test]
 fn test_forge_determinism_multiple_runs() {
     let config = Config::load("test.toml").unwrap();
-    
+
     let mut hashes = Vec::new();
-    
+
     for run in 0..5 {
         let builder = CalendarBuilder::new(config.clone()).unwrap();
         let calendar = builder.build().unwrap();
-        
+
         let mut file = Vec::new();
         calendar.write_kald(&mut file).unwrap();
-        
+
         let hash = sha256::digest(&file);
         hashes.push(hash);
     }
-    
+
     // Tous les hashes doivent être identiques
     assert!(hashes.windows(2).all(|w| w[0] == w[1]));
 }
@@ -1151,9 +1154,9 @@ L'opérateur `?` propage les erreurs via `From::from()`. Si une conversion
 the trait `From<IoError>` is not implemented for `RuntimeError`
 ```
 
-Cette erreur apparaît au *site d'appel* (là où `?` est utilisé), pas au niveau
+Cette erreur apparaît au _site d'appel_ (là où `?` est utilisé), pas au niveau
 de la définition du type — ce qui peut être déroutant. Implémenter toutes les
-conversions du tableau §9.1 de la spec *avant* d'écrire le code qui les utilise.
+conversions du tableau §9.1 de la spec _avant_ d'écrire le code qui les utilise.
 
 Ordre d'implémentation : `std::io::Error → IoError` en premier, puis
 `IoError → RuntimeError`, puis `DomainError → RuntimeError`.
@@ -1188,7 +1191,7 @@ pub struct Provider {
     slow_path: SlowPath,
     range: (i16, u16),
     string_provider: StringProvider,
-    
+
     /// NOUVEAU : Télémétrie atomique
     telemetry: Telemetry,
 }
@@ -1209,21 +1212,21 @@ impl Provider {
             self.telemetry.invalid_returns.fetch_add(1, Ordering::Relaxed);
             return DayPacked::invalid();
         }
-        
+
         // Validation année bissextile
         if day_of_year == 366 && !is_leap_year(year as i32) {
             self.telemetry.invalid_returns.fetch_add(1, Ordering::Relaxed);
             return DayPacked::invalid();
         }
-        
+
         // Tentative Fast Path
         if let Some(ref fast) = self.fast_path {
             if year >= self.range.0 && year < self.range.0 + self.range.1 as i16 {
                 self.telemetry.fast_path_hits.fetch_add(1, Ordering::Relaxed);
-                
+
                 let idx = index_day(year, day_of_year, fast.start_year);
                 let packed = fast.data[idx];
-                
+
                 match DayPacked::try_from_u32(packed) {
                     Ok(day) => return day,
                     Err(_) => {
@@ -1235,7 +1238,7 @@ impl Provider {
                 }
             }
         }
-        
+
         // Fallback Slow Path
         if year >= 1583 && year <= 4099 {
             self.telemetry.slow_path_hits.fetch_add(1, Ordering::Relaxed);
@@ -1243,12 +1246,12 @@ impl Provider {
                 .map(|logic| DayPacked::from(logic))
                 .unwrap_or_else(|| DayPacked::invalid());
         }
-        
+
         // Hors limites
         self.telemetry.out_of_bounds_queries.fetch_add(1, Ordering::Relaxed);
         DayPacked::invalid()
     }
-    
+
     /// Log structuré de corruption (JSON vers stderr)
     ///
     /// SIGNATURE CANONIQUE (conforme spec §7) : reçoit le u32 brut.
@@ -1273,7 +1276,7 @@ impl Provider {
 
         eprintln!("{}", log);
     }
-    
+
     /// API de télémétrie (snapshot atomique)
     pub fn get_telemetry(&self) -> TelemetrySnapshot {
         TelemetrySnapshot {
@@ -1300,7 +1303,7 @@ impl TelemetrySnapshot {
         let total = self.fast_path_hits + self.slow_path_hits;
         if total == 0 { 0.0 } else { self.fast_path_hits as f64 / total as f64 }
     }
-    
+
     /// Export au format Prometheus (text exposition)
     pub fn to_prometheus(&self) -> String {
         format!(
@@ -1353,15 +1356,15 @@ impl Provider {
 fn setup_metrics_endpoint(provider: Arc<Provider>) {
     use std::net::TcpListener;
     use std::io::Write;
-    
+
     std::thread::spawn(move || {
         let listener = TcpListener::bind("127.0.0.1:9090").unwrap();
-        
+
         for stream in listener.incoming() {
             if let Ok(mut stream) = stream {
                 let telemetry = provider.get_telemetry();
                 let metrics = telemetry.to_prometheus();
-                
+
                 let response = format!(
                     "HTTP/1.1 200 OK\r\n\
                      Content-Type: text/plain; version=0.0.4\r\n\
@@ -1371,7 +1374,7 @@ fn setup_metrics_endpoint(provider: Arc<Provider>) {
                     metrics.len(),
                     metrics
                 );
-                
+
                 let _ = stream.write_all(response.as_bytes());
             }
         }
@@ -1394,7 +1397,8 @@ Métriques (Prometheus) :
 
 Principe : Le runtime expose les données, l'infrastructure gère la collecte.
 ```
-```
+
+````
 
 **Tests** :
 
@@ -1403,20 +1407,20 @@ Principe : Le runtime expose les données, l'infrastructure gère la collecte.
 fn test_telemetry_corruption_tracking() {
     // Création fichier corrompu
     let mut data = create_valid_litu(2025, 1);
-    
+
     // Injection corruption (season = 15)
     data[16] = 0xFF;
     data[17] = 0xFF;
     data[18] = 0xFF;
     data[19] = 0xFF;
-    
+
     write_file("corrupt.kald", &data);
-    
+
     let provider = Provider::new("corrupt.kald", "corrupt.lits", make_slow_path()).unwrap();
     let result = provider.get_day(2025, 1);
-    
+
     assert_eq!(result.as_u32(), 0xFFFFFFFF);  // DayPacked::invalid()
-    
+
     let telemetry = provider.get_telemetry();
     assert_eq!(telemetry.corrupted_entries, 1);
     assert_eq!(telemetry.invalid_returns, 0);  // corruption ≠ invalid_returns
@@ -1425,23 +1429,23 @@ fn test_telemetry_corruption_tracking() {
 #[test]
 fn test_telemetry_hit_rates() {
     let provider = Provider::new("france.kald", "france.lits", make_slow_path()).unwrap();
-    
+
     // 100 requêtes dans la plage
     for i in 0..100 {
         provider.get_day(2025 + (i % 10), 1 + (i % 365));
     }
-    
+
     // 50 requêtes hors plage
     for i in 0..50 {
         provider.get_day(1500, 1);
     }
-    
+
     let telemetry = provider.get_telemetry();
     assert_eq!(telemetry.fast_path_hits, 100);
     assert_eq!(telemetry.slow_path_hits, 0);
     assert_eq!(telemetry.out_of_bounds_queries, 50);
 }
-```
+````
 
 #### 3.2 FFI Durci avec Gestion d'Erreurs (Semaine 6, Jours 4-5)
 
@@ -1503,7 +1507,7 @@ use std::cell::RefCell;
 
 pub struct Provider {
     // ... champs existants ...
-    
+
     /// NOUVEAU : Dernier message d'erreur (thread-local)
     last_error: RefCell<Option<CString>>,
 }
@@ -1534,7 +1538,7 @@ pub unsafe extern "C" fn kal_get_day_checked(
             error_code: 1,  // INVALID_HANDLE
         };
     }
-    
+
     if day_of_year == 0 || day_of_year > 366 {
         let provider = unsafe { &*handle };
         provider.set_last_error(&format!("Invalid day_of_year: {}", day_of_year));
@@ -1543,10 +1547,10 @@ pub unsafe extern "C" fn kal_get_day_checked(
             error_code: 3,  // INVALID_DAY
         };
     }
-    
+
     let provider = unsafe { &*handle };
     let day = provider.get_day(year, day_of_year);
-    
+
     if day.is_invalid() {
         let error_code = if year < 1583 || year > 4099 {
             provider.set_last_error(&format!("Year {} out of bounds", year));
@@ -1555,7 +1559,7 @@ pub unsafe extern "C" fn kal_get_day_checked(
             provider.set_last_error("Corrupted entry or invalid day");
             4  // CORRUPTED_ENTRY
         };
-        
+
         KalResult {
             value: 0,
             error_code,
@@ -1575,7 +1579,7 @@ pub unsafe extern "C" fn kal_get_last_error(
     if handle.is_null() {
         return std::ptr::null();
     }
-    
+
     let provider = unsafe { &*handle };
     provider.last_error.borrow()
         .as_ref()
@@ -1594,23 +1598,23 @@ pub unsafe extern "C" fn kal_get_last_error(
 
 void test_invalid_day() {
     KalProvider* provider = kal_new("france.kald", "france.lits");
-    
+
     KalResult result = kal_get_day_checked(provider, 2025, 0);
     assert(result.error_code == KAL_INVALID_DAY);
     assert(result.value == 0);
-    
+
     const char* error = kal_get_last_error(provider);
     printf("Error: %s\n", error);
-    
+
     kal_free(provider);
 }
 
 void test_out_of_bounds() {
     KalProvider* provider = kal_new("france.kald", "france.lits");
-    
+
     KalResult result = kal_get_day_checked(provider, 1500, 1);
     assert(result.error_code == KAL_OUT_OF_BOUNDS);
-    
+
     kal_free(provider);
 }
 
@@ -1657,12 +1661,14 @@ Garantir la robustesse production via fuzzing, cross-build, et tests d'intégrat
 **Objectif** : Garantir l'absence de panics et la gestion contrôlée des erreurs sur inputs aléatoires.
 
 **Invariants Attendus** :
+
 1. Aucun panic sur input arbitraire
 2. Aucun undefined behavior (vérifié par MIRI)
 3. Les erreurs retournées sont cohérentes avec le type d'input
 4. Les compteurs de télémétrie s'incrémentent correctement
 
 **Seuils Minimaux** :
+
 - 10,000 mutations par target (header, full file)
 - Coverage ≥80% des branches dans le code de validation
 - 0 panics, 0 crashes, 0 UB détectés
@@ -1691,7 +1697,7 @@ use liturgical_calendar_core::validate_header;
 fuzz_target!(|data: &[u8]| {
     // INVARIANT : Aucun panic
     let _ = validate_header(data);
-    
+
     // Note : Les erreurs sont attendues et acceptables
     // Ce qui est interdit : panics, UB, segfaults
 });
@@ -1712,15 +1718,15 @@ fuzz_target!(|data: &[u8]| {
     if data.len() < 1480 {  // Header + 1 année minimum
         return;
     }
-    
+
     let iter = ITERATION.fetch_add(1, Ordering::Relaxed);
     let path = format!("/tmp/fuzz_{}_{}.kald", std::process::id(), iter);
-    
+
     // Écriture du fichier
     if let Ok(mut file) = std::fs::File::create(&path) {
         let _ = file.write_all(data);
         drop(file);
-        
+
         // Tentative de chargement
         // INVARIANT : Pas de panic même sur input corrompu
         let rules = HardcodedRuleProvider::new_roman_rite_ordinary();
@@ -1730,18 +1736,18 @@ fuzz_target!(|data: &[u8]| {
             let _ = provider.get_day(2025, 1);
             let _ = provider.get_day(2025, 366);
             let _ = provider.get_day(1500, 1);  // Hors limites
-            
+
             // Vérifier cohérence de la télémétrie
             let telemetry = provider.get_telemetry();
-            let total = telemetry.fast_path_hits 
-                + telemetry.slow_path_hits 
+            let total = telemetry.fast_path_hits
+                + telemetry.slow_path_hits
                 + telemetry.out_of_bounds_queries
                 + telemetry.invalid_returns;
-            
+
             // INVARIANT : Au moins 3 requêtes comptabilisées
             assert!(total >= 3, "Telemetry inconsistent: total={}", total);
         }
-        
+
         // Cleanup
         let _ = std::fs::remove_file(&path);
     }
@@ -1820,16 +1826,16 @@ targets:
   - runner: ubuntu-latest
     target: x86_64-unknown-linux-gnu
     endian: little
-  
+
   - runner: ubuntu-latest
     target: aarch64-unknown-linux-gnu
     endian: little
-    cross: true  # Utilise cross-rs
-  
+    cross: true # Utilise cross-rs
+
   - runner: macos-latest
     target: x86_64-apple-darwin
     endian: little
-  
+
   - runner: macos-latest
     target: aarch64-apple-darwin
     endian: little
@@ -1859,20 +1865,20 @@ jobs:
           - os: macos-14
             target: aarch64-apple-darwin
             use_cross: false
-    
+
     runs-on: ${{ matrix.os }}
-    
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
-      
+
       - name: Install cross (if needed)
         if: matrix.use_cross
         run: cargo install cross --git https://github.com/cross-rs/cross
-      
+
       - name: Build forge
         run: |
           if [ "${{ matrix.use_cross }}" = "true" ]; then
@@ -1880,24 +1886,24 @@ jobs:
           else
             cargo build --release --bin liturgical-calendar-forge --target ${{ matrix.target }}
           fi
-      
+
       - name: Generate calendar
         run: |
           FORGE_BIN=./target/${{ matrix.target }}/release/liturgical-calendar-forge
           $FORGE_BIN build --config test.toml --output france-${{ matrix.target }}.kald
-      
+
       - name: Compute hash
         id: hash
         run: |
           HASH=$(sha256sum france-${{ matrix.target }}.kald | awk '{print $1}')
           echo "hash=$HASH" >> $GITHUB_OUTPUT
           echo "$HASH" > hash-${{ matrix.target }}.txt
-      
+
       - name: Run diagnostics
         run: |
           INSPECT_BIN=./target/${{ matrix.target }}/release/kald-inspect
           $INSPECT_BIN france-${{ matrix.target }}.kald --check > diagnostic-${{ matrix.target }}.txt
-      
+
       - uses: actions/upload-artifact@v3
         with:
           name: build-${{ matrix.target }}
@@ -1905,14 +1911,14 @@ jobs:
             france-${{ matrix.target }}.kald
             hash-${{ matrix.target }}.txt
             diagnostic-${{ matrix.target }}.txt
-  
+
   compare:
     needs: build-matrix
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/download-artifact@v3
-      
+
       - name: Compare hashes within same endianness
         run: |
           # Tous les targets little-endian doivent avoir le même hash
@@ -1920,12 +1926,12 @@ jobs:
           LINUX_ARM64=$(cat build-aarch64-unknown-linux-gnu/hash-aarch64-unknown-linux-gnu.txt)
           MACOS_X64=$(cat build-x86_64-apple-darwin/hash-x86_64-apple-darwin.txt)
           MACOS_ARM64=$(cat build-aarch64-apple-darwin/hash-aarch64-apple-darwin.txt)
-          
+
           echo "Linux x86_64:  $LINUX_X64"
           echo "Linux aarch64: $LINUX_ARM64"
           echo "macOS x86_64:  $MACOS_X64"
           echo "macOS aarch64: $MACOS_ARM64"
-          
+
           if [ "$LINUX_X64" = "$LINUX_ARM64" ] && \
              [ "$LINUX_ARM64" = "$MACOS_X64" ] && \
              [ "$MACOS_X64" = "$MACOS_ARM64" ]; then
@@ -1935,7 +1941,7 @@ jobs:
             echo "✗ Hash mismatch detected"
             exit 1
           fi
-      
+
       - name: Verify diagnostics
         run: |
           # Vérifier que tous les diagnostics passent
@@ -1953,6 +1959,7 @@ jobs:
 **Distribution Multi-Arch** :
 
 Pour les déploiements production, distribuer un .kald par architecture :
+
 ```
 releases/
 ├── france-x86_64-linux.kald       (little-endian)
@@ -1974,13 +1981,13 @@ fn test_forge_runtime_identity_loop() {
     let config = Config::load("test.toml").unwrap();
     let builder = CalendarBuilder::new(config).unwrap();
     let calendar = builder.build().unwrap();
-    
+
     calendar.write_kald("test_loop.kald").unwrap();
     calendar.write_lits("test_loop.lits", "fr").unwrap();
-    
+
     // Load
     let provider = Provider::new("test_loop.kald", "test_loop.lits", make_slow_path()).unwrap();
-    
+
     // Verify 100 dates
     for year in 2025..2030 {
         for day in [1, 50, 100, 150, 200, 250, 300, 365] {
@@ -1988,7 +1995,7 @@ fn test_forge_runtime_identity_loop() {
             let slow = provider.compute_slow(year, day)
                 .map(|l| DayPacked::from(l))
                 .unwrap_or_else(|_| DayPacked::invalid());
-            
+
             assert_eq!(runtime.as_u32(), slow.as_u32(),
                 "Divergence at {}-{:03}", year, day);
         }
@@ -1999,7 +2006,7 @@ fn test_forge_runtime_identity_loop() {
 fn test_corruption_injection_handling() {
     // Create valid file
     let mut data = create_valid_litu(2025, 10);
-    
+
     // Inject 10 corruptions
     for i in 0..10 {
         let offset = 16 + (i * 100 * 4);
@@ -2008,11 +2015,11 @@ fn test_corruption_injection_handling() {
         data[offset + 2] = 0xFF;
         data[offset + 3] = 0xFF;
     }
-    
+
     write_file("corrupt.kald", &data);
-    
+
     let provider = Provider::new("corrupt.kald", "corrupt.lits", make_slow_path()).unwrap();
-    
+
     // Query all 3660 days (10 years)
     let mut invalid_count = 0;
     for year in 2025..2035 {
@@ -2023,7 +2030,7 @@ fn test_corruption_injection_handling() {
             }
         }
     }
-    
+
     // Verify telemetry
     let telemetry = provider.get_telemetry();
     assert_eq!(telemetry.corrupted_entries, 10);
@@ -2160,7 +2167,7 @@ fn test_header_unknown_flags() {
         0x01, 0x00,              // Flags 0x0001 (INCONNU)
         0x00, 0x00, 0x00, 0x00,  // Padding
     ];
-    
+
     let result = validate_header(&header_bytes);
     assert!(matches!(result, Err(HeaderError::UnsupportedFlags { .. })));
 }
@@ -2175,7 +2182,7 @@ fn test_header_padding_non_zero() {
         0x00, 0x00,
         0xFF, 0x00, 0x00, 0x00,  // Padding invalide
     ];
-    
+
     let result = validate_header(&header_bytes);
     assert!(matches!(result, Err(HeaderError::InvalidPadding(_))));
 }
@@ -2185,7 +2192,7 @@ fn test_header_file_size_mismatch() {
     // Créer header valide mais fichier tronqué
     let mut data = create_valid_header(2025, 300);
     data.truncate(1000);  // Tronquer
-    
+
     write_file("truncated.kald", &data);
     let result = Provider::new("truncated.kald", "truncated.lits", make_slow_path());
     assert!(matches!(result, Err(RuntimeError::Io(IoError::CorruptedFile { .. }))));
@@ -2201,25 +2208,25 @@ fn test_header_file_size_mismatch() {
 fn test_feast_id_interop_4k_allocations() {
     // Forge 1 : France — 4 000 allocations (dans la limite 12 bits séquentiel = 4 096 max)
     let mut registry_fr = FeastRegistry::new();
-    
+
     for i in 0..4_000 {
         let id = registry_fr.allocate_next(2, 1).unwrap();
         registry_fr.register(id, format!("Saint FR {}", i)).unwrap();
     }
-    
+
     // Export
     let export = registry_fr.export_scope(2, 1);
     assert_eq!(export.allocations.len(), 4_000);
-    
+
     // Forge 2 : Allemagne
     let mut registry_de = FeastRegistry::new();
     let import_result = registry_de.import(export);
-    
+
     assert!(import_result.is_ok());
     let report = import_result.unwrap();
     assert_eq!(report.imported, 4_000);
     assert_eq!(report.collisions.len(), 0);
-    
+
     // Allocation allemande ne doit pas collisionner
     // Layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12], seq=4000=0xFA0
     // Premier ID allemand = (2<<16)|(1<<12)|0xFA0 = 0x21FA0
@@ -2263,11 +2270,11 @@ fn test_registry_collision_detection() {
 fn bench_telemetry_mixed_load(b: &mut Bencher) {
     let provider = Provider::new("france.kald", "france.lits", make_slow_path()).unwrap();
     let mut rng = thread_rng();
-    
+
     b.iter(|| {
         // 70% fast path, 20% slow path, 10% invalides
         let roll = rng.gen_range(0..100);
-        
+
         if roll < 70 {
             // Fast path
             provider.get_day(rng.gen_range(2025..2325), rng.gen_range(1..=365))
@@ -2279,14 +2286,14 @@ fn bench_telemetry_mixed_load(b: &mut Bencher) {
             provider.get_day(2025, rng.gen_range(367..=500))
         }
     });
-    
+
     // Vérification cohérence télémétrie
     let telemetry = provider.get_telemetry();
-    let total = telemetry.fast_path_hits 
-        + telemetry.slow_path_hits 
-        + telemetry.invalid_returns 
+    let total = telemetry.fast_path_hits
+        + telemetry.slow_path_hits
+        + telemetry.invalid_returns
         + telemetry.out_of_bounds_queries;
-    
+
     assert!(total > 0, "Telemetry not incremented");
 }
 
@@ -2294,10 +2301,10 @@ fn bench_telemetry_mixed_load(b: &mut Bencher) {
 fn test_telemetry_atomic_consistency() {
     use std::sync::Arc;
     use std::thread;
-    
+
     let provider = Arc::new(Provider::new("france.kald", "france.lits", make_slow_path()).unwrap());
     let mut handles = vec![];
-    
+
     // 10 threads × 1000 requêtes
     for _ in 0..10 {
         let p = provider.clone();
@@ -2307,11 +2314,11 @@ fn test_telemetry_atomic_consistency() {
             }
         }));
     }
-    
+
     for h in handles {
         h.join().unwrap();
     }
-    
+
     let telemetry = provider.get_telemetry();
     assert_eq!(telemetry.fast_path_hits, 10_000);
 }
@@ -2336,19 +2343,19 @@ void test_handle_null() {
 
 void test_invalid_day_of_year() {
     KalProvider* provider = kal_new("france.kald", "france.lits");
-    
+
     // day_of_year = 0
     KalResult r1 = kal_get_day_checked(provider, 2025, 0);
     assert(r1.error_code == KAL_INVALID_DAY);
-    
+
     // day_of_year > 366
     KalResult r2 = kal_get_day_checked(provider, 2025, 367);
     assert(r2.error_code == KAL_INVALID_DAY);
-    
+
     const char* err = kal_get_last_error(provider);
     assert(err != NULL);
     assert(strlen(err) > 0);
-    
+
     kal_free(provider);
     printf("✓ Invalid day_of_year handled\n");
 }
@@ -2360,32 +2367,32 @@ void test_corrupted_file() {
     memcpy(data, "KALD", 4);
     fwrite(data, 1, 1480, f);
     fclose(f);
-    
+
     KalProvider* provider = kal_new("corrupt_test.kald", "france.lits");
-    
+
     if (provider != NULL) {
         KalResult result = kal_get_day_checked(provider, 2025, 1);
-        
+
         // Doit retourner erreur ou invalide
         assert(result.error_code != KAL_OK || result.value == 0);
-        
+
         kal_free(provider);
     }
-    
+
     printf("✓ Corrupted file handled\n");
 }
 
 void test_telemetry() {
     KalProvider* provider = kal_new("france.kald", "france.lits");
-    
+
     // Faire quelques requêtes
     for (int i = 1; i <= 100; i++) {
         kal_get_day(provider, 2025, i);
     }
-    
+
     KalTelemetry telemetry = kal_get_telemetry(provider);
     assert(telemetry.fast_path_hits == 100);
-    
+
     kal_free(provider);
     printf("✓ Telemetry functional\n");
 }
@@ -2395,7 +2402,7 @@ int main() {
     test_invalid_day_of_year();
     test_corrupted_file();
     test_telemetry();
-    
+
     printf("\n✓ All FFI contract tests passed\n");
     return 0;
 }
@@ -2423,7 +2430,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: cargo test --all-features
-  
+
   ffi-tests:
     runs-on: ubuntu-latest
     steps:
@@ -2431,7 +2438,7 @@ jobs:
       - run: cargo build --release --lib
       - run: gcc -o test_ffi tests/test_ffi.c -L./target/release -lliturgical_calendar_runtime
       - run: LD_LIBRARY_PATH=./target/release ./test_ffi
-  
+
   fuzzing:
     runs-on: ubuntu-latest
     steps:
@@ -2489,31 +2496,31 @@ jobs:
 
 ## Résumé des Corrections Appliquées
 
-| #   | Point Hardening                    | Correction                                       | Phase | Criticité    |
-| --- | ---------------------------------- | ------------------------------------------------ | ----- | ------------ |
-| C1  | Modèle 1D `Rank` → Modèle 2D `Precedence`+`Nature` | Layout DayPacked v2.0 : `[31:28] Precedence \| [27:25] Nature \| [24:22] Color \| [21:19] Season \| [18] Reserved \| [17:0] FeastID` | 1.1 | **Critique** |
-| C2  | FeastID 22 bits → 18 bits | Capacité 262 144 slots (valeurs 0–262 143). Masques registry mis à jour. | 1.1 | **Haute** |
-| --- | ---------------------------------- | ------------------------------------------------ | ----- | ------------ |
-| 1   | Validation header flags            | Rejet strict bits inconnus + politique migration | 1.3   | **Haute**    |
-| 2   | Corruption silencieuse             | API Result + télémétrie + logs JSON + timestamp | 3.1   | **Haute**    |
-| 3   | is_sunday manquant                 | Tomohiko Sakamoto + lookup tables optimisées    | 1.2   | **Haute**    |
-| 4   | Endianness non documentée          | Diagnostic kald-inspect + matrix CI cross-arch   | 1.4   | **Moyenne**  |
-| 5   | FeastID collisions                 | Registry déterministe BTreeMap + import/export   | 2.1   | **Moyenne**  |
-| 6   | FFI sans gestion erreur            | KalResult + last_error + tests C            | 3.2   | **Haute**    |
-| 7   | Pas de fuzzing                     | Harness + corpus + invariants + seuils 10k       | 4.1   | **Haute**    |
-| 8   | Cross-build non testé              | CI matrix 4 targets + determinism SHA-256        | 4.2   | **Haute**    |
-| 9   | Observabilité manquante            | Télémétrie + export Prometheus + logs JSON       | 3.1   | **Haute**    |
-| 10  | BTreeMap (déjà corrigé)            | Maintenu dans v2.0 (déterminisme garanti)        | 2.2   | **Critique** |
-| 11  | Contention registry                | Supprimé — modèle &mut self suffisant (Forge mono-thread) | 2.1 | **N/A** |
-| 12  | Tests manquants                    | Header/FeastID/Telemetry/FFI tests ajoutés      | 7     | **Haute**    |
-| A1  | Import collisions : Err vs Ok      | Aligné spec §3.3 — Ok(report), collisions non fatales | 2.1 | **Critique** |
-| A2  | FeastRegistry Arc\<Mutex\> vs &mut self | Aligné spec §3.2 — modèle simple mono-thread | 2.1 | **Critique** |
-| A3  | Bug décembre day_of_year_to_month_day | Corrigé : soustraction itérative (conforme spec §4.3) | 1.2 | **Haute** |
-| A4  | Signature day_of_year_to_month_day | Alignée spec §4.3 : (u16, bool) au lieu de (i32, u16) | 1.2 | **Moyenne** |
-| B1  | log_corruption signature : CorruptionInfo vs u32 brut | Aligné spec §7 — (year, day_of_year, packed: u32), reconstruction interne | 3.1 | **Critique** |
-| B2  | log_corruption body : champs fantômes info.year/day_of_year | Corrigé spec §7 — accès aux paramètres locaux year/day_of_year | 7   | **Critique** |
-| B3  | CalendarBuilder::build : Error générique + variant inconnue | Roadmap — RuntimeError + DomainError::YearOutOfBounds conforme §9.1 | 2.2 | **Haute**    |
-| B4  | CalendarBuilder.cache : BTreeMap<_, Day> vs insert DayPacked | Roadmap — unifié à DayPacked, conversion Day→DayPacked au point de calcul | 2.2 | **Haute**    |
+| #   | Point Hardening                                               | Correction                                                                                                                           | Phase | Criticité    |
+| --- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----- | ------------ |
+| C1  | Modèle 1D `Rank` → Modèle 2D `Precedence`+`Nature`            | Layout DayPacked v2.0 : `[31:28] Precedence \| [27:25] Nature \| [24:22] Color \| [21:19] Season \| [18] Reserved \| [17:0] FeastID` | 1.1   | **Critique** |
+| C2  | FeastID 22 bits → 18 bits                                     | Capacité 262 144 slots (valeurs 0–262 143). Masques registry mis à jour.                                                             | 1.1   | **Haute**    |
+| --- | ----------------------------------                            | ------------------------------------------------                                                                                     | ----- | ------------ |
+| 1   | Validation header flags                                       | Rejet strict bits inconnus + politique migration                                                                                     | 1.3   | **Haute**    |
+| 2   | Corruption silencieuse                                        | API Result + télémétrie + logs JSON + timestamp                                                                                      | 3.1   | **Haute**    |
+| 3   | is_sunday manquant                                            | Tomohiko Sakamoto + lookup tables optimisées                                                                                         | 1.2   | **Haute**    |
+| 4   | Endianness non documentée                                     | Diagnostic kald-inspect + matrix CI cross-arch                                                                                       | 1.4   | **Moyenne**  |
+| 5   | FeastID collisions                                            | Registry déterministe BTreeMap + import/export                                                                                       | 2.1   | **Moyenne**  |
+| 6   | FFI sans gestion erreur                                       | KalResult + last_error + tests C                                                                                                     | 3.2   | **Haute**    |
+| 7   | Pas de fuzzing                                                | Harness + corpus + invariants + seuils 10k                                                                                           | 4.1   | **Haute**    |
+| 8   | Cross-build non testé                                         | CI matrix 4 targets + determinism SHA-256                                                                                            | 4.2   | **Haute**    |
+| 9   | Observabilité manquante                                       | Télémétrie + export Prometheus + logs JSON                                                                                           | 3.1   | **Haute**    |
+| 10  | BTreeMap (déjà corrigé)                                       | Maintenu dans v2.0 (déterminisme garanti)                                                                                            | 2.2   | **Critique** |
+| 11  | Contention registry                                           | Supprimé — modèle &mut self suffisant (Forge mono-thread)                                                                            | 2.1   | **N/A**      |
+| 12  | Tests manquants                                               | Header/FeastID/Telemetry/FFI tests ajoutés                                                                                           | 7     | **Haute**    |
+| A1  | Import collisions : Err vs Ok                                 | Aligné spec §3.3 — Ok(report), collisions non fatales                                                                                | 2.1   | **Critique** |
+| A2  | FeastRegistry Arc\<Mutex\> vs &mut self                       | Aligné spec §3.2 — modèle simple mono-thread                                                                                         | 2.1   | **Critique** |
+| A3  | Bug décembre day_of_year_to_month_day                         | Corrigé : soustraction itérative (conforme spec §4.3)                                                                                | 1.2   | **Haute**    |
+| A4  | Signature day_of_year_to_month_day                            | Alignée spec §4.3 : (u16, bool) au lieu de (i32, u16)                                                                                | 1.2   | **Moyenne**  |
+| B1  | log_corruption signature : CorruptionInfo vs u32 brut         | Aligné spec §7 — (year, day_of_year, packed: u32), reconstruction interne                                                            | 3.1   | **Critique** |
+| B2  | log_corruption body : champs fantômes info.year/day_of_year   | Corrigé spec §7 — accès aux paramètres locaux year/day_of_year                                                                       | 7     | **Critique** |
+| B3  | CalendarBuilder::build : Error générique + variant inconnue   | Roadmap — RuntimeError + DomainError::YearOutOfBounds conforme §9.1                                                                  | 2.2   | **Haute**    |
+| B4  | CalendarBuilder.cache : BTreeMap<\_, Day> vs insert DayPacked | Roadmap — unifié à DayPacked, conversion Day→DayPacked au point de calcul                                                            | 2.2   | **Haute**    |
 
 ---
 

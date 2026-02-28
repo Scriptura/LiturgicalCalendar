@@ -4,7 +4,7 @@
 **Architecture** : Shared-Core / DOD / Fast-Slow Path / AOT  
 **Langage Domaine** : Latin (Strictement Canonique)  
 **Déterminisme** : Bit-for-bit reproductible  
-**Date de Révision** : 2026-02-19  
+**Date de Révision** : 2026-02-28
 **Version** : 2.0
 
 ---
@@ -158,7 +158,7 @@ impl From<Day> for u32 {
 
 **Justification de la Séparation** :
 
-| Aspect             | `Day`         | `DayPacked`        |
+| Aspect             | `Day`                        | `DayPacked`                  |
 | ------------------ | ---------------------------- | ---------------------------- |
 | **Usage**          | Forge, Slow Path, calculs    | Runtime Fast Path uniquement |
 | **Taille**         | ≥ 20 octets (struct riche)   | 4 octets (transparent)       |
@@ -209,23 +209,23 @@ Le modèle v2.0 découple strictement deux axes orthogonaux.
 
 Force d'éviction. Comparaison purement numérique (`u32 >> 28`). Ordre total non cyclique. Une valeur numérique plus faible représente une force d'éviction plus élevée.
 
-*Tabella dierum liturgicorum — NALC 1969. Ordre figé. Aucune modification autorisée après freeze v2.0.*
+_Tabella dierum liturgicorum — NALC 1969. Ordre figé. Aucune modification autorisée après freeze v2.0._
 
-| Valeur | Niveau Canonique |
-| ------ | ---------------- |
-| 0 | Triduum Sacrum |
-| 1 | Nativitas, Epiphania, Ascensio, Pentecostes |
-| 2 | Dominicae Adventus, Quadragesimae, Paschales |
-| 3 | Feria IV Cinerum; Hebdomada Sancta |
-| 4 | Sollemnitates Domini, BMV, Sanctorum in Calendario Generali |
-| 5 | Sollemnitates propriae |
-| 6 | Festa Domini in Calendario Generali |
-| 7 | Dominicae per annum |
-| 8 | Festa BMV et Sanctorum in Calendario Generali |
-| 9 | Festa propria |
-| 10 | Feriae Adventus (17–24 Dec), Octava Nativitatis |
-| 11 | Memoriae obligatoriae |
-| 12 | Feriae per annum; Memoriae ad libitum |
+| Valeur | Niveau Canonique                                            |
+| ------ | ----------------------------------------------------------- |
+| 0      | Triduum Sacrum                                              |
+| 1      | Nativitas, Epiphania, Ascensio, Pentecostes                 |
+| 2      | Dominicae Adventus, Quadragesimae, Paschales                |
+| 3      | Feria IV Cinerum; Hebdomada Sancta                          |
+| 4      | Sollemnitates Domini, BMV, Sanctorum in Calendario Generali |
+| 5      | Sollemnitates propriae                                      |
+| 6      | Festa Domini in Calendario Generali                         |
+| 7      | Dominicae per annum                                         |
+| 8      | Festa BMV et Sanctorum in Calendario Generali               |
+| 9      | Festa propria                                               |
+| 10     | Feriae Adventus (17–24 Dec), Octava Nativitatis             |
+| 11     | Memoriae obligatoriae                                       |
+| 12     | Feriae per annum; Memoriae ad libitum                       |
 
 ```rust
 #[repr(u8)]
@@ -454,24 +454,24 @@ pub struct Header {
 
 impl Header {
     /// Désérialise un header depuis 16 octets bruts
-    /// 
+    ///
     /// IMPORTANT : Utilise l'endianness native (from_ne_bytes).
     /// Les fichiers .kald sont spécifiques à l'architecture de build.
-    /// 
+    ///
     /// SÉCURITÉ : Pas de comportement indéfini (UB) lié à l'alignement.
     /// Portable sur toutes les architectures (ARM, RISC-V, x86, etc.).
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, HeaderError> {
         if bytes.len() < 16 {
             return Err(HeaderError::FileTooSmall);
         }
-        
+
         let magic = [bytes[0], bytes[1], bytes[2], bytes[3]];
         let version = u16::from_ne_bytes([bytes[4], bytes[5]]);
         let start_year = i16::from_ne_bytes([bytes[6], bytes[7]]);
         let year_count = u16::from_ne_bytes([bytes[8], bytes[9]]);
         let flags = u16::from_ne_bytes([bytes[10], bytes[11]]);
         let padding = [bytes[12], bytes[13], bytes[14], bytes[15]];
-        
+
         Ok(Header {
             magic,
             version,
@@ -481,18 +481,18 @@ impl Header {
             _padding: padding,
         })
     }
-    
+
     /// Sérialise le header en 16 octets bruts (endianness native)
     pub fn to_bytes(&self) -> [u8; 16] {
         let mut bytes = [0u8; 16];
-        
+
         bytes[0..4].copy_from_slice(&self.magic);
         bytes[4..6].copy_from_slice(&self.version.to_ne_bytes());
         bytes[6..8].copy_from_slice(&self.start_year.to_ne_bytes());
         bytes[8..10].copy_from_slice(&self.year_count.to_ne_bytes());
         bytes[10..12].copy_from_slice(&self.flags.to_ne_bytes());
         bytes[12..16].copy_from_slice(&self._padding);
-        
+
         bytes
     }
 }
@@ -504,16 +504,19 @@ impl Header {
 - **Justification** : Gain de performance au runtime (pas de byte-swap), déploiement ciblé par architecture
 - **Distribution** : Un fichier `.kald` par architecture cible (en pratique, peu-endian universel actuellement)
 - **Détection Runtime** : L'outil `kald-inspect` vérifie la plausibilité du `start_year` pour détecter les mismatches
+
 ```
 
 **Flags d'Extension (bits 0-15)** :
 
 ```
-Bit 0     : Compression activée (0 = non, 1 = ZSTD)        [réservé v2.1]
-Bit 1     : Checksums inclus (0 = non, 1 = CRC32)           [réservé v2.1]
-Bit 2-3   : Réservé pour rites (00 = Ordinaire, 01 = Extraordinaire) [réservé v2.2]
-Bit 4-15  : Réservé pour extensions futures
-```
+
+Bit 0 : Compression activée (0 = non, 1 = ZSTD) [réservé v2.1]
+Bit 1 : Checksums inclus (0 = non, 1 = CRC32) [réservé v2.1]
+Bit 2-3 : Réservé pour rites (00 = Ordinaire, 01 = Extraordinaire) [réservé v2.2]
+Bit 4-15 : Réservé pour extensions futures
+
+````
 
 > **v1 : tous les flags sont refusés.** `KNOWN_FLAGS_V1 = 0x0000` — tout fichier présentant un flag non nul est rejeté au chargement (`UnsupportedFlags`). Les bits ci-dessus documentent les extensions planifiées pour v2+, non des fonctionnalités actives.
 
@@ -521,7 +524,7 @@ Bit 4-15  : Réservé pour extensions futures
 
 ```rust
 /// Valide et désérialise un header depuis un mmap
-/// 
+///
 /// SÉCURITÉ :
 /// - Pas d'UB lié à l'alignement (désérialisation explicite)
 /// - Validation stricte de tous les champs
@@ -548,7 +551,7 @@ pub fn validate_header(bytes: &[u8]) -> Result<Header, HeaderError> {
     if header.version != 1 {
         return Err(HeaderError::UnsupportedVersion(header.version));
     }
-    
+
     // Validation flags (rejet strict des bits inconnus)
     const KNOWN_FLAGS_V1: u16 = 0x0000;
     if (header.flags & !KNOWN_FLAGS_V1) != 0 {
@@ -572,7 +575,7 @@ pub fn validate_header(bytes: &[u8]) -> Result<Header, HeaderError> {
     if header.year_count == 0 || header.year_count > 2516 {
         return Err(HeaderError::InvalidYearCount(header.year_count));
     }
-    
+
     // Détection heuristique de mismatch endianness
     // Si start_year semble aberrant, probable endianness inversé
     if header.start_year < 1000 || header.start_year > 5000 {
@@ -599,7 +602,7 @@ pub enum HeaderError {
     YearOutOfBounds(i16),
     InvalidYearCount(u16),
 }
-```
+````
 
 ### 2.2 Data Body (366 u32 × N années)
 
@@ -657,7 +660,7 @@ pub fn detect_endianness_mismatch(header: &Header) -> bool {
 pub fn diagnose_file(path: &str) -> Result<DiagnosticReport, IoError> {
     let file = File::open(path)?;
     let mmap = unsafe { Mmap::map(&file)? };
-    
+
     // Désérialisation sans UB
     let header = Header::from_bytes(&mmap[0..16])?;
 
@@ -699,9 +702,9 @@ targets = [
 | [31..28] | Precedence | 4 bits  | Axe ordinal (0–12). Z-Index strict. Comparaison purement entière.  |
 | [27..25] | Nature     | 3 bits  | Axe sémantique (Solemnitas, Festum, Memoria, Feria, Commemoratio). |
 | [24..22] | Color      | 3 bits  | Couleur liturgique finale résolue en Forge.                        |
-| [21..19] | Season     | 3 bits  | Cache AOT — rendu O(1). Valeurs 0–6, 7 réservé.                   |
-| [18]     | Reserved   | 1 bit   | Inactif en v2.0. Positionné à 0 par la Forge.                     |
-| [17..0]  | FeastID    | 18 bits | Identifiant de fête (0–262 143).                               |
+| [21..19] | Season     | 3 bits  | Cache AOT — rendu O(1). Valeurs 0–6, 7 réservé.                    |
+| [18]     | Reserved   | 1 bit   | Inactif en v2.0. Positionné à 0 par la Forge.                      |
+| [17..0]  | FeastID    | 18 bits | Identifiant de fête (0–262 143).                                   |
 
 **Extraction (Runtime)** :
 
@@ -1351,10 +1354,10 @@ Le `CalendarBuilder` charge cette configuration et construit les couches `Tempor
 impl CalendarBuilder {
     pub fn new(config: Config) -> Result<Self, RuntimeError> {
         let feast_registry = FeastRegistry::load(&config.registry_path)?;
-        
+
         // Construction du Slow Path depuis la configuration
         let slow_path = SlowPath::from_config(&config)?;
-        
+
         Ok(Self {
             config,
             feast_registry,
@@ -1370,7 +1373,7 @@ impl SlowPath {
         let temporal = TemporalLayer::from_rules(&config.temporal_rules)?;
         let sanctoral = SanctoralLayer::from_feasts(&config.sanctoral_feasts)?;
         let precedence = PrecedenceResolver::from_config(&config.precedence)?;
-        
+
         Ok(Self {
             temporal,
             sanctoral,
@@ -1430,6 +1433,7 @@ fn normalize_nature(input: Option<&str>) -> Result<Nature, RegistryError> {
 **Hors Scope v1.0** :
 
 La spécification v2.0 se concentre sur :
+
 - Architecture du système
 - Format binaire `.kald`
 - Contrats des APIs
@@ -1468,23 +1472,23 @@ Le contenu liturgique exhaustif (toutes les fêtes votives, règles de déplacem
 
 ```rust
 /// Trait abstrait pour la fourniture de règles liturgiques
-/// 
+///
 /// Ce trait découple le moteur de calcul de la source des règles.
 /// Il permet de passer d'une implémentation hardcodée à une implémentation
 /// data-driven sans modifier le moteur.
 pub trait RuleProvider {
     /// Retourne les règles temporelles (fêtes mobiles, déplacements)
     fn temporal_rules(&self) -> &[TemporalRule];
-    
+
     /// Retourne les fêtes sanctorales (fêtes fixes)
     fn sanctoral_feasts(&self) -> &[SanctoralFeast];
-    
+
     /// Retourne les règles de précédence
     fn precedence_rules(&self) -> &PrecedenceRules;
 }
 
 /// Représentation déclarative d'une règle temporelle
-/// 
+///
 /// Cette structure est identique qu'elle soit créée :
 /// - directement en Rust (v1.0)
 /// - via un pipeline AOT depuis YAML (v2.0+)
@@ -1502,16 +1506,16 @@ pub struct TemporalRule {
 pub enum TemporalRuleType {
     /// Fête relative à Pâques (ex: Ascension = Pâques + 39j)
     RelativeToEaster { offset_days: i16 },
-    
+
     /// Règle de déplacement (ex: St-Joseph si conflit avec Semaine Sainte)
     Displacement {
         base_date: (u8, u8),  // (mois, jour)
         displaced_if: Vec<DisplacementCondition>,
         displaced_to: DisplacementTarget,
     },
-    
+
     /// Fête mobile avec calcul custom
-    CustomComputation { 
+    CustomComputation {
         compute_fn_id: u32,  // Référence à une fonction enregistrée
     },
 }
@@ -1549,8 +1553,8 @@ impl HardcodedRuleProvider {
                 TemporalRule {
                     id: 0x00001,
                     name: "Ascension".to_string(),
-                    rule_type: TemporalRuleType::RelativeToEaster { 
-                        offset_days: 39 
+                    rule_type: TemporalRuleType::RelativeToEaster {
+                        offset_days: 39
                     },
                     precedence: Precedence::SollemnitatesFixaeMaior,
                     nature: Nature::Solemnitas,
@@ -1559,8 +1563,8 @@ impl HardcodedRuleProvider {
                 TemporalRule {
                     id: 0x00002,
                     name: "Pentecôte".to_string(),
-                    rule_type: TemporalRuleType::RelativeToEaster { 
-                        offset_days: 49 
+                    rule_type: TemporalRuleType::RelativeToEaster {
+                        offset_days: 49
                     },
                     precedence: Precedence::SollemnitatesFixaeMaior,
                     nature: Nature::Solemnitas,
@@ -1588,11 +1592,11 @@ impl RuleProvider for HardcodedRuleProvider {
     fn temporal_rules(&self) -> &[TemporalRule] {
         &self.temporal
     }
-    
+
     fn sanctoral_feasts(&self) -> &[SanctoralFeast] {
         &self.sanctoral
     }
-    
+
     fn precedence_rules(&self) -> &PrecedenceRules {
         &self.precedence
     }
@@ -1604,6 +1608,7 @@ let slow_path = SlowPath::new(rules);
 ```
 
 **Avantages Phase 1** :
+
 - Démarrage immédiat (pas de parser YAML)
 - Type-safety garantie par le compilateur
 - Refactoring facile (IDE assist)
@@ -1615,7 +1620,7 @@ Une fois l'architecture stabilisée, introduction d'un pipeline AOT pour externa
 
 ```rust
 /// Implémentation v2.0+ : Règles depuis YAML compilées en AOT
-/// 
+///
 /// Le pipeline AOT (liturgical-calendar-forge):
 /// 1. Lit les fichiers YAML (roman-rite-ordinary.yaml)
 /// 2. Valide la cohérence des règles
@@ -1629,7 +1634,7 @@ pub struct YamlAotRuleProvider {
 
 impl YamlAotRuleProvider {
     /// Généré automatiquement par le pipeline AOT
-    /// 
+    ///
     /// Ce code est produit depuis roman-rite-ordinary.yaml
     pub fn new_roman_rite_ordinary() -> Self {
         // Ces structures sont générées à la compilation (macro ou build.rs)
@@ -1645,11 +1650,11 @@ impl RuleProvider for YamlAotRuleProvider {
     fn temporal_rules(&self) -> &[TemporalRule] {
         self.temporal
     }
-    
+
     fn sanctoral_feasts(&self) -> &[SanctoralFeast] {
         self.sanctoral
     }
-    
+
     fn precedence_rules(&self) -> &PrecedenceRules {
         self.precedence
     }
@@ -1668,7 +1673,7 @@ temporal_rules:
     precedence: 1
     nature: solemnitas
     color: albus
-    
+
   - id: 0x00002
     name: "Pentecôte"
     type: relative_to_easter
@@ -1691,7 +1696,7 @@ sanctoral_feasts:
 $ liturgical-calendar-forge compile-rules \
     --input config/roman-rite-ordinary.yaml \
     --output src/rules_generated.rs
-    
+
 # Validation stricte
 ✓ 50 règles temporelles validées
 ✓ 365 fêtes sanctorales validées
@@ -1701,6 +1706,7 @@ $ liturgical-calendar-forge compile-rules \
 ```
 
 **Avantages Phase 2** :
+
 - Externalisation des règles (contribution communautaire facile)
 - Validation stricte à la compilation (pas d'erreur runtime)
 - Performance identique (structures statiques)
@@ -1724,7 +1730,7 @@ Le contrat `RuleProvider` reste identique, seule l'implémentation change.
 
 **Principe de Conception Clé** :
 
-> *"Le moteur calcule. Les règles décrivent. L'origine des règles est un détail d'implémentation."*
+> _"Le moteur calcule. Les règles décrivent. L'origine des règles est un détail d'implémentation."_
 
 Cette séparation garantit que l'investissement dans le moteur (Phase 1) n'est jamais perdu lors de l'externalisation (Phase 2).
 
@@ -2036,7 +2042,7 @@ Le Provider maintient deux chemins de calcul **fonctionnellement équivalents** 
 
 La sélection est une **optimisation de performance**, pas une correction d'erreur. Les deux chemins produisent des résultats identiques (validé par tests d'identité).
 
-```rust
+````rust
 use memmap2::{Mmap, MmapOptions};
 use std::fs::File;
 
@@ -2091,9 +2097,9 @@ impl Provider {
     pub fn new(data_path: &str, lang_path: &str, slow_path: SlowPath) -> Result<Self, RuntimeError> {
         Self::new_with_strategy(data_path, lang_path, LoadStrategy::Preload, slow_path)
     }
-    
+
     /// Crée un Provider sans Fast Path (Slow Path uniquement)
-    /// 
+    ///
     /// Utile pour :
     /// - Recherche historique (années < 1900)
     /// - Systèmes contraints en mémoire
@@ -2170,11 +2176,11 @@ impl Provider {
     }
 
     /// Récupère un jour liturgique
-    /// 
+    ///
     /// Sélection automatique Fast/Slow selon la fenêtre optimisée :
     /// - Si année dans [range.0, range.0+range.1) ET Fast Path disponible → Fast Path
     /// - Sinon → Slow Path
-    /// 
+    ///
     /// Les deux chemins sont fonctionnellement équivalents.
     pub fn get_day(&self, year: i16, day_of_year: u16) -> DayPacked {
         // Validation stricte
@@ -2280,7 +2286,7 @@ pub enum LoadStrategy {
     /// Lock en RAM (hard real-time)
     Locked,
 }
-```
+````
 
 ### 7.2 Sécurité Mémoire (Invariant Lifetime Documenté - Audit #5)
 
@@ -2299,7 +2305,7 @@ struct FastPath {
 ```
 
 Rust refuse cette construction : `data` est une référence vers des données
-*possédées* par la même struct (`mmap`). Il est impossible d'annoter le
+_possédées_ par la même struct (`mmap`). Il est impossible d'annoter le
 lifetime de `data` sans faire référence à `FastPath` elle-même, ce que Rust
 interdit formellement. Le compilateur produira une erreur de lifetime à
 ce stade, sans solution directe en Rust safe.
@@ -2307,6 +2313,7 @@ ce stade, sans solution directe en Rust safe.
 **Deux solutions idiomatiques :**
 
 1. **Accès par méthode** (zero-cost, pas d'`unsafe`) :
+
    ```rust
    impl FastPath {
        fn data(&self) -> &[u32] {
@@ -2316,6 +2323,7 @@ ce stade, sans solution directe en Rust safe.
        }
    }
    ```
+
    Avantage : Rust safe, aucun lifetime artificiel.
    Inconvénient : la spec requiert un accès indexé direct `data[idx]` depuis
    `get_day` — cette forme impose un appel de méthode intermédiaire.
@@ -2677,12 +2685,12 @@ impl From<std::io::Error> for RuntimeError {
 
 **Règle de mapping crate ↔ type** :
 
-| Crate | Type d'erreur exposé | Consomme |
-|-------|---------------------|----------|
-| `core` | `DomainError` | — |
-| `io` | `IoError` | `std::io::Error` |
-| `forge` | `RegistryError`, `IoError` | `DomainError` via `?` |
-| `runtime` | `RuntimeError` | `DomainError`, `IoError` |
+| Crate     | Type d'erreur exposé       | Consomme                 |
+| --------- | -------------------------- | ------------------------ |
+| `core`    | `DomainError`              | —                        |
+| `io`      | `IoError`                  | `std::io::Error`         |
+| `forge`   | `RegistryError`, `IoError` | `DomainError` via `?`    |
+| `runtime` | `RuntimeError`             | `DomainError`, `IoError` |
 
 **Note** : `HeaderError` (défini §2.1) reste le type interne de `validate_header`. Il est converti en `IoError` par la couche `io` avant d'être exposé.
 
@@ -2699,14 +2707,14 @@ exister** pour que `?` fonctionne à travers les frontières de crates. Toute
 conversion manquante provoquera une erreur `the trait From<X> is not
 implemented for Y` à la compilation.
 
-| `From` (source) | `For` (cible) | Crate d'implémentation | Usage |
-|---|---|---|---|
-| `std::io::Error` | `IoError` | `liturgical-calendar-io` | `File::open()?`, `file.write_all()?` |
-| `std::io::Error` | `RuntimeError` | `liturgical-calendar-runtime` | `File::open()?` dans le Provider |
-| `IoError` | `RuntimeError` | `liturgical-calendar-runtime` | propagation depuis les fonctions io |
-| `DomainError` | `RuntimeError` | `liturgical-calendar-runtime` | `slow_path.compute()?` dans le runtime |
-| `HeaderError` | `IoError` | `liturgical-calendar-io` | `validate_header()?` interne |
-| `serde_json::Error` | `IoError` | `liturgical-calendar-io` | `serde_json::from_reader()?` dans FeastRegistry |
+| `From` (source)     | `For` (cible)  | Crate d'implémentation        | Usage                                           |
+| ------------------- | -------------- | ----------------------------- | ----------------------------------------------- |
+| `std::io::Error`    | `IoError`      | `liturgical-calendar-io`      | `File::open()?`, `file.write_all()?`            |
+| `std::io::Error`    | `RuntimeError` | `liturgical-calendar-runtime` | `File::open()?` dans le Provider                |
+| `IoError`           | `RuntimeError` | `liturgical-calendar-runtime` | propagation depuis les fonctions io             |
+| `DomainError`       | `RuntimeError` | `liturgical-calendar-runtime` | `slow_path.compute()?` dans le runtime          |
+| `HeaderError`       | `IoError`      | `liturgical-calendar-io`      | `validate_header()?` interne                    |
+| `serde_json::Error` | `IoError`      | `liturgical-calendar-io`      | `serde_json::from_reader()?` dans FeastRegistry |
 
 **Conversions absentes volontairement** :
 
@@ -2723,7 +2731,7 @@ cet ordre lors de la construction du workspace complet (`cargo build --workspace
 
 // CorruptionInfo est défini canoniquement en section 1.1.
 // Rappel : { packed_value: u32, invalid_field: &'static str,
-//             invalid_value: u8, offset: Option<usize> }
+// invalid_value: u8, offset: Option<usize> }
 
 ### 9.2 Télémétrie Structurée
 
@@ -2767,7 +2775,7 @@ impl TelemetrySnapshot {
 ```c
 // kal.h
 // Note: The "kal_" prefix derives from "Kalendarium", the compiled annual artifact
-//       used to keep function names concise while avoiding namespace 
+//       used to keep function names concise while avoiding namespace
 //       collisions in C.
 
 #ifndef KAL_H
@@ -2991,7 +2999,7 @@ pub unsafe extern "C" fn kal_free(handle: *mut Provider) {
 
 /// Construit un SlowPath de test avec les règles romaines hardcodées
 fn make_slow_path() -> SlowPath {
-    SlowPath::new(HardcodedRuleProvider::new_roman_rite_ordinary())
+SlowPath::new(HardcodedRuleProvider::new_roman_rite_ordinary())
 }
 
 ## 11. Tests de Validation Canoniques
@@ -3254,20 +3262,20 @@ fn test_telemetry_corruption_tracking() {
 
 ## 13. Résumé des Corrections et Hardening
 
-| #   | Risque Identifié              | Correction                              | Criticité   | Section |
-| --- | ----------------------------- | --------------------------------------- | ----------- | ------- |
-| 1   | Collisions FeastID            | Registry canonique + import/export      | **Moyenne** | 3.1-3.3 |
-| 2   | Séparation Logic/Packed       | Types distincts Logic/Packed            | **Haute**   | 1.1     |
-| 3   | Précédence non-stricte        | PrecedenceResolver documenté            | **Moyenne** | 4.4     |
-| 4   | HashMap non-déterministe      | BTreeMap partout dans Forge             | **Haute**   | 5.1     |
-| 5   | Lifetime 'static non-justifié | Documentation invariants Mmap           | **Haute**   | 7.2     |
-| 6   | Bornes années non-validées    | Validation 1583-4099 stricte            | **Moyenne** | 5.1     |
-| 7   | Identité Forge/Runtime        | Test loop complet                       | **Haute**   | 11.4    |
-| 8   | Versioning binaire            | Header flags + migration strategy       | **Haute**   | 8.1-8.2 |
-| 9   | Corruptions silencieuses      | Telemetry + logs structurés             | **Haute**   | 9.1-9.2 |
-| 10  | Endianness implicite          | Documentation + détection runtime       | **Moyenne** | 2.2     |
+| #   | Risque Identifié              | Correction                         | Criticité   | Section |
+| --- | ----------------------------- | ---------------------------------- | ----------- | ------- |
+| 1   | Collisions FeastID            | Registry canonique + import/export | **Moyenne** | 3.1-3.3 |
+| 2   | Séparation Logic/Packed       | Types distincts Logic/Packed       | **Haute**   | 1.1     |
+| 3   | Précédence non-stricte        | PrecedenceResolver documenté       | **Moyenne** | 4.4     |
+| 4   | HashMap non-déterministe      | BTreeMap partout dans Forge        | **Haute**   | 5.1     |
+| 5   | Lifetime 'static non-justifié | Documentation invariants Mmap      | **Haute**   | 7.2     |
+| 6   | Bornes années non-validées    | Validation 1583-4099 stricte       | **Moyenne** | 5.1     |
+| 7   | Identité Forge/Runtime        | Test loop complet                  | **Haute**   | 11.4    |
+| 8   | Versioning binaire            | Header flags + migration strategy  | **Haute**   | 8.1-8.2 |
+| 9   | Corruptions silencieuses      | Telemetry + logs structurés        | **Haute**   | 9.1-9.2 |
+| 10  | Endianness implicite          | Documentation + détection runtime  | **Moyenne** | 2.2     |
 | 11  | FFI error reporting           | KalResult + last_error             | **Haute**   | 10.1    |
-| 12  | Couverture tests              | Fuzzing + cross-build + interop         | **Haute**   | 11.5-11 |
+| 12  | Couverture tests              | Fuzzing + cross-build + interop    | **Haute**   | 11.5-11 |
 
 ---
 
@@ -3329,6 +3337,7 @@ liturgical-calendar-core (0 dépendances externes)
 ```
 
 **Propriétés** :
+
 - Graphe acyclique (pas de dépendances circulaires)
 - Hiérarchie claire (core → io → runtime → tools)
 - Dépendances minimales (chaque crate tire uniquement ce nécessaire)
@@ -3465,26 +3474,31 @@ std = []
 ### A.5 Principes Directeurs
 
 **1. Core Stable**
+
 - Le crate `core` a une API stable et minimaliste
 - Versioning sémantique strict (1.x → 2.x rare)
 - Rupture uniquement si les règles liturgiques canoniques changent
 
 **2. Isolation I/O**
+
 - La sérialisation est strictement séparée du calcul
 - Formats binaires évolutifs sans impact sur le core
 - Migration de formats documentée et testée
 
 **3. Tools Optionnels**
+
 - Les binaires CLI ne sont pas des dépendances obligatoires
 - Installation séparée via `cargo install`
 - Utilisables indépendamment du code
 
 **4. FFI Feature**
+
 - Les bindings C sont optionnels (feature flag)
 - Activation : `liturgical-calendar-runtime = { features = ["ffi"] }`
 - Isolation des dépendances système (libc)
 
 **5. WASM-Ready**
+
 - Le core compile en WebAssembly sans modification
 - Zéro dépendance sur I/O système
 - `#![no_std]` compatible
@@ -3492,30 +3506,35 @@ std = []
 ### A.6 Utilisation
 
 **Calcul uniquement (Slow Path pur)** :
+
 ```toml
 [dependencies]
 liturgical-calendar-core = "0.1"
 ```
 
 **Runtime complet (Fast/Slow Path + fichiers .kald)** :
+
 ```toml
 [dependencies]
 liturgical-calendar-runtime = "0.1"
 ```
 
 **Avec bindings C/C++** :
+
 ```toml
 [dependencies]
 liturgical-calendar-runtime = { version = "0.1", features = ["ffi"] }
 ```
 
 **Génération de .kald** :
+
 ```bash
 $ cargo install liturgical-calendar-forge
 $ liturgical-calendar-forge build --config france.toml --output france.kald
 ```
 
 **Inspection de .kald** :
+
 ```bash
 $ cargo install kald-inspect
 $ kald-inspect france.kald --check
@@ -3524,27 +3543,32 @@ $ kald-inspect france.kald --check
 ### A.7 Justification Multi-Crate
 
 **Séparation des Responsabilités** :
+
 - **Core** : Algorithmes purs, zéro I/O
 - **I/O** : Formats binaires, mmap
 - **Runtime** : Composition core + I/O + télémétrie
 - **Tools** : CLI utilisateur final
 
 **Évolutivité** :
+
 - Ajout de nouveaux crates (serveur HTTP, export ICS) sans impact
 - Feature flags limités (pas de matrice explosive)
 - Dépendances ciblées (pas de bloat)
 
 **Testabilité** :
+
 - Tests du core : rapides, zéro I/O, déterministes
 - Tests du runtime : avec fixtures .kald
 - Isolation complète des suites de tests
 
 **Contrôle des Dépendances** :
+
 - Audit de sécurité facile (`cargo audit -p liturgical-calendar-core`)
 - Core à zéro dépendance externe (auditable manuellement)
 - Dépendances lourdes isolées (clap, serde dans tools uniquement)
 
 **Coût Initial vs Long Terme** :
+
 - Setup initial : +1 semaine
 - Maintenance : -30% (compilation incrémentale, tests ciblés)
 - Évolution : +50% facilité (ajout de features isolées)
@@ -3624,10 +3648,10 @@ impl SlowPath {
 
 **Stratégie Évolutive** :
 
-| Phase | Implémentation | Crate | Utilisateur |
-|-------|----------------|-------|-------------|
-| **v1.0** | Hardcodée Rust | `rules-roman` | Forge, tests |
-| **v2.0+** | AOT depuis YAML | `rules-aot` | Production multi-rites |
+| Phase     | Implémentation  | Crate         | Utilisateur            |
+| --------- | --------------- | ------------- | ---------------------- |
+| **v1.0**  | Hardcodée Rust  | `rules-roman` | Forge, tests           |
+| **v2.0+** | AOT depuis YAML | `rules-aot`   | Production multi-rites |
 
 **Avantages** :
 
@@ -3656,6 +3680,7 @@ let slow_path = SlowPath::new(rules);  // Code identique
 **Critère de Conformité** :
 
 Le code du moteur (`liturgical-calendar-core/src/engine/`) ne doit **jamais** contenir :
+
 - De constantes liturgiques hardcodées (`const ASCENSION_OFFSET: i16 = 39`)
 - De logique conditionnelle spécifique aux règles (`if feast_name == "Ascension"`)
 - De dépendances sur des implémentations concrètes de règles
@@ -3721,6 +3746,7 @@ pub enum Season {
 ```
 
 **Justification** :
+
 - Évite les ambiguïtés de traduction (ex: "Ordinary Time" vs "Temps Ordinaire" vs "Tiempo Ordinario")
 - Reste fidèle au vocabulaire liturgique officiel
 - Facilite l'interopérabilité internationale
@@ -3753,6 +3779,7 @@ let provider = Provider::new("data.kald", "lang.lits")?;
 ```
 
 **Justification** :
+
 - Le nom du crate (`liturgical_calendar_core`) fournit déjà le contexte complet
 - Les types restent concis et lisibles
 - Pattern standard Rust (cf. `std::io::Error` pas `std::io::StdIoError`)
@@ -3777,10 +3804,11 @@ uint32_t kal_get_day(const KalProvider* h, int16_t year, uint16_t day);
 ```
 
 **Justification** :
+
 - Plus court que `liturgical_calendar_*` (24 caractères)
 - Cohérent avec des pratiques courantes :
   - libgit2 → `git_*`
-  - libssh2 → `ssh2_*`  
+  - libssh2 → `ssh2_*`
   - libcurl → `curl_*`
 - Dérive de "Kalendarium" (artefact AOT), terme officiel du projet
 - Abréviation explicitement documentée
@@ -3825,12 +3853,14 @@ use liturgical_calendar::Provider;
 **Principe** : Le type et le contexte suffisent, pas besoin de répéter l'information.
 
 **Antipattern** ❌ :
+
 ```rust
 let liturgical_day_logic = provider.get_day(2025, 1);
 let liturgical_season_boundaries = SeasonBoundaries::compute(2025)?;
 ```
 
 **Pattern Idiomatique** ✅ :
+
 ```rust
 let day = provider.get_day(2025, 1);
 let boundaries = SeasonBoundaries::compute(2025)?;
@@ -3859,6 +3889,7 @@ liturgical-calendar-core/src/
 ```
 
 **Imports** :
+
 ```rust
 use liturgical_calendar_core::types::Day;
 use liturgical_calendar_core::rules::RuleProvider;
@@ -3869,17 +3900,18 @@ use liturgical_calendar_core::engine::SlowPath;
 
 **Principe** : Utiliser un vocabulaire consistant dans tout le projet.
 
-| Concept | Terme Utilisé | Éviter |
-|---------|---------------|--------|
-| Fournisseur de données | `Provider` | `Supplier`, `Source` |
-| Règles liturgiques | `Rule` | `Policy`, `Regulation` |
-| Couche de calcul | `Layer` | `Level`, `Tier` |
-| Chemin de calcul | `Path` (Fast/Slow) | `Route`, `Mode` |
-| Fête liturgique | `Feast` | `Holiday`, `Celebration` |
+| Concept                | Terme Utilisé      | Éviter                   |
+| ---------------------- | ------------------ | ------------------------ |
+| Fournisseur de données | `Provider`         | `Supplier`, `Source`     |
+| Règles liturgiques     | `Rule`             | `Policy`, `Regulation`   |
+| Couche de calcul       | `Layer`            | `Level`, `Tier`          |
+| Chemin de calcul       | `Path` (Fast/Slow) | `Route`, `Mode`          |
+| Fête liturgique        | `Feast`            | `Holiday`, `Celebration` |
 
 ### B.9 Exemples Conformes
 
 **✅ Excellent** :
+
 ```rust
 pub struct Provider { /* ... */ }
 pub fn compute_easter(year: i32) -> Option<(u8, u8)> { /* ... */ }
@@ -3888,6 +3920,7 @@ const KNOWN_FLAGS_V1: u16 = 0x0000;
 ```
 
 **❌ À Éviter** :
+
 ```rust
 pub struct LiturgicalCalendarRuntimeProvider { /* ... */ }  // Redondant
 pub fn LiturgicalComputeEaster(year: i32) -> (u8, u8) { /* ... */ }  // PascalCase fonction
@@ -3913,4 +3946,4 @@ Avant l'implémentation, vérifier :
 
 **Fin de la Spécification Technique v2.0**
 
-_Document consolidé le 2026-02-27. Intègre la transition vers le modèle 2D découplé (Precedence + Nature), le layout DayPacked v2.0, et le freeze des invariants structurels. Version de référence pour l'implémentation._
+_Document consolidé le 2026-02-28. Intègre la transition vers le modèle 2D découplé (Precedence + Nature), le layout DayPacked v2.0, et le freeze des invariants structurels. Version de référence pour l'implémentation._
