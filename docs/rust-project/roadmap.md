@@ -1,7 +1,7 @@
 # Roadmap de Développement : Liturgical Calendar v2.0
 
 **Version** : 2.0  
-**Date de Révision** : 2026-02-19  
+**Date de Révision** : 2026-02-27  
 **Durée Totale Estimée** : 10 semaines  
 **Méthodologie** : Développement incrémental orienté livrables binaires  
 **Critères de Succès** : Tests de régression + Benchmarks + Fuzzing + Cross-build determinism
@@ -25,6 +25,8 @@ Le système est **complet et autonome** :
 **Le Kalendarium est un luxe de performance que l'on s'offre pour les années qui comptent vraiment.**
 
 **Nouveautés v2.0** :
+- **Modèle 2D découplé** : abandon du modèle 1D `Rank`. Introduction de deux axes orthogonaux — `Precedence` (axe ordinal, 4 bits, Z-Index strict) et `Nature` (axe sémantique, 3 bits). La résolution de collision est désormais une comparaison entière pure sur `Precedence`. `Nature` ne dicte jamais la force d'éviction.
+- **Nouveau layout DayPacked** : `[31:28] Precedence | [27:25] Nature | [24:22] Color | [21:19] Season | [18] Reserved | [17:0] FeastID`. FeastID réduit de 22 à 18 bits (262 144 slots, valeurs 0–262 143). Season repositionné de l'axe primaire vers cache AOT structurel (bits [21:19]).
 - Intégration du hardening production (validation header, corruption handling, observabilité)
 - Tests de robustesse systématiques (fuzzing, cross-build)
 - Outils de diagnostic et inspection
@@ -55,9 +57,10 @@ Fondations robustes avec validation stricte et outils de diagnostic dès le dép
 /// Représentation logique pour la Forge et le Slow Path
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Day {
-    pub season: Season,
+    pub precedence: Precedence,
+    pub nature: Nature,
     pub color: Color,
-    pub rank: Rank,
+    pub season: Season,
     pub feast_id: u32,
 }
 
@@ -66,9 +69,18 @@ pub struct Day {
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct DayPacked(u32);
 
+impl From<Day> for u32 {
+    fn from(day: Day) -> Self {
+        ((day.precedence as u32) << 28)
+            | ((day.nature as u32) << 25)
+            | ((day.color as u32) << 22)
+            | ((day.season as u32) << 19)
+            | (day.feast_id & 0x3FFFF)
+    }
+}
+
 impl DayPacked {
     /// Construction sécurisée avec validation des bits
-    /// NOUVEAU : Retourne CorruptionInfo détaillé
     pub fn try_from_u32(packed: u32) -> Result<Self, CorruptionInfo> {
         Day::try_from_u32(packed)
             .map(|_| Self(packed))
@@ -76,41 +88,31 @@ impl DayPacked {
                 packed_value: packed,
                 invalid_field: e.field_name(),
                 invalid_value: e.field_value(),
-                offset: None,  // Sera rempli par le Provider
+                offset: None,
             })
     }
 
-    /// SUPPRIMÉ : from_u32_or_invalid (comportement silencieux interdit)
-
-    /// Extraction du u32 brut (zero-cost)
     #[inline(always)]
-    pub fn as_u32(&self) -> u32 {
-        self.0
-    }
+    pub fn as_u32(&self) -> u32 { self.0 }
 
     /// Sentinelle pour entrées invalides
     ///
-    /// INVARIANT : 0xFFFFFFFF — Season bits [31:28] = 15, hors domaine valide (max=6),
-    /// rejeté par try_from_u8. Aucune entrée liturgique ne peut produire cette valeur.
-    /// NE PAS utiliser 0x00000000 : décode en (TempusOrdinarium, Albus, Sollemnitas, id=0).
-    pub fn invalid() -> Self {
-        Self(0xFFFFFFFF)
-    }
+    /// INVARIANT : 0xFFFFFFFF — Precedence bits [31:28] = 15 (hors domaine, max=12),
+    /// Nature bits [27:25] = 7 (hors domaine, max=4). Rejeté par try_from_u8.
+    /// NE PAS utiliser 0x00000000 : valeur liturgique décodable valide.
+    pub fn invalid() -> Self { Self(0xFFFFFFFF) }
 
-    /// Teste si ce DayPacked est la sentinelle d'erreur
     #[inline(always)]
-    pub fn is_invalid(&self) -> bool {
-        self.0 == 0xFFFFFFFF
-    }
+    pub fn is_invalid(&self) -> bool { self.0 == 0xFFFFFFFF }
 }
 
 /// Information détaillée sur une corruption
 #[derive(Debug, Clone)]
 pub struct CorruptionInfo {
     pub packed_value: u32,
-    pub invalid_field: &'static str,  // "season", "color", "rank"
+    pub invalid_field: &'static str,  // "precedence", "nature", "color", "season", "reserved"
     pub invalid_value: u8,
-    pub offset: Option<usize>,  // Position dans le fichier
+    pub offset: Option<usize>,
 }
 ```
 
@@ -121,40 +123,71 @@ pub struct CorruptionInfo {
 ```rust
 #[test]
 fn test_corruption_detection() {
-    // Season invalide (15 > 6)
+    // Precedence invalide (15 > 12)
     let packed = 0xF0000000;
     let result = DayPacked::try_from_u32(packed);
     assert!(result.is_err());
-    
     let err = result.unwrap_err();
-    assert_eq!(err.invalid_field, "season");
+    assert_eq!(err.invalid_field, "precedence");
     assert_eq!(err.invalid_value, 15);
+}
+
+#[test]
+fn test_reserved_bit_rejected() {
+    // Bit [18] = 1 doit être rejeté
+    let packed = 0x0004_0000u32;  // bit 18 set, Precedence=0, Nature=0, Color=0, Season=0
+    let result = DayPacked::try_from_u32(packed);
+    assert!(result.is_err());
 }
 
 #[test]
 fn test_all_valid_combinations() {
     use itertools::iproduct;
-    
-    for (s, c, r) in iproduct!(0..=6u8, 0..=5u8, 0..=5u8) {
+
+    for (p, n, c, s) in iproduct!(0..=12u8, 0..=4u8, 0..=5u8, 0..=6u8) {
         let logic = Day {
-            season: Season::try_from_u8(s).unwrap(),
-            color: Color::try_from_u8(c).unwrap(),
-            rank: Rank::try_from_u8(r).unwrap(),
-            feast_id: 0x123456,
+            precedence: Precedence::try_from_u8(p).unwrap(),
+            nature:     Nature::try_from_u8(n).unwrap(),
+            color:      Color::try_from_u8(c).unwrap(),
+            season:     Season::try_from_u8(s).unwrap(),
+            feast_id:   0x12345,
         };
-        
+
         let packed: u32 = logic.clone().into();
         let result = DayPacked::try_from_u32(packed);
-        assert!(result.is_ok());
+        assert!(result.is_ok(), "p={p} n={n} c={c} s={s} failed");
     }
+}
+
+#[test]
+fn test_layout_field_positions() {
+    // Vérification des positions de bits
+    let p12: u32 = 12u32 << 28;  // Precedence max
+    let n4:  u32 = 4u32  << 25;  // Nature max
+    let c5:  u32 = 5u32  << 22;  // Color max
+    let s6:  u32 = 6u32  << 19;  // Season max
+    let id:  u32 = 0x3FFFF;      // FeastID max
+
+    let packed = p12 | n4 | c5 | s6 | id;
+    let result = DayPacked::try_from_u32(packed);
+    assert!(result.is_ok());
+
+    let day = Day::try_from_u32(packed).unwrap();
+    assert_eq!(day.precedence as u8, 12);
+    assert_eq!(day.nature as u8, 4);
+    assert_eq!(day.color as u8, 5);
+    assert_eq!(day.season as u8, 6);
+    assert_eq!(day.feast_id, 0x3FFFF);
 }
 ```
 
 **Critères de Validation** :
 
 - ✅ `try_from_u32` rejette toutes les valeurs invalides avec info détaillée
+- ✅ `try_from_u32` rejette le bit reserved [18] si set
 - ✅ Zéro allocation dans le happy path
 - ✅ `size_of::<DayPacked>() == 4`
+- ✅ Round-trip `Day → u32 → Day` sans perte pour toutes combinaisons valides
 - ✅ Tests unitaires : 100% passés
 
 #### 1.2 Algorithme de Pâques + is_sunday (Semaine 1, Jours 4-5)
@@ -583,9 +616,10 @@ fn preview_entries(
         
         match Day::try_from_u32(packed) {
             Ok(logic) => {
-                println!("  {}-{:03}: 0x{:08X} ({:?}, {:?}, {:?}, #0x{:06X})",
+                println!("  {}-{:03}: 0x{:08X} (Prec={:?}, Nat={:?}, {:?}, {:?}, #0x{:05X})",
                     year, day, packed,
-                    logic.season, logic.color, logic.rank, logic.feast_id
+                    logic.precedence, logic.nature, logic.color, logic.season,
+                    logic.feast_id
                 );
             }
             Err(_) => {
@@ -726,12 +760,14 @@ impl FeastRegistry {
         let key = (scope, category);
         let current = self.next_id.entry(key).or_insert(0);
 
-        if *current == 0xFFFF {
+        // Séquentiel 12 bits : valeurs 0x000–0xFFF (4096 entrées max).
+        // Refus quand *current atteint 0x1000 (hors domaine).
+        if *current == 0x1000 {
             return Err(RegistryError::FeastIDExhausted { scope, category });
         }
 
-        let feast_id = ((scope as u32) << 20)
-            | ((category as u32) << 16)
+        let feast_id = ((scope as u32) << 16)
+            | ((category as u32) << 12)
             | (*current as u32);
 
         *current += 1;
@@ -750,8 +786,8 @@ impl FeastRegistry {
 
     /// Export d'un scope/category pour partage entre forges.
     pub fn export_scope(&self, scope: u8, category: u8) -> RegistryExport {
-        let prefix = ((scope as u32) << 20) | ((category as u32) << 16);
-        let mask = 0x3F0000u32;
+        let prefix = ((scope as u32) << 16) | ((category as u32) << 12);
+        let mask = 0x3F000u32;  // Bits [17:12] : Scope (2 bits) + Category (4 bits)
 
         let allocations: Vec<(u32, String)> = self.allocations
             .iter()
@@ -802,8 +838,8 @@ impl FeastRegistry {
         let key = (export.scope, export.category);
         let max_seq = self.allocations
             .keys()
-            .filter(|id| (**id & 0x3F0000u32) == ((export.scope as u32) << 20 | (export.category as u32) << 16))
-            .map(|id| (id & 0xFFFF) as u16)
+            .filter(|id| (**id & 0x3F000u32) == ((export.scope as u32) << 16 | (export.category as u32) << 12))
+            .map(|id| (id & 0xFFF) as u16)
             .max()
             .unwrap_or(0);
 
@@ -899,7 +935,10 @@ fn test_registry_import_export() {
     
     // Allocation allemande ne doit pas collisionner
     let de_id = registry_de.allocate_next(2, 1).unwrap();
-    assert!(de_id > 0x210063);  // Au-delà des 100 français
+    // Avec layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12].
+    // 100 allocations françaises (seq 0x000–0x063) → next = 0x064.
+    // Premier ID allemand = (2<<16)|(1<<12)|0x064 = 0x21064.
+    assert_eq!(de_id, 0x21064);
 }
 
 #[test]
@@ -907,15 +946,16 @@ fn test_registry_collision_detection() {
     let mut registry = FeastRegistry::new();
     
     // Allocation manuelle
-    registry.register(0x210001, "Saint A".to_string()).unwrap();
-    
+    // Layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12], seq=1 → 0x21001
+    registry.register(0x21001, "Saint A".to_string()).unwrap();
+
     // Export conflit
-    let mut export = RegistryExport {
+    let export = RegistryExport {
         scope: 2,
         category: 1,
         version: 1,
         allocations: vec![
-            (0x210001, "Saint B".to_string()),  // Collision !
+            (0x21001, "Saint B".to_string()),  // Collision !
         ],
     };
 
@@ -925,7 +965,7 @@ fn test_registry_collision_detection() {
     assert!(result.is_ok());
     let report = result.unwrap();
     assert_eq!(report.collisions.len(), 1);
-    assert_eq!(report.collisions[0].feast_id, 0x210001);
+    assert_eq!(report.collisions[0].feast_id, 0x21001);
     assert_eq!(report.collisions[0].existing, "Saint A");
     assert_eq!(report.collisions[0].incoming, "Saint B");
     assert_eq!(report.skipped, 1);
@@ -1483,7 +1523,7 @@ pub struct KalResult {
 }
 
 #[no_mangle]
-pub extern "C" fn kal_get_day_checked(
+pub unsafe extern "C" fn kal_get_day_checked(
     handle: *const Provider,
     year: i16,
     day_of_year: u16,
@@ -1529,7 +1569,7 @@ pub extern "C" fn kal_get_day_checked(
 }
 
 #[no_mangle]
-pub extern "C" fn kal_get_last_error(
+pub unsafe extern "C" fn kal_get_last_error(
     handle: *const Provider
 ) -> *const c_char {
     if handle.is_null() {
@@ -1751,7 +1791,7 @@ $ cargo cov -- show target/*/release/kald_full \
 "\x00\x00"
 "\xFF\xFF"
 
-# Season/Color/Rank values (tous les valides et invalides)
+# Season/Color/Precedence/Nature values (tous les valides et invalides)
 "\x00"
 "\x01"
 "\x05"
@@ -2158,18 +2198,18 @@ fn test_header_file_size_mismatch() {
 
 ```rust
 #[test]
-fn test_feast_id_interop_10k_allocations() {
-    // Forge 1 : France
+fn test_feast_id_interop_4k_allocations() {
+    // Forge 1 : France — 4 000 allocations (dans la limite 12 bits séquentiel = 4 096 max)
     let mut registry_fr = FeastRegistry::new();
     
-    for i in 0..10_000 {
+    for i in 0..4_000 {
         let id = registry_fr.allocate_next(2, 1).unwrap();
         registry_fr.register(id, format!("Saint FR {}", i)).unwrap();
     }
     
     // Export
     let export = registry_fr.export_scope(2, 1);
-    assert_eq!(export.allocations.len(), 10_000);
+    assert_eq!(export.allocations.len(), 4_000);
     
     // Forge 2 : Allemagne
     let mut registry_de = FeastRegistry::new();
@@ -2177,27 +2217,28 @@ fn test_feast_id_interop_10k_allocations() {
     
     assert!(import_result.is_ok());
     let report = import_result.unwrap();
-    assert_eq!(report.imported, 10_000);
+    assert_eq!(report.imported, 4_000);
     assert_eq!(report.collisions.len(), 0);
     
     // Allocation allemande ne doit pas collisionner
-    for i in 0..1000 {
-        let de_id = registry_de.allocate_next(2, 1).unwrap();
-        assert!(de_id >= 0x212710);  // Au-delà des 10k français
-        assert!(!registry_fr.has_feast_id(de_id));
-    }
+    // Layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12], seq=4000=0xFA0
+    // Premier ID allemand = (2<<16)|(1<<12)|0xFA0 = 0x21FA0
+    let de_id = registry_de.allocate_next(2, 1).unwrap();
+    assert_eq!(de_id, 0x21FA0);
+    assert!(!registry_fr.has_feast_id(de_id));
 }
 
 #[test]
 fn test_registry_collision_detection() {
     let mut registry = FeastRegistry::new();
-    registry.register(0x210001, "Saint A".to_string()).unwrap();
+    // Layout 18 bits : scope=2 → bits[17:16], cat=1 → bits[15:12], seq=1 → 0x21001
+    registry.register(0x21001, "Saint A".to_string()).unwrap();
 
     let export = RegistryExport {
         scope: 2,
         category: 1,
         version: 1,
-        allocations: vec![(0x210001, "Saint B".to_string())],
+        allocations: vec![(0x21001, "Saint B".to_string())],
     };
 
     // Conforme spec §3.3 : Ok même en présence de collision.
@@ -2207,7 +2248,7 @@ fn test_registry_collision_detection() {
 
     let report = result.unwrap();
     assert_eq!(report.collisions.len(), 1);
-    assert_eq!(report.collisions[0].feast_id, 0x210001);
+    assert_eq!(report.collisions[0].feast_id, 0x21001);
     assert_eq!(report.collisions[0].existing, "Saint A");
     assert_eq!(report.collisions[0].incoming, "Saint B");
 }
@@ -2449,6 +2490,9 @@ jobs:
 ## Résumé des Corrections Appliquées
 
 | #   | Point Hardening                    | Correction                                       | Phase | Criticité    |
+| --- | ---------------------------------- | ------------------------------------------------ | ----- | ------------ |
+| C1  | Modèle 1D `Rank` → Modèle 2D `Precedence`+`Nature` | Layout DayPacked v2.0 : `[31:28] Precedence \| [27:25] Nature \| [24:22] Color \| [21:19] Season \| [18] Reserved \| [17:0] FeastID` | 1.1 | **Critique** |
+| C2  | FeastID 22 bits → 18 bits | Capacité 262 144 slots (valeurs 0–262 143). Masques registry mis à jour. | 1.1 | **Haute** |
 | --- | ---------------------------------- | ------------------------------------------------ | ----- | ------------ |
 | 1   | Validation header flags            | Rejet strict bits inconnus + politique migration | 1.3   | **Haute**    |
 | 2   | Corruption silencieuse             | API Result + télémétrie + logs JSON + timestamp | 3.1   | **Haute**    |

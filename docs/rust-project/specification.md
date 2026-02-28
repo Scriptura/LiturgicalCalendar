@@ -55,9 +55,10 @@ Toutes les définitions utilisent le Latin Canonique. Les Enums Rust sont annot�
 /// Structure riche avec validations, conversions, et métadonnées
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Day {
-    pub season: Season,
+    pub precedence: Precedence,
+    pub nature: Nature,
     pub color: Color,
-    pub rank: Rank,
+    pub season: Season,
     pub feast_id: u32,
 }
 
@@ -75,7 +76,7 @@ pub struct DayPacked(u32);
 pub struct CorruptionInfo {
     /// Valeur u32 brute lue dans le Data Body
     pub packed_value: u32,
-    /// Nom du champ invalide ("season", "color", "rank")
+    /// Nom du champ invalide ("precedence", "nature", "color", "season", "reserved")
     pub invalid_field: &'static str,
     /// Valeur numérique du champ invalide
     pub invalid_value: u8,
@@ -118,11 +119,14 @@ impl DayPacked {
 
     /// Crée un jour marqué comme invalide (pour erreurs)
     ///
-    /// INVARIANT : 0xFFFFFFFF est hors domaine valide — Season bits [31:28] = 0xF = 15,
-    /// rejeté par Season::try_from_u8. Aucune entrée liturgique valide ne peut
-    /// produire cette valeur. Pas de collision possible avec une entrée décodable.
+    /// INVARIANT : 0xFFFFFFFF est hors domaine valide.
+    /// Décomposé selon le layout DayPacked v2.0 :
+    ///   Precedence bits [31:28] = 15 → hors domaine (max = 12), rejeté par try_from_u8.
+    ///   Nature bits [27:25] = 7 → hors domaine (max = 4), rejeté par try_from_u8.
+    /// Aucune entrée liturgique valide ne peut produire cette valeur.
+    /// Pas de collision possible avec une entrée décodable.
     ///
-    /// NE PAS utiliser 0x00000000 : décode en (TempusOrdinarium, Albus, Sollemnitas, id=0),
+    /// NE PAS utiliser 0x00000000 : décode en (TriduumSacrum, Solemnitas, Albus, TempusOrdinarium, id=0),
     /// valeur sémantiquement valide — ambiguïté fatale pour la détection de corruption.
     pub fn invalid() -> Self {
         Self(0xFFFFFFFF)
@@ -143,10 +147,11 @@ impl From<Day> for DayPacked {
 
 impl From<Day> for u32 {
     fn from(day: Day) -> Self {
-        ((day.season as u32) << 28)
-            | ((day.color as u32) << 25)
-            | ((day.rank as u32) << 22)
-            | (day.feast_id & 0x3FFFFF)
+        ((day.precedence as u32) << 28)
+            | ((day.nature as u32) << 25)
+            | ((day.color as u32) << 22)
+            | ((day.season as u32) << 19)
+            | (day.feast_id & 0x3FFFF)
     }
 }
 ```
@@ -156,7 +161,7 @@ impl From<Day> for u32 {
 | Aspect             | `Day`         | `DayPacked`        |
 | ------------------ | ---------------------------- | ---------------------------- |
 | **Usage**          | Forge, Slow Path, calculs    | Runtime Fast Path uniquement |
-| **Taille**         | ≥ 12 octets (struct riche)   | 4 octets (transparent)       |
+| **Taille**         | ≥ 20 octets (struct riche)   | 4 octets (transparent)       |
 | **Validation**     | Stricte à la construction    | Déjà validé par Forge        |
 | **Conversions**    | Riches (JSON, display, etc.) | Minimales (u32 brut)         |
 | **Évolution v2.x** | Extensible (nouveaux champs) | Figée (contrat binaire)      |
@@ -196,44 +201,109 @@ impl Color {
 
 > **Normalisation à la Forge** : `normalize_color(input: &str)` vit dans `liturgical-calendar-forge` (§5), pas dans `core`. Elle utilise `to_lowercase()` (allocation heap) et retourne `RegistryError`. Le crate `core` n'a pas cette dépendance.
 
-### 1.3 Rank (3 bits)
+### 1.3 Precedence (4 bits) et Nature (3 bits)
 
-Hiérarchie de précédence décroissante. L'ordre numérique reflète la priorité (0 = maximum).
+Le modèle v2.0 découple strictement deux axes orthogonaux.
+
+**Axe ordinal : `Precedence` (4 bits)**
+
+Force d'éviction. Comparaison purement numérique (`u32 >> 28`). Ordre total non cyclique. Une valeur numérique plus faible représente une force d'éviction plus élevée.
+
+*Tabella dierum liturgicorum — NALC 1969. Ordre figé. Aucune modification autorisée après freeze v2.0.*
+
+| Valeur | Niveau Canonique |
+| ------ | ---------------- |
+| 0 | Triduum Sacrum |
+| 1 | Nativitas, Epiphania, Ascensio, Pentecostes |
+| 2 | Dominicae Adventus, Quadragesimae, Paschales |
+| 3 | Feria IV Cinerum; Hebdomada Sancta |
+| 4 | Sollemnitates Domini, BMV, Sanctorum in Calendario Generali |
+| 5 | Sollemnitates propriae |
+| 6 | Festa Domini in Calendario Generali |
+| 7 | Dominicae per annum |
+| 8 | Festa BMV et Sanctorum in Calendario Generali |
+| 9 | Festa propria |
+| 10 | Feriae Adventus (17–24 Dec), Octava Nativitatis |
+| 11 | Memoriae obligatoriae |
+| 12 | Feriae per annum; Memoriae ad libitum |
 
 ```rust
 #[repr(u8)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum Rank {
-    Sollemnitas      = 0,  // Solennités
-    Festum           = 1,  // Fêtes
-    Dominica         = 2,  // Dimanches
-    Memoria          = 3,  // Mémoires obligatoires
-    MemoriaAdLibitum = 4,  // Mémoires facultatives
-    Feria            = 5,  // Féries (jours ordinaires)
-    // 6, 7 réservés pour extensions futures
+pub enum Precedence {
+    TriduumSacrum                      = 0,
+    SollemnitatesFixaeMaior            = 1,
+    DominicaePrivilegiataeMaior        = 2,
+    FeriaePrivilegiataeMaior           = 3,
+    SollemnitatesGenerales            = 4,
+    SollemnitatesPropria               = 5,
+    FestaDomini                        = 6,
+    DominicaePerAnnum                  = 7,
+    FestaBMVEtSanctorumGenerales       = 8,
+    FestaPropria                       = 9,
+    FeriaeAdventusEtOctavaNativitatis  = 10,
+    MemoriaeObligatoriae               = 11,
+    FeriaePerAnnumEtMemoriaeAdLibitum  = 12,
+    // 13-15 réservés
 }
 
-impl Rank {
-    /// Construction sécurisée depuis u8 avec validation
+impl Precedence {
     pub fn try_from_u8(val: u8) -> Result<Self, DomainError> {
         match val {
-            0 => Ok(Self::Sollemnitas),
-            1 => Ok(Self::Festum),
-            2 => Ok(Self::Dominica),
-            3 => Ok(Self::Memoria),
-            4 => Ok(Self::MemoriaAdLibitum),
-            5 => Ok(Self::Feria),
-            _ => Err(DomainError::InvalidRank(val)),
+            0  => Ok(Self::TriduumSacrum),
+            1  => Ok(Self::SollemnitatesFixaeMaior),
+            2  => Ok(Self::DominicaePrivilegiataeMaior),
+            3  => Ok(Self::FeriaePrivilegiataeMaior),
+            4  => Ok(Self::SollemnitatesGenerales),
+            5  => Ok(Self::SollemnitatesPropria),
+            6  => Ok(Self::FestaDomini),
+            7  => Ok(Self::DominicaePerAnnum),
+            8  => Ok(Self::FestaBMVEtSanctorumGenerales),
+            9  => Ok(Self::FestaPropria),
+            10 => Ok(Self::FeriaeAdventusEtOctavaNativitatis),
+            11 => Ok(Self::MemoriaeObligatoriae),
+            12 => Ok(Self::FeriaePerAnnumEtMemoriaeAdLibitum),
+            _  => Err(DomainError::InvalidPrecedence(val)),
         }
     }
 }
 ```
 
-> **Normalisation à la Forge** : `normalize_rank(input: Option<&str>)` vit dans `liturgical-calendar-forge` (§5), pas dans `core`. Elle opère sur des `&str` issus de configs TOML/YAML et retourne `RegistryError`. Aucune allocation dans `core`.
+**Axe sémantique : `Nature` (3 bits)**
 
-### 1.4 Season (4 bits)
+Typologie rituelle de l'entité liturgique. La Nature ne dicte jamais la force d'éviction. Une Feria peut posséder une Precedence supérieure à une Memoria (ex : Feria IV Cinerum, Precedence=3, est supérieure à toute Memoria, Precedence=11 ou 12). Ce découplage est la justification structurelle du modèle 2D.
 
-États liturgiques du calendrier. L'indice 0 représente l'état par défaut (Temps Ordinaire).
+> **Dominica** : n'est pas une Nature. Dominica est une classe canonique de précédence. Sa Nature structurelle est `Feria`. Sa force d'éviction est encodée par `Precedence::DominicaePerAnnum` (7) ou `Precedence::DominicaePrivilegiataeMaior` (2) selon le temps liturgique.
+
+```rust
+#[repr(u8)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+pub enum Nature {
+    Solemnitas    = 0,
+    Festum        = 1,
+    Memoria       = 2,
+    Feria         = 3,
+    Commemoratio  = 4,
+    // 5-7 réservés
+}
+
+impl Nature {
+    pub fn try_from_u8(val: u8) -> Result<Self, DomainError> {
+        match val {
+            0 => Ok(Self::Solemnitas),
+            1 => Ok(Self::Festum),
+            2 => Ok(Self::Memoria),
+            3 => Ok(Self::Feria),
+            4 => Ok(Self::Commemoratio),
+            _ => Err(DomainError::InvalidNature(val)),
+        }
+    }
+}
+```
+
+### 1.4 Season (3 bits)
+
+États liturgiques du calendrier. L'indice 0 représente l'état par défaut (Temps Ordinaire). Champ cache AOT — bits [21:19] du layout DayPacked v2.0.
 
 ```rust
 #[repr(u8)]
@@ -246,7 +316,7 @@ pub enum Season {
     TriduumPaschale     = 4,  // Triduum Pascal
     TempusPaschale      = 5,  // Temps Pascal
     DiesSancti          = 6,  // Semaine Sainte (Rameaux-Mercredi)
-    // 7-15 réservés
+    // 7 réservé (3 bits, valeur max = 7)
 }
 
 impl Season {
@@ -542,8 +612,8 @@ Offset   : Contenu
 0x0010   : Année[0], Jour 1 (u32)
 0x0014   : Année[0], Jour 2 (u32)
 ...
-0x05B4   : Année[0], Jour 366 (u32)
-0x05B8   : Année[1], Jour 1 (u32)
+0x05C4   : Année[0], Jour 366 (u32)
+0x05C8   : Année[1], Jour 1 (u32)
 ...
 ```
 
@@ -620,31 +690,40 @@ targets = [
 ]
 ```
 
-### 2.3 Bitpacking Layout (32 bits par jour)
+### 2.3 Bitpacking Layout — DayPacked (u32)
 
-**Structure Packed** :
+**Layout Normatif (v2.0 — figé)** :
 
-```
-Bits 31-28 (4 bits) : Season (0-15)
-Bits 27-25 (3 bits) : Color (0-7)
-Bits 24-22 (3 bits) : Rank (0-7)
-Bits 21-0  (22 bits): FeastID (0-4,194,303)
-```
+| Bits     | Champ      | Taille  | Description                                                        |
+| -------- | ---------- | ------- | ------------------------------------------------------------------ |
+| [31..28] | Precedence | 4 bits  | Axe ordinal (0–12). Z-Index strict. Comparaison purement entière.  |
+| [27..25] | Nature     | 3 bits  | Axe sémantique (Solemnitas, Festum, Memoria, Feria, Commemoratio). |
+| [24..22] | Color      | 3 bits  | Couleur liturgique finale résolue en Forge.                        |
+| [21..19] | Season     | 3 bits  | Cache AOT — rendu O(1). Valeurs 0–6, 7 réservé.                   |
+| [18]     | Reserved   | 1 bit   | Inactif en v2.0. Positionné à 0 par la Forge.                     |
+| [17..0]  | FeastID    | 18 bits | Identifiant de fête (0–262 143).                               |
 
 **Extraction (Runtime)** :
 
 ```rust
 impl Day {
     pub fn try_from_u32(packed: u32) -> Result<Self, DomainError> {
-        let season_bits = ((packed >> 28) & 0xF) as u8;
-        let color_bits = ((packed >> 25) & 0x7) as u8;
-        let rank_bits = ((packed >> 22) & 0x7) as u8;
-        let feast_id = packed & 0x3FFFFF;
+        let precedence_bits = ((packed >> 28) & 0xF) as u8;
+        let nature_bits     = ((packed >> 25) & 0x7) as u8;
+        let color_bits      = ((packed >> 22) & 0x7) as u8;
+        let season_bits     = ((packed >> 19) & 0x7) as u8;
+        // Bit [18] : Reserved — doit être 0
+        let reserved_bit    = (packed >> 18) & 0x1;
+        let feast_id        = packed & 0x3FFFF;
+        if reserved_bit != 0 {
+            return Err(DomainError::ReservedBitSet);
+        }
 
         Ok(Self {
-            season: Season::try_from_u8(season_bits)?,
-            color: Color::try_from_u8(color_bits)?,
-            rank: Rank::try_from_u8(rank_bits)?,
+            precedence: Precedence::try_from_u8(precedence_bits)?,
+            nature:     Nature::try_from_u8(nature_bits)?,
+            color:      Color::try_from_u8(color_bits)?,
+            season:     Season::try_from_u8(season_bits)?,
             feast_id,
         })
     }
@@ -653,26 +732,78 @@ impl Day {
 
 ---
 
+### 2.4 Invariants Structurels (v2.0 — Freeze)
+
+### INV-1 : Comparaison Ordinale
+
+- La Precedence est l'unique axe de résolution des collisions.
+- Comparaison purement entière : `(packed_a >> 28) < (packed_b >> 28)`.
+- Ordre total, non cyclique.
+- Valeur numérique plus faible = force d'éviction plus élevée.
+- Aucune logique sémantique n'intervient dans la collision.
+
+### INV-2 : Immutabilité du Z-Index
+
+- La Tabella (13 niveaux, §1.3) est figée après freeze v2.0.
+- Aucune modification de l'ordre 0–12 n'est autorisée.
+- Toute extension future doit utiliser des valeurs hors de la plage 0–12, via migration majeure.
+
+### INV-3 : Séparation des Axes
+
+- `Nature ≠ Precedence`. Les deux axes sont orthogonaux.
+- La Nature ne dicte jamais la force d'éviction.
+- Cas normatif : `Feria IV Cinerum` possède `Precedence=3` (FeriaePrivilegiataeMaior), supérieure à toute `Memoria` (`Precedence=11`), bien que sa Nature soit `Feria`.
+- `Dominica` n'est pas une Nature. Sa Nature est `Feria`. Sa force d'éviction est encodée par `Precedence::DominicaePerAnnum` (7) ou `Precedence::DominicaePrivilegiataeMaior` (2).
+
+### INV-4 : Forge comme Producteur Unique
+
+- Le fichier `.kald` est généré exclusivement par la Forge (Slow Path, AOT).
+- Le runtime (Fast Path) est strictement en lecture.
+- Aucune mutation, recalcul liturgique, de saison, de couleur ou de précédence n'est autorisé au runtime.
+
+### INV-5 : Unicité des Commémorations
+
+- La Forge garantit au maximum une seule Commemoratio par jour.
+- Le runtime ne gère aucune liste de collisions.
+- Toute collision complexe est résolue en AOT.
+
+### INV-6 : Redondance Contrôlée — Season
+
+- Le champ `Season` (bits [21:19]) est une matérialisation AOT volontaire.
+- Il garantit un rendu O(1) sans calcul de frontières temporelles au runtime.
+- Il est un cache structurel, non une donnée dérivable au runtime.
+
+### INV-7 : Bit Reserved
+
+- Le bit [18] est inactif en v2.0.
+- La Forge le positionne à 0.
+- Aucun comportement ne dépend de ce bit en v2.0.
+- `try_from_u32` retourne `DomainError::ReservedBitSet` si ce bit est à 1.
+
+---
+
 ## 3. FeastID Registry (Correction Audit #1 - Collisions)
 
 ### 3.1 Espace d'Allocation Hiérarchique
 
-**Structure des FeastID (22 bits)** :
+**Structure des FeastID (18 bits)** :
 
 ```
-Bits 21-20 (2 bits) : Scope       (0=Universal, 1=Regional, 2=National, 3=Local)
-Bits 19-16 (4 bits) : Category    (0=Temporal, 1=Sanctoral, 2=Marian, etc.)
-Bits 15-0  (16 bits): Sequential  (0-65535 par scope/category)
+Bits 17-16 (2 bits) : Scope       (0=Universal, 1=Regional, 2=National, 3=Local)
+Bits 15-12 (4 bits) : Category    (0=Temporal, 1=Sanctoral, 2=Marian, etc.)
+Bits 11-0  (12 bits): Sequential  (0-4095 par scope/category)
 ```
+
+Capacité totale : 262 144 FeastID (valeurs 0 à 262 143). Largement suffisant pour tout sanctoral universel, régional et local prévisible.
 
 **Exemple d'Allocation** :
 
 ```
-Universal/Temporal  : 0x000000 - 0x00FFFF (Pâques, Pentecôte, etc.)
-Universal/Sanctoral : 0x010000 - 0x01FFFF (Saints universels)
-Regional/Sanctoral  : 0x090000 - 0x09FFFF (Saints régionaux)
-National/Sanctoral  : 0x110000 - 0x11FFFF (Saints nationaux)
-Local/Sanctoral     : 0x190000 - 0x19FFFF (Saints locaux)
+Universal/Temporal  : 0x00000 - 0x00FFF
+Universal/Sanctoral : 0x01000 - 0x01FFF
+Regional/Sanctoral  : 0x09000 - 0x09FFF
+National/Sanctoral  : 0x11000 - 0x11FFF
+Local/Sanctoral     : 0x19000 - 0x19FFF
 ```
 
 ### 3.2 Registry Canonique
@@ -716,12 +847,12 @@ impl FeastRegistry {
         let key = (scope, category);
         let next = self.next_id.entry(key).or_insert(0);
 
-        if *next == 0xFFFF {
+        if *next == 0x1000 {
             return Err(RegistryError::FeastIDExhausted { scope, category });
         }
 
-        let feast_id = ((scope as u32) << 20)
-            | ((category as u32) << 16)
+        let feast_id = ((scope as u32) << 16)
+            | ((category as u32) << 12)
             | (*next as u32);
 
         *next += 1;
@@ -771,8 +902,8 @@ pub struct CollisionInfo {
 impl FeastRegistry {
     /// Export d'un scope/category pour partage entre forges
     pub fn export_scope(&self, scope: u8, category: u8) -> RegistryExport {
-        let prefix = ((scope as u32) << 20) | ((category as u32) << 16);
-        let mask = 0x3F0000u32;  // Bits [21:16] : Scope (2 bits) + Category (4 bits)
+        let prefix = ((scope as u32) << 16) | ((category as u32) << 12);
+        let mask = 0x3F000u32;  // Bits [17:12] : Scope (2 bits) + Category (4 bits)
 
         let allocations: Vec<(u32, String)> = self
             .allocations
@@ -823,8 +954,8 @@ impl FeastRegistry {
         let key = (export.scope, export.category);
         let max_seq = self.allocations
             .keys()
-            .filter(|id| (**id & 0x3F0000u32) == ((export.scope as u32) << 20 | (export.category as u32) << 16))
-            .map(|id| (id & 0xFFFF) as u16)
+            .filter(|id| (**id & 0x3F000u32) == ((export.scope as u32) << 16 | (export.category as u32) << 12))
+            .map(|id| (id & 0xFFF) as u16)
             .max()
             .unwrap_or(0);
 
@@ -898,7 +1029,7 @@ impl SlowPath {
         let sanctoral_feast = self.sanctoral.get_feast(year, day_of_year);
 
         // 4. Résolution de précédence
-        let (rank, color, feast_id) = self.precedence.resolve(
+        let (precedence, nature, color, feast_id) = self.precedence.resolve(
             year,
             &season,
             temporal_feast,
@@ -908,9 +1039,10 @@ impl SlowPath {
         )?;
 
         Ok(Day {
+            precedence,
+            nature,
             season,
             color,
-            rank,
             feast_id,
         })
     }
@@ -924,11 +1056,12 @@ impl SlowPath {
 ///
 /// TYPE COPY intentionnel : pas d'allocation dans get_feast/get_day.
 /// Le nom canonique n'est PAS ici — il est dans le StringProvider (.lits).
-/// Le moteur n'a besoin que de l'identifiant, du rang et de la couleur.
+/// Le moteur n'a besoin que de l'identifiant, de la précédence, de la nature et de la couleur.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct FeastDefinition {
-    pub id: u32,        // FeastID (22 bits, voir section 3)
-    pub rank: Rank,
+    pub id: u32,               // FeastID (18 bits, voir section 3)
+    pub precedence: Precedence,
+    pub nature: Nature,
     pub color: Color,
 }
 
@@ -976,14 +1109,16 @@ impl TemporalLayer {
         // Recherche de fêtes temporelles (Pâques, Pentecôte, etc.)
         if day_of_year == boundaries.easter_sunday {
             Some(FeastDefinition {
-                id: 0x000001,
-                rank: Rank::Sollemnitas,
+                id: 0x00001,
+                precedence: Precedence::TriduumSacrum,
+                nature: Nature::Solemnitas,
                 color: Color::Albus,
             })
         } else if day_of_year == boundaries.pentecost {
             Some(FeastDefinition {
-                id: 0x000002,
-                rank: Rank::Sollemnitas,
+                id: 0x00002,
+                precedence: Precedence::SollemnitatesFixaeMaior,
+                nature: Nature::Solemnitas,
                 color: Color::Rubeus,
             })
         } else {
@@ -1030,15 +1165,17 @@ fn day_of_year_to_month_day(day_of_year: u16, is_leap: bool) -> (u8, u8) {
 }
 ```
 
-### 4.4 Precedence Resolver (Correction Audit #3)
+### 4.4 Precedence Resolver
 
-**Règles de Précédence (Ordre Strict)** :
+**Règles de Résolution (Ordre Strict)** :
+
+La résolution est une comparaison purement numérique sur l'axe `Precedence`. Valeur plus faible = force d'éviction plus élevée. Aucune logique sémantique n'intervient dans la collision.
 
 ```rust
 pub struct PrecedenceResolver;
 
 impl PrecedenceResolver {
-    /// Résout les conflits entre fêtes selon les règles liturgiques
+    /// Résout les conflits entre fêtes selon la Tabella dierum liturgicorum
     pub fn resolve(
         &self,
         year: i16,
@@ -1047,61 +1184,42 @@ impl PrecedenceResolver {
         sanctoral: Option<FeastDefinition>,
         day_of_year: u16,
         boundaries: &SeasonBoundaries,
-    ) -> Result<(Rank, Color, u32), DomainError> {
-        // Règle 1 : Triduum Pascal prioritaire absolu
-        if *season == Season::TriduumPaschale {
-            if let Some(feast) = temporal {
-                return Ok((feast.rank, feast.color, feast.id));
+    ) -> Result<(Precedence, Nature, Color, u32), DomainError> {
+        // Résolution : sélection du candidat à Precedence numérique minimale.
+        // En cas d'égalité : le candidat temporal prime sur le sanctoral.
+        let winner = match (temporal, sanctoral) {
+            (Some(t), Some(s)) => {
+                if (t.precedence as u8) <= (s.precedence as u8) { t } else { s }
             }
-        }
-
-        // Règle 2 : Solennités prioritaires sur tout
-        if let Some(feast) = temporal.as_ref().filter(|f| f.rank == Rank::Sollemnitas) {
-            return Ok((feast.rank, feast.color, feast.id));
-        }
-
-        if let Some(feast) = sanctoral.as_ref().filter(|f| f.rank == Rank::Sollemnitas) {
-            return Ok((feast.rank, feast.color, feast.id));
-        }
-
-        // Règle 3 : Dimanches prioritaires sur fêtes
-        if is_sunday(year as i32, day_of_year) {
-            if let Some(feast) = temporal {
-                return Ok((Rank::Dominica, feast.color, feast.id));
-            } else {
-                return Ok((
-                    Rank::Dominica,
-                    season_default_color(season),
-                    0,
-                ));
+            (Some(t), None) => t,
+            (None, Some(s)) => s,
+            (None, None) => {
+                // Feria par défaut : Precedence selon saison
+                let prec = default_precedence(season, is_sunday(year as i32, day_of_year));
+                return Ok((prec, Nature::Feria, season_default_color(season), 0));
             }
-        }
+        };
 
-        // Règle 4 : Fêtes prioritaires sur mémoires
-        if let Some(feast) = temporal.as_ref().filter(|f| f.rank == Rank::Festum) {
-            return Ok((feast.rank, feast.color, feast.id));
-        }
+        Ok((winner.precedence, winner.nature, winner.color, winner.id))
+    }
+}
 
-        if let Some(feast) = sanctoral.as_ref().filter(|f| f.rank == Rank::Festum) {
-            return Ok((feast.rank, feast.color, feast.id));
+fn default_precedence(season: &Season, is_sunday: bool) -> Precedence {
+    if is_sunday {
+        match season {
+            Season::TempusAdventus
+            | Season::TempusQuadragesimae
+            | Season::TempusPaschale => Precedence::DominicaePrivilegiataeMaior,
+            _ => Precedence::DominicaePerAnnum,
         }
-
-        // Règle 5 : Mémoires obligatoires
-        if let Some(feast) = sanctoral.as_ref().filter(|f| f.rank == Rank::Memoria) {
-            return Ok((feast.rank, feast.color, feast.id));
+    } else {
+        match season {
+            Season::TempusAdventus => Precedence::FeriaeAdventusEtOctavaNativitatis,
+            Season::TempusNativitatis => Precedence::FeriaeAdventusEtOctavaNativitatis,
+            Season::TempusQuadragesimae | Season::DiesSancti => Precedence::FeriaePrivilegiataeMaior,
+            Season::TriduumPaschale => Precedence::TriduumSacrum,
+            _ => Precedence::FeriaePerAnnumEtMemoriaeAdLibitum,
         }
-
-        // Règle 6 : Mémoires facultatives
-        if let Some(feast) = sanctoral.as_ref().filter(|f| f.rank == Rank::MemoriaAdLibitum) {
-            return Ok((feast.rank, feast.color, feast.id));
-        }
-
-        // Règle 7 : Férie par défaut
-        Ok((
-            Rank::Feria,
-            season_default_color(season),
-            0,
-        ))
     }
 }
 
@@ -1195,7 +1313,8 @@ year_count = 300
 type = "relative_to_easter"
 name = "Ascension"
 offset_days = 39
-rank = "sollemnitas"
+precedence = 1
+nature = "solemnitas"
 color = "albus"
 
 [[temporal_rules]]
@@ -1209,28 +1328,19 @@ displaced_to = "next_available"
 [[sanctoral_feasts]]
 date = { month = 1, day = 1 }
 name = "Sainte Marie, Mère de Dieu"
-rank = "sollemnitas"
+precedence = 4
+nature = "solemnitas"
 color = "albus"
 scope = "universal"
 
 [[sanctoral_feasts]]
 date = { month = 7, day = 14 }
 name = "Fête nationale de la France"
-rank = "festum"
+precedence = 9
+nature = "festum"
 color = "albus"
 scope = "national"
 region = "FR"
-
-# Règles de précédence
-[precedence]
-order = [
-    "triduum_paschale",
-    "sollemnitas",
-    "dominica_adventus",
-    "dominica_quadragesimae",
-    "festum",
-    # ... ordre complet
-]
 ```
 
 **Implémentation** :
@@ -1298,16 +1408,21 @@ fn normalize_color(input: &str) -> Result<Color, RegistryError> {
     }
 }
 
-/// Convertit une chaîne de configuration en Rank liturgique.
-fn normalize_rank(input: Option<&str>) -> Result<Rank, RegistryError> {
+/// Convertit une chaîne de configuration en Precedence liturgique.
+fn normalize_precedence(input: u8) -> Result<Precedence, RegistryError> {
+    Precedence::try_from_u8(input)
+        .map_err(|_| RegistryError::InvalidPrecedenceValue(input))
+}
+
+/// Convertit une chaîne de configuration en Nature liturgique.
+fn normalize_nature(input: Option<&str>) -> Result<Nature, RegistryError> {
     match input {
-        Some("sollemnitas")       => Ok(Rank::Sollemnitas),
-        Some("festum")            => Ok(Rank::Festum),
-        Some("dominica")          => Ok(Rank::Dominica),
-        Some("memoria")           => Ok(Rank::Memoria),
-        Some("memoriaAdLibitum")  => Ok(Rank::MemoriaAdLibitum),
-        None | Some("feria")      => Ok(Rank::Feria),
-        Some(other) => Err(RegistryError::UnknownRankString(other.to_string())),
+        Some("solemnitas")   => Ok(Nature::Solemnitas),
+        Some("festum")       => Ok(Nature::Festum),
+        Some("memoria")      => Ok(Nature::Memoria),
+        Some("feria") | None => Ok(Nature::Feria),
+        Some("commemoratio") => Ok(Nature::Commemoratio),
+        Some(other) => Err(RegistryError::UnknownNatureString(other.to_string())),
     }
 }
 ```
@@ -1378,7 +1493,8 @@ pub struct TemporalRule {
     pub id: u32,
     pub name: String,
     pub rule_type: TemporalRuleType,
-    pub rank: Rank,
+    pub precedence: Precedence,
+    pub nature: Nature,
     pub color: Color,
 }
 
@@ -1431,21 +1547,23 @@ impl HardcodedRuleProvider {
         Self {
             temporal: vec![
                 TemporalRule {
-                    id: 0x000001,
+                    id: 0x00001,
                     name: "Ascension".to_string(),
                     rule_type: TemporalRuleType::RelativeToEaster { 
                         offset_days: 39 
                     },
-                    rank: Rank::Sollemnitas,
+                    precedence: Precedence::SollemnitatesFixaeMaior,
+                    nature: Nature::Solemnitas,
                     color: Color::Albus,
                 },
                 TemporalRule {
-                    id: 0x000002,
+                    id: 0x00002,
                     name: "Pentecôte".to_string(),
                     rule_type: TemporalRuleType::RelativeToEaster { 
                         offset_days: 49 
                     },
-                    rank: Rank::Sollemnitas,
+                    precedence: Precedence::SollemnitatesFixaeMaior,
+                    nature: Nature::Solemnitas,
                     color: Color::Rubeus,
                 },
                 // ... ~50 règles au total
@@ -1454,7 +1572,8 @@ impl HardcodedRuleProvider {
                 SanctoralFeast {
                     date: (1, 1),
                     name: "Sainte Marie, Mère de Dieu".to_string(),
-                    rank: Rank::Sollemnitas,
+                    precedence: Precedence::SollemnitatesGenerales,
+                    nature: Nature::Solemnitas,
                     color: Color::Albus,
                     scope: FeastScope::Universal,
                 },
@@ -1542,24 +1661,27 @@ impl RuleProvider for YamlAotRuleProvider {
 ```yaml
 # config/roman-rite-ordinary.yaml
 temporal_rules:
-  - id: 0x000001
+  - id: 0x00001
     name: "Ascension"
     type: relative_to_easter
     offset_days: 39
-    rank: sollemnitas
+    precedence: 1
+    nature: solemnitas
     color: albus
     
-  - id: 0x000002
+  - id: 0x00002
     name: "Pentecôte"
     type: relative_to_easter
     offset_days: 49
-    rank: sollemnitas
+    precedence: 1
+    nature: solemnitas
     color: rubeus
 
 sanctoral_feasts:
   - date: [1, 1]
     name: "Sainte Marie, Mère de Dieu"
-    rank: sollemnitas
+    precedence: 4
+    nature: solemnitas
     color: albus
     scope: universal
 ```
@@ -1715,7 +1837,7 @@ impl Calendar {
                     // DayPacked : extraction zero-cost via as_u32()
                     .map(|dp| dp.as_u32())
                     // Padding jour 366 pour années non-bissextiles : 0xFFFFFFFF
-                    // (DayPacked::invalid — Season=15, hors domaine, non décodable)
+                    // (DayPacked::invalid — Precedence=15 hors domaine, non décodable)
                     .unwrap_or(0xFFFFFFFF_u32);
                 file.write_all(&packed.to_ne_bytes())?;
             }
@@ -2319,8 +2441,8 @@ Compression: None
 Flags: 0x0000
 
 First 10 entries:
-  2025-001: 0x20000042 (TempusNativitatis, Albus, Sollemnitas, #0x42)
-  2025-002: 0x20000000 (TempusNativitatis, Albus, Feria, #0x00)
+  2025-001: 0x40100042 (Prec=4/SollemnitatesGenerales, Nat=Solemnitas, Albus, TempusNativitatis, #0x00042)
+  2025-002: 0xA6100000 (Prec=10/FeriaeAdventusEtOctavaNativitatis, Nat=Feria, Albus, TempusNativitatis, #0x00000)
   ...
 
 Validation: ✓ All entries decodable
@@ -2399,7 +2521,8 @@ RuntimeError     ← liturgical-calendar-runtime (agrège tout + corruption)
 /// Erreurs du domaine liturgique pur.
 ///
 /// Produites par : Season::try_from_u8, Color::try_from_u8,
-/// Rank::try_from_u8, SlowPath::compute, SeasonBoundaries::compute.
+/// Precedence::try_from_u8, Nature::try_from_u8, SlowPath::compute,
+/// SeasonBoundaries::compute, Day::try_from_u32.
 ///
 /// GARANTIES no_std :
 /// - Aucun variant ne contient String ni Box<dyn _>
@@ -2411,7 +2534,9 @@ RuntimeError     ← liturgical-calendar-runtime (agrège tout + corruption)
 pub enum DomainError {
     InvalidSeason(u8),
     InvalidColor(u8),
-    InvalidRank(u8),
+    InvalidPrecedence(u8),
+    InvalidNature(u8),
+    ReservedBitSet,
     YearOutOfBounds(i16),
 }
 
@@ -2420,7 +2545,9 @@ impl core::fmt::Display for DomainError {
         match self {
             Self::InvalidSeason(v)    => write!(f, "invalid season: {}", v),
             Self::InvalidColor(v)     => write!(f, "invalid color: {}", v),
-            Self::InvalidRank(v)      => write!(f, "invalid rank: {}", v),
+            Self::InvalidPrecedence(v) => write!(f, "invalid precedence: {}", v),
+            Self::InvalidNature(v)    => write!(f, "invalid nature: {}", v),
+            Self::ReservedBitSet      => write!(f, "reserved bit [18] must be 0"),
             Self::YearOutOfBounds(y)  => write!(f, "year out of bounds: {}", y),
         }
     }
@@ -2442,16 +2569,19 @@ impl DomainError {
         match self {
             Self::InvalidSeason(_)    => "season",
             Self::InvalidColor(_)     => "color",
-            Self::InvalidRank(_)      => "rank",
+            Self::InvalidPrecedence(_) => "precedence",
+            Self::InvalidNature(_)    => "nature",
+            Self::ReservedBitSet      => "reserved",
             Self::YearOutOfBounds(_)  => "year",
         }
     }
 
-    /// Valeur numérique hors domaine (0 pour YearOutOfBounds).
+    /// Valeur numérique hors domaine (0 pour YearOutOfBounds et ReservedBitSet).
     pub fn field_value(&self) -> u8 {
         match self {
-            Self::InvalidSeason(v) | Self::InvalidColor(v) | Self::InvalidRank(v) => *v,
-            Self::YearOutOfBounds(_) => 0,
+            Self::InvalidSeason(v) | Self::InvalidColor(v)
+            | Self::InvalidPrecedence(v) | Self::InvalidNature(v) => *v,
+            Self::ReservedBitSet | Self::YearOutOfBounds(_) => 0,
         }
     }
 }
@@ -2491,20 +2621,22 @@ impl From<std::io::Error> for IoError {
 /// Erreurs d'allocation et d'interopérabilité du FeastID Registry.
 ///
 /// Produites par : FeastRegistry::allocate_next, register, import,
-/// et les fonctions de normalisation de config (normalize_color, normalize_rank).
+/// et les fonctions de normalisation de config (normalize_color, normalize_nature).
 #[derive(Debug)]
 pub enum RegistryError {
     /// Deux forges ont alloué le même FeastID avec des noms différents.
     FeastIDCollision(u32),
-    /// L'espace séquentiel 16 bits d'un scope/category est épuisé.
+    /// L'espace séquentiel 12 bits d'un scope/category est épuisé (max 4096 entrées).
     FeastIDExhausted { scope: u8, category: u8 },
     /// Scope > 3 ou category > 15.
     InvalidScopeCategory { scope: u8, category: u8 },
     /// Chaîne de couleur inconnue dans un fichier de configuration TOML/YAML.
     /// Contient la valeur originale pour le message d'erreur à l'opérateur.
     UnknownColorString(String),
-    /// Chaîne de rang inconnue dans un fichier de configuration TOML/YAML.
-    UnknownRankString(String),
+    /// Chaîne de nature inconnue dans un fichier de configuration TOML/YAML.
+    UnknownNatureString(String),
+    /// Valeur de précédence hors domaine (0–12) dans un fichier de configuration.
+    InvalidPrecedenceValue(u8),
     // NOTE : import() retourne Ok(ImportReport) même en présence de collisions.
     // Les collisions de noms sont rapportées via ImportReport::collisions, non via Err.
     // Voir §3.3 pour le comportement canonique.
@@ -2871,12 +3003,13 @@ fn make_slow_path() -> SlowPath {
 fn test_bitpack_all_combinations() {
     use itertools::iproduct;
 
-    for (season, color, rank) in iproduct!(0..=6u8, 0..=5u8, 0..=5u8) {
+    for (prec, nat, color, season) in iproduct!(0..=12u8, 0..=4u8, 0..=5u8, 0..=6u8) {
         let original = Day {
-            season: Season::try_from_u8(season).unwrap(),
-            color: Color::try_from_u8(color).unwrap(),
-            rank: Rank::try_from_u8(rank).unwrap(),
-            feast_id: 0x123456,
+            precedence: Precedence::try_from_u8(prec).unwrap(),
+            nature:     Nature::try_from_u8(nat).unwrap(),
+            color:      Color::try_from_u8(color).unwrap(),
+            season:     Season::try_from_u8(season).unwrap(),
+            feast_id:   0x12345,
         };
 
         let packed: u32 = original.clone().into();
@@ -3089,28 +3222,32 @@ fn test_telemetry_corruption_tracking() {
           └─────┬─────┘ │  └──┬──┘  └──┬──┘  └──────┬──────┘
              Magic    Ver  Start   Count      Flags + Padding
 
-[Data Body - Année 2025, Jour 1 (1er janvier)]
-00000010: 42 00 00 20 ...                                   |B.. |
-          └───┬───┘
-            0x20000042
-            Season: 0010 (TempusNativitatis)
-            Color:  000 (Albus)
-            Rank:   000 (Sollemnitas)
-            FeastID: 0x000042 (Nativitas Domini)
+[Data Body — Année 2025, Jour 1 (1er janvier, Sainte Marie Mère de Dieu)]
+00000010: XX XX XX XX ...
+          DayPacked layout v2.0 :
+            Precedence [31:28] = 4  (SollemnitatesGenerales)
+            Nature     [27:25] = 0  (Solemnitas)
+            Color      [24:22] = 0  (Albus)
+            Season     [21:19] = 2  (TempusNativitatis)
+            Reserved   [18]    = 0
+            FeastID    [17:0]  = 0x00042
 
-[Année 2025, Jour 110 (20 avril - Pâques)]
-000001C4: 01 00 00 50 ...                                   |...P|
-          └───┬───┘
-            0x50000001
-            Season: 0101 (TempusPaschale)
-            Color:  000 (Albus)
-            Rank:   000 (Sollemnitas)
-            FeastID: 0x000001 (Dominica Resurrectionis)
+[Année 2025, Jour 110 (20 avril — Dominica Resurrectionis)]
+000001C4: XX XX XX XX ...
+          DayPacked layout v2.0 :
+            Precedence [31:28] = 0  (TriduumSacrum — niveau 0 inclut Pâques, cf. NALC 1969)
+            Nature     [27:25] = 0  (Solemnitas)
+            Color      [24:22] = 0  (Albus)
+            Season     [21:19] = 5  (TempusPaschale)
+            Reserved   [18]    = 0
+            FeastID    [17:0]  = 0x00001
 
 [Année 2025, Jour 366 (padding année non-bissextile)]
-000005B4: FF FF FF FF                                       |....|
+000005C4: FF FF FF FF                                       |....|
           └───┬───┘
-            0xFFFFFFFF (DayPacked::invalid() — Season=15 hors domaine, non décodable)
+            0xFFFFFFFF (DayPacked::invalid())
+            Precedence [31:28] = 15 → hors domaine (max=12), rejeté
+            Nature     [27:25] = 7  → hors domaine (max=4),  rejeté
 ```
 
 ---
@@ -3560,18 +3697,25 @@ pub enum Color {
     Niger,      // Noir
 }
 
-pub enum Rank {
-    Sollemnitas,   // Solennité
-    Festum,        // Fête
-    Memoria,       // Mémoire
-    // ...
+pub enum Precedence {
+    TriduumSacrum                     = 0,
+    SollemnitatesFixaeMaior           = 1,
+    // ... 13 valeurs, voir §1.3
+}
+
+pub enum Nature {
+    Solemnitas,   // Solennité
+    Festum,       // Fête
+    Memoria,      // Mémoire
+    Feria,        // Férie / Dimanche
+    Commemoratio, // Commémoration
 }
 
 pub enum Season {
-    Adventus,           // Avent
-    Natalis,            // Temps de Noël
-    Quadragesima,       // Carême
     TempusOrdinarium,   // Temps Ordinaire
+    TempusAdventus,     // Avent
+    TempusNativitatis,  // Temps de Noël
+    TempusQuadragesimae,// Carême
     // ...
 }
 ```
@@ -3758,6 +3902,7 @@ Avant l'implémentation, vérifier :
 - [ ] Aucun préfixe `liturgical_calendar_*` dans les noms de types Rust
 - [ ] FFI utilise `kal_*` avec note explicative
 - [ ] Enums liturgiques en latin (sauf justification)
+- [ ] `Rank` absent du codebase — modèle 2D uniquement (`Precedence` + `Nature`)
 - [ ] `snake_case` pour fonctions et variables
 - [ ] `PascalCase` pour types et enums
 - [ ] `SCREAMING_SNAKE_CASE` pour constantes
@@ -3768,4 +3913,4 @@ Avant l'implémentation, vérifier :
 
 **Fin de la Spécification Technique v2.0**
 
-_Document consolidé le 2026-02-19. Intègre toutes les corrections d'audit et le hardening production. Version de référence pour l'implémentation._
+_Document consolidé le 2026-02-27. Intègre la transition vers le modèle 2D découplé (Precedence + Nature), le layout DayPacked v2.0, et le freeze des invariants structurels. Version de référence pour l'implémentation._
